@@ -21,7 +21,7 @@ namespace eDostava.Data.Models
         [ForeignKey("TipKuhinje")]
         public int TipKuhinjeID { get; set; }
         public TipKuhinje TipKuhinje { get; set; }
-
+        //123 commit
     }
 }
 

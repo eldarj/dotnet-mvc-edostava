@@ -22,6 +22,7 @@ namespace eDostava.Data.Models
         [ForeignKey("Vlasnik")]
         public int VlasnikID { get; set; }
 
+        /* Vlasnik restorana */
         public Vlasnik Vlasnik { get; set; }
 
         [ForeignKey("Blok")]

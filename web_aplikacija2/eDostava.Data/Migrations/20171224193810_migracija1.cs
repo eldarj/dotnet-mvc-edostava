@@ -10,6 +10,20 @@ namespace eDostava.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Badgevi",
+                columns: table => new
+                {
+                    BadgeID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BrojBodova = table.Column<int>(nullable: false),
+                    Naziv = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Badgevi", x => x.BadgeID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Gradovi",
                 columns: table => new
                 {
@@ -202,6 +216,7 @@ namespace eDostava.Data.Migrations
                 {
                     KorisnikID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BadgeID = table.Column<int>(nullable: false),
                     BlokID = table.Column<int>(nullable: false),
                     DatumKreiranja = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(nullable: true),
@@ -214,6 +229,12 @@ namespace eDostava.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Narucioci", x => x.KorisnikID);
+                    table.ForeignKey(
+                        name: "FK_Narucioci_Badgevi_BadgeID",
+                        column: x => x.BadgeID,
+                        principalTable: "Badgevi",
+                        principalColumn: "BadgeID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Narucioci_Blokovi_BlokID",
                         column: x => x.BlokID,
@@ -351,6 +372,11 @@ namespace eDostava.Data.Migrations
                 column: "RestoranID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Narucioci_BadgeID",
+                table: "Narucioci",
+                column: "BadgeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Narucioci_BlokID",
                 table: "Narucioci",
                 column: "BlokID");
@@ -420,6 +446,9 @@ namespace eDostava.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Narudzbe");
+
+            migrationBuilder.DropTable(
+                name: "Badgevi");
 
             migrationBuilder.DropTable(
                 name: "Blokovi");

@@ -24,7 +24,7 @@ namespace eDostavaProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MojContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("lokalni1")));
+                options.UseSqlServer(Configuration.GetConnectionString("fit-server1")));
 
             services.AddMvc();
         }

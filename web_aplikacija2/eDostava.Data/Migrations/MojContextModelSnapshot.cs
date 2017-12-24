@@ -21,6 +21,20 @@ namespace eDostava.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("eDostava.Data.Models.Badge", b =>
+                {
+                    b.Property<int>("BadgeID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BrojBodova");
+
+                    b.Property<string>("Naziv");
+
+                    b.HasKey("BadgeID");
+
+                    b.ToTable("Badgevi");
+                });
+
             modelBuilder.Entity("eDostava.Data.Models.Blok", b =>
                 {
                     b.Property<int>("BlokID")
@@ -136,6 +150,8 @@ namespace eDostava.Data.Migrations
                     b.Property<int>("KorisnikID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("BadgeID");
+
                     b.Property<int>("BlokID");
 
                     b.Property<DateTime>("DatumKreiranja");
@@ -153,6 +169,8 @@ namespace eDostava.Data.Migrations
                     b.Property<string>("Username");
 
                     b.HasKey("KorisnikID");
+
+                    b.HasIndex("BadgeID");
 
                     b.HasIndex("BlokID");
 
@@ -355,6 +373,11 @@ namespace eDostava.Data.Migrations
 
             modelBuilder.Entity("eDostava.Data.Models.Narucilac", b =>
                 {
+                    b.HasOne("eDostava.Data.Models.Badge", "Badge")
+                        .WithMany()
+                        .HasForeignKey("BadgeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("eDostava.Data.Models.Blok", "Blok")
                         .WithMany()
                         .HasForeignKey("BlokID")

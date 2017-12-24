@@ -16,3 +16,12 @@ C:\Users\asus\Desktop\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcor
 C:\Users\asus\Desktop\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.AssemblyInfo.cs
 C:\Users\asus\Desktop\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.dll
 C:\Users\asus\Desktop\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.pdb
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\bin\Debug\netcoreapp2.0\eDostava.Data.deps.json
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\bin\Debug\netcoreapp2.0\eDostava.Data.dll
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\bin\Debug\netcoreapp2.0\eDostava.Data.pdb
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.csprojResolveAssemblyReference.cache
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.AssemblyInfo.cs
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.dll
+C:\Users\user\source\repos\eDostavaapp\web_aplikacija2\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.pdb

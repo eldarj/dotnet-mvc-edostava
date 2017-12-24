@@ -16,6 +16,9 @@ namespace eDostava.Data.Models
         public int BlokID { get; set; }
 
         public Blok Blok { get; set; }
+        [ForeignKey("Badge")]
+        public int BadgeID { get; set; }
+        public Badge Badge { get; set; }
 
         public string Ime_prezime
         {

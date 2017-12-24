@@ -66,7 +66,7 @@ namespace eDostava.Data.Migrations
 
                     b.Property<int>("Sifra");
 
-                    b.Property<byte[]>("Slika");
+                    b.Property<string>("Slika");
 
                     b.Property<int>("TipKuhinjeID");
 
@@ -88,7 +88,7 @@ namespace eDostava.Data.Migrations
 
                     b.Property<int>("RestoranID");
 
-                    b.Property<byte[]>("Slika");
+                    b.Property<string>("Slika");
 
                     b.HasKey("JelovnikID");
 
@@ -222,7 +222,7 @@ namespace eDostava.Data.Migrations
 
                     b.Property<string>("Opis");
 
-                    b.Property<byte[]>("Slika");
+                    b.Property<string>("Slika");
 
                     b.Property<string>("Slogan");
 

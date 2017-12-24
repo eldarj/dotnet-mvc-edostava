@@ -14,7 +14,7 @@ namespace eDostava.Data.Models
         public double Cijena { get; set; }
         public string Opis { get; set; }
 
-        public byte[] Slika { get; set; }
+        public string Slika { get; set; }
 
         public string Prilog { get; set; }
 

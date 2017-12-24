@@ -11,7 +11,7 @@ namespace eDostava.Data.Models
         [Key]
         public int JelovnikID { get; set; }
 
-        public byte[] Slika { get; set; }
+        public string Slika { get; set; }
 
         public bool Aktivan { get; set; }
         public string Opis { get; set; }

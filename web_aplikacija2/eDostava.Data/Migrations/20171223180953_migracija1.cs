@@ -182,7 +182,7 @@ namespace eDostava.Data.Migrations
                     Opis = table.Column<string>(nullable: true),
                     Prilog = table.Column<string>(nullable: true),
                     Sifra = table.Column<int>(nullable: false),
-                    Slika = table.Column<byte[]>(nullable: true),
+                    Slika = table.Column<string>(nullable: true),
                     TipKuhinjeID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -232,7 +232,7 @@ namespace eDostava.Data.Migrations
                     MinimalnaCijenaNarudžbe = table.Column<int>(nullable: false),
                     Naziv = table.Column<string>(nullable: true),
                     Opis = table.Column<string>(nullable: true),
-                    Slika = table.Column<byte[]>(nullable: true),
+                    Slika = table.Column<string>(nullable: true),
                     Slogan = table.Column<string>(nullable: true),
                     Telefon = table.Column<string>(nullable: true),
                     VlasnikID = table.Column<int>(nullable: false),
@@ -291,7 +291,7 @@ namespace eDostava.Data.Migrations
                     Aktivan = table.Column<bool>(nullable: false),
                     Opis = table.Column<string>(nullable: true),
                     RestoranID = table.Column<int>(nullable: false),
-                    Slika = table.Column<byte[]>(nullable: true)
+                    Slika = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

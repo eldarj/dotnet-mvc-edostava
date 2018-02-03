@@ -18,32 +18,43 @@ namespace RS1_Ispit_2017.Helper
         private const string logiraniModerator = "logiraniModerator";
         private const string logiraniNarucilac = "logiraniNarucilac";
 
-        public static void SetLogiranogKorisnika(this HttpContext context, Korisnik korisnik,string tip)
+        public static void SetLogiranogVlasnika(this HttpContext context, Vlasnik korisnik)
         {
-            if(tip == "vlasnik")
+           
             context.Session.Set(logiraniVlasnik,korisnik);
-            if (tip == "moderator")
-                context.Session.Set(logiraniModerator, korisnik);
-            if (tip == "narucilac")
-                context.Session.Set(logiraniNarucilac, korisnik);
+            
         }
 
-        public static Korisnik GetLogiranogVlasnika(this HttpContext context)
+        public static void SetLogiranogModeratora(this HttpContext context, Moderator korisnik)
         {
-            Korisnik x = context.Session.Get<Korisnik>(logiraniVlasnik);
+
+            context.Session.Set(logiraniModerator, korisnik);
+
+        }
+
+        public static void SetLogiranogNarucioca(this HttpContext context, Narucilac korisnik)
+        {
+
+            context.Session.Set(logiraniNarucilac, korisnik);
+
+        }
+
+        public static Vlasnik GetLogiranogVlasnika(this HttpContext context)
+        {
+            Vlasnik x = context.Session.Get<Vlasnik>(logiraniVlasnik);
             
             return x;
         }
 
-        public static Korisnik GetLogiranogModeratora(this HttpContext context)
+        public static Moderator GetLogiranogModeratora(this HttpContext context)
         {
-            Korisnik x = context.Session.Get<Korisnik>(logiraniModerator);
+            Moderator x = context.Session.Get<Moderator>(logiraniModerator);
             return x;
         }
 
-        public static Korisnik GetLogiranogNarucioca(this HttpContext context)
+        public static Narucilac GetLogiranogNarucioca(this HttpContext context)
         {
-            Korisnik x = context.Session.Get<Korisnik>(logiraniNarucilac);
+            Narucilac x = context.Session.Get<Narucilac>(logiraniNarucilac);
             return x;
         }
     }

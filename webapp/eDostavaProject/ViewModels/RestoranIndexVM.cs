@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using eDostava.Data.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,10 @@ namespace eDostava.Web.ViewModels
 {
     public class RestoranIndexVM
     {
+        public enum Logiran
+        {
+            Moderator,Vlasnik,Narucilac
+        }
         public class Row
         {
             public int RestoranID;
@@ -19,9 +24,11 @@ namespace eDostava.Web.ViewModels
             public string brojTelefona;
             public int brojLajkova;
             public string nazivRestorana;
+           
 
         }
-
+        public Vlasnik vlasnik;
+        public Logiran jeLogiran;
         public List<Row>Rows;
 
 

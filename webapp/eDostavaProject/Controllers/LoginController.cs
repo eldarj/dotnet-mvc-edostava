@@ -36,12 +36,12 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
                 return RedirectToAction("Index");
 
             if(n1!=null)
-            HttpContext.SetLogiranogKorisnika(n1,"vlasnik");
+            HttpContext.SetLogiranogVlasnika(n1);
 
             if (n2 != null)
-                HttpContext.SetLogiranogKorisnika(n2,"moderator");
+                HttpContext.SetLogiranogModeratora(n2);
             if (n3 != null)
-                HttpContext.SetLogiranogKorisnika(n3,"narucilac");
+                HttpContext.SetLogiranogNarucioca(n3);
 
 
             return RedirectToAction("Index", "Restorani");

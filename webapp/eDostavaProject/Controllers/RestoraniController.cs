@@ -24,8 +24,9 @@ namespace eDostava.Web.Controllers
         {
 
             
-            //if (HttpContext.GetLogiranogNarucioca()==null && HttpContext.GetLogiranogVlasnika() == null && HttpContext.GetLogiranogModeratora() == null)
-            //    return RedirectToAction("Index", "Login");
+            if (HttpContext.GetLogiranogNarucioca()==null && HttpContext.GetLogiranogVlasnika() == null && HttpContext.GetLogiranogModeratora() == null)
+                return RedirectToAction("Index", "Login");
+
 
             RestoranIndexVM model = new RestoranIndexVM();
             model.Rows = context.Restorani.Include(x=>x.Vlasnik).Include(x => x.Blok).Include(x => x.Blok.Grad).Select(x => new RestoranIndexVM.Row
@@ -43,6 +44,26 @@ namespace eDostava.Web.Controllers
                     Value= ((Dani)y.Dan).ToString() + " : " + y.VrijemeOtvaranja.ToString() + " - " + y.VrijemeZatvaranja.ToString()
         }).ToList()
             }).ToList();
+
+
+
+            if (HttpContext.GetLogiranogModeratora() != null)
+            {
+                model.jeLogiran = (RestoranIndexVM.Logiran)0;
+            }
+
+            if (HttpContext.GetLogiranogVlasnika() != null)
+            {
+                Vlasnik n = HttpContext.GetLogiranogVlasnika();
+                model.jeLogiran = (RestoranIndexVM.Logiran)1;
+                model.vlasnik = n;
+            }
+
+            if (HttpContext.GetLogiranogNarucioca() != null)
+            {
+                model.jeLogiran = (RestoranIndexVM.Logiran)2;
+            }
+
 
             return View(model);
         }

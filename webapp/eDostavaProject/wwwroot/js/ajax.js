@@ -10,6 +10,15 @@ function DodajAjaxEvente() {
 
         $.get(urlZaPoziv, function (data, status) {
             $("#" + divZaRezultat).html(data);
+
+        });
+    });
+
+
+    $(document).ready(function () {
+        $("#bt").click(function (event) {
+            ("#val").html("Opcija dopustena samo moderatoru");
+
         });
     });
 

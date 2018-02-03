@@ -24,6 +24,9 @@ namespace eDostava.Data.Models
 
         public TimeSpan VrijemeOtvaranja { get; set; }
         public TimeSpan VrijemeZatvaranja { get; set; }
+        [ForeignKey("Restoran")]
+        public int RestoranID { get; set; }
+        public Restoran Restoran { get; set; }
 
     }
 }

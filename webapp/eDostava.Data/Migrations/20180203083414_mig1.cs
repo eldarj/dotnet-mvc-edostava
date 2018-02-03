@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace eDostava.Data.Migrations
 {
-    public partial class migracija1 : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -114,21 +114,6 @@ namespace eDostava.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VrijemeRada",
-                columns: table => new
-                {
-                    RadnoVrijemeID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Dan = table.Column<int>(nullable: false),
-                    VrijemeOtvaranja = table.Column<TimeSpan>(nullable: false),
-                    VrijemeZatvaranja = table.Column<TimeSpan>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VrijemeRada", x => x.RadnoVrijemeID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Zalbe",
                 columns: table => new
                 {
@@ -149,7 +134,7 @@ namespace eDostava.Data.Migrations
                     BlokID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     GradID = table.Column<int>(nullable: false),
-                    Naziv = table.Column<int>(nullable: false)
+                    Naziv = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -183,31 +168,6 @@ namespace eDostava.Data.Migrations
                         principalTable: "Kuponi",
                         principalColumn: "KuponID",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Proizvodi",
-                columns: table => new
-                {
-                    HranaID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Cijena = table.Column<double>(nullable: false),
-                    Naziv = table.Column<string>(nullable: true),
-                    Opis = table.Column<string>(nullable: true),
-                    Prilog = table.Column<string>(nullable: true),
-                    Sifra = table.Column<int>(nullable: false),
-                    Slika = table.Column<string>(nullable: true),
-                    TipKuhinjeID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Proizvodi", x => x.HranaID);
-                    table.ForeignKey(
-                        name: "FK_Proizvodi_TipoviKuhinje_TipKuhinjeID",
-                        column: x => x.TipKuhinjeID,
-                        principalTable: "TipoviKuhinje",
-                        principalColumn: "TipKuhinjeID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -277,33 +237,6 @@ namespace eDostava.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StavkeNarudzbe",
-                columns: table => new
-                {
-                    StavkeNarudzbeID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    HranaID = table.Column<int>(nullable: false),
-                    Kolicina = table.Column<int>(nullable: false),
-                    NarudzbaID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StavkeNarudzbe", x => x.StavkeNarudzbeID);
-                    table.ForeignKey(
-                        name: "FK_StavkeNarudzbe_Proizvodi_HranaID",
-                        column: x => x.HranaID,
-                        principalTable: "Proizvodi",
-                        principalColumn: "HranaID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StavkeNarudzbe_Narudzbe_NarudzbaID",
-                        column: x => x.NarudzbaID,
-                        principalTable: "Narudzbe",
-                        principalColumn: "NarudzbaID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Jelovnici",
                 columns: table => new
                 {
@@ -351,6 +284,87 @@ namespace eDostava.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "VrijemeRada",
+                columns: table => new
+                {
+                    RadnoVrijemeID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Dan = table.Column<int>(nullable: false),
+                    RestoranID = table.Column<int>(nullable: false),
+                    VrijemeOtvaranja = table.Column<TimeSpan>(nullable: false),
+                    VrijemeZatvaranja = table.Column<TimeSpan>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VrijemeRada", x => x.RadnoVrijemeID);
+                    table.ForeignKey(
+                        name: "FK_VrijemeRada_Restorani_RestoranID",
+                        column: x => x.RestoranID,
+                        principalTable: "Restorani",
+                        principalColumn: "RestoranID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Proizvodi",
+                columns: table => new
+                {
+                    HranaID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Cijena = table.Column<double>(nullable: false),
+                    JelovnikID = table.Column<int>(nullable: false),
+                    Naziv = table.Column<string>(nullable: true),
+                    Opis = table.Column<string>(nullable: true),
+                    Prilog = table.Column<string>(nullable: true),
+                    Sifra = table.Column<int>(nullable: false),
+                    Slika = table.Column<string>(nullable: true),
+                    TipKuhinjeID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proizvodi", x => x.HranaID);
+                    table.ForeignKey(
+                        name: "FK_Proizvodi_Jelovnici_JelovnikID",
+                        column: x => x.JelovnikID,
+                        principalTable: "Jelovnici",
+                        principalColumn: "JelovnikID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Proizvodi_TipoviKuhinje_TipKuhinjeID",
+                        column: x => x.TipKuhinjeID,
+                        principalTable: "TipoviKuhinje",
+                        principalColumn: "TipKuhinjeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StavkeNarudzbe",
+                columns: table => new
+                {
+                    StavkeNarudzbeID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    HranaID = table.Column<int>(nullable: false),
+                    Kolicina = table.Column<int>(nullable: false),
+                    NarudzbaID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StavkeNarudzbe", x => x.StavkeNarudzbeID);
+                    table.ForeignKey(
+                        name: "FK_StavkeNarudzbe_Proizvodi_HranaID",
+                        column: x => x.HranaID,
+                        principalTable: "Proizvodi",
+                        principalColumn: "HranaID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StavkeNarudzbe_Narudzbe_NarudzbaID",
+                        column: x => x.NarudzbaID,
+                        principalTable: "Narudzbe",
+                        principalColumn: "NarudzbaID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Blokovi_GradID",
                 table: "Blokovi",
@@ -387,6 +401,11 @@ namespace eDostava.Data.Migrations
                 column: "KuponID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Proizvodi_JelovnikID",
+                table: "Proizvodi",
+                column: "JelovnikID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Proizvodi_TipKuhinjeID",
                 table: "Proizvodi",
                 column: "TipKuhinjeID");
@@ -410,13 +429,15 @@ namespace eDostava.Data.Migrations
                 name: "IX_StavkeNarudzbe_NarudzbaID",
                 table: "StavkeNarudzbe",
                 column: "NarudzbaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VrijemeRada_RestoranID",
+                table: "VrijemeRada",
+                column: "RestoranID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Jelovnici");
-
             migrationBuilder.DropTable(
                 name: "Lajkovi");
 
@@ -439,9 +460,6 @@ namespace eDostava.Data.Migrations
                 name: "Narucioci");
 
             migrationBuilder.DropTable(
-                name: "Restorani");
-
-            migrationBuilder.DropTable(
                 name: "Proizvodi");
 
             migrationBuilder.DropTable(
@@ -451,16 +469,22 @@ namespace eDostava.Data.Migrations
                 name: "Badgevi");
 
             migrationBuilder.DropTable(
-                name: "Blokovi");
-
-            migrationBuilder.DropTable(
-                name: "Vlasnici");
+                name: "Jelovnici");
 
             migrationBuilder.DropTable(
                 name: "TipoviKuhinje");
 
             migrationBuilder.DropTable(
                 name: "Kuponi");
+
+            migrationBuilder.DropTable(
+                name: "Restorani");
+
+            migrationBuilder.DropTable(
+                name: "Blokovi");
+
+            migrationBuilder.DropTable(
+                name: "Vlasnici");
 
             migrationBuilder.DropTable(
                 name: "Gradovi");

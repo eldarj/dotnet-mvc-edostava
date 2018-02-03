@@ -10,7 +10,7 @@ namespace eDostava.Data.Models
         [Key]
         public int BlokID { get; set; }
 
-        public int Naziv { get; set; }
+        public string Naziv { get; set; }
         [ForeignKey("Grad")]
         public int GradID { get; set; }
 

@@ -1,0 +1,42 @@
+﻿@model eDostava.Web.ViewModels.RestoranIndexVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="text-align:center;color:#B58900" >eDostava</h1>
+<button class="btn btn-warning" style="float:right" role="spinbutton">Logout :(</button>
+<button class="btn btn-success" style="float:right;margin-right:5px" role="spinbutton">Prijavi restoran!</button>
+
+
+<br /><hr />
+
+
+<div class="row">
+
+    
+        @foreach (var x in Model.Rows)
+    {
+        <div class="col-md-4">
+            <h2 style="display:inline;color:#B58900">@x.nazivRestorana  </h2>
+
+            <hr />
+            <span class="badge badge-primary" style="float:right">Liked: @x.brojLajkova</span>
+            <p>@x.lokacijaRestorana</p>
+            <p>Radno vrijeme: <select asp-items="@x.radnoVrijeme" class="custom-select" style="width:30%;display:inline;float:right"></select></p>
+            <p>Minimum : <b style="color:#B58900">@x.minimalnaCijenaNarudzbe KM</b></p>
+            <p>@x.opis</p>
+
+
+            <p style="float:right"><a class="btn btn-primary" asp-action="Jelovnik" asp-route-restoranid="@x.RestoranID" role="button">Jelovnik &raquo;</a></p>
+        </div>
+}
+    
+   </div>
+
+
+
+
+
+
+

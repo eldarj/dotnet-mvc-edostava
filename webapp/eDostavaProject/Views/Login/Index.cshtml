@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+     <link href="~/css/Login.css" rel="stylesheet" />
+}
+
+<div class="login-page">
+    <div class="form">
+        <form asp-action="Prijava" method="post">
+            <input type="text" name="username" placeholder="username" />
+            <input type="password" name="password" placeholder="password" />
+            <button type="submit">login</button>
+            <p class="message">Not registered? <a href="#">Create an account</a></p>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    $('.message a').click(function () {
+        $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+    });
+</script>

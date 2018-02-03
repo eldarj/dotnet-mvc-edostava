@@ -27,6 +27,8 @@ namespace eDostavaProject
                 options.UseSqlServer(Configuration.GetConnectionString("fit-server1")));
 
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +45,8 @@ namespace eDostavaProject
             }
 
             app.UseStaticFiles();
+            app.UseSession();
+            
 
             app.UseMvc(routes =>
             {

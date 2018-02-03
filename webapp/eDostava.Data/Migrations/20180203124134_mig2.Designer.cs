@@ -12,8 +12,8 @@ using System;
 namespace eDostava.Data.Migrations
 {
     [DbContext(typeof(MojContext))]
-    [Migration("20171224193810_migracija1")]
-    partial class migracija1
+    [Migration("20180203124134_mig2")]
+    partial class mig2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,7 +43,7 @@ namespace eDostava.Data.Migrations
 
                     b.Property<int>("GradID");
 
-                    b.Property<int>("Naziv");
+                    b.Property<string>("Naziv");
 
                     b.HasKey("BlokID");
 
@@ -73,6 +73,8 @@ namespace eDostava.Data.Migrations
 
                     b.Property<double>("Cijena");
 
+                    b.Property<int>("JelovnikID");
+
                     b.Property<string>("Naziv");
 
                     b.Property<string>("Opis");
@@ -86,6 +88,8 @@ namespace eDostava.Data.Migrations
                     b.Property<int>("TipKuhinjeID");
 
                     b.HasKey("HranaID");
+
+                    b.HasIndex("JelovnikID");
 
                     b.HasIndex("TipKuhinjeID");
 
@@ -219,11 +223,15 @@ namespace eDostava.Data.Migrations
 
                     b.Property<int>("Dan");
 
+                    b.Property<int>("RestoranID");
+
                     b.Property<TimeSpan>("VrijemeOtvaranja");
 
                     b.Property<TimeSpan>("VrijemeZatvaranja");
 
                     b.HasKey("RadnoVrijemeID");
+
+                    b.HasIndex("RestoranID");
 
                     b.ToTable("VrijemeRada");
                 });
@@ -358,6 +366,11 @@ namespace eDostava.Data.Migrations
 
             modelBuilder.Entity("eDostava.Data.Models.Hrana", b =>
                 {
+                    b.HasOne("eDostava.Data.Models.Jelovnik", "Jelovnik")
+                        .WithMany()
+                        .HasForeignKey("JelovnikID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("eDostava.Data.Models.TipKuhinje", "TipKuhinje")
                         .WithMany()
                         .HasForeignKey("TipKuhinjeID")
@@ -390,6 +403,14 @@ namespace eDostava.Data.Migrations
                     b.HasOne("eDostava.Data.Models.Kupon", "Kupon")
                         .WithMany()
                         .HasForeignKey("KuponID");
+                });
+
+            modelBuilder.Entity("eDostava.Data.Models.RadnoVrijeme", b =>
+                {
+                    b.HasOne("eDostava.Data.Models.Restoran", "Restoran")
+                        .WithMany()
+                        .HasForeignKey("RestoranID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("eDostava.Data.Models.Restoran", b =>

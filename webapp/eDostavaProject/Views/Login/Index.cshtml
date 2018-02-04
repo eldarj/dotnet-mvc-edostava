@@ -1,11 +1,28 @@
-﻿
-@{
+﻿@model eDostava.Web.ViewModels.BlokLista
+@{ 
     ViewData["Title"] = "Index";
      <link href="~/css/Login.css" rel="stylesheet" />
+    DateTime today = DateTime.Now;
+  
 }
 
 <div class="login-page">
     <div class="form">
+        <form class="register-form" asp-action="Registracija" method="post">
+            <select name="korisnik">
+                <option value="vlasnik">Vlasnik restorana</option>
+                <option value="narucilac">Narucilac</option>
+            </select>
+            <input type="text" name="ime" placeholder="Ime" />
+            <input type="text" name="prezime" placeholder="Prezime" />
+            <input type="text" name="username" placeholder="Username" />
+            <input type="password" name="password" placeholder="Password" />
+            <input type="email" name="email" placeholder="Email" />
+            <input type="datetime" name="datumKreiranja" placeholder="Datum" value="@today" readonly />
+        <select name="blokid" asp-for="blokid" asp-items="@Model.blokovi"></select>
+            <button type="submit">create</button>
+            <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
         <form asp-action="Prijava" method="post">
             <input type="text" name="username" placeholder="username" />
             <input type="password" name="password" placeholder="password" />
@@ -20,4 +37,5 @@
     $('.message a').click(function () {
         $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
     });
+
 </script>

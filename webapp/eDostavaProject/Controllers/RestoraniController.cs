@@ -89,5 +89,46 @@ namespace eDostava.Web.Controllers
 
             return View(model);
         }
+
+
+        public IActionResult PrijaviRestoran()
+        {
+            RestoranPrijavaVM model = new RestoranPrijavaVM();
+
+            
+            model.blokovi = context.Blokovi.Include(x=>x.Grad).Select(x => new SelectListItem
+            {
+                Text = x.Naziv + ", " + x.Grad.Naziv,
+                Value = x.BlokID.ToString()
+
+            }).ToList();
+
+            model.vlasnici = context.Vlasnici.Select(x => new SelectListItem
+            {
+                Text = x.Ime_prezime,
+                Value = x.KorisnikID.ToString()
+
+            }).ToList();
+
+            return View(model);
+        }
+
+        public IActionResult SnimiRestoran(RestoranPrijavaVM model)
+        {
+            Restoran n = new Restoran
+            {
+                BlokID=model.blokId,
+                MinimalnaCijenaNarudžbe=model.minimalnaCijenaNarudzbe,
+                Naziv=model.naziv,
+                Opis=model.opis,
+                Telefon=model.brojTelefona,
+                VlasnikID=model.vlasnikId,
+                
+            };
+            context.Restorani.Add(n);
+            context.SaveChanges();
+            HttpContext.SetLogiranogModeratora(HttpContext.GetLogiranogModeratora());
+            return RedirectToAction("Index");
+        }
     }
 }

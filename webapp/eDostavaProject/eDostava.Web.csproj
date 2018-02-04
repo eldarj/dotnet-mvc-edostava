@@ -20,8 +20,4 @@
     <ProjectReference Include="..\eDostava.Data\eDostava.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Content\" />
-  </ItemGroup>
-
 </Project>

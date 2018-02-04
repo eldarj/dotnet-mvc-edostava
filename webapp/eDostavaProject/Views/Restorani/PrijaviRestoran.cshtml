@@ -1,0 +1,61 @@
+﻿@model eDostava.Web.ViewModels.RestoranPrijavaVM
+@{
+    ViewData["Title"] = "PrijaviRestoran";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+
+<h2>Unesite podatke o restoranu: </h2><br />
+
+<form asp-action="SnimiRestoran" method="post">
+
+<div>
+    <label asp-for="vlasnikId">Vlasnik: </label>
+    <select asp-items="@Model.vlasnici" class="form-control" asp-for="vlasnikId"></select>
+    <span asp-validation-for="brojTelefona"></span>
+    <small class="form-text text-muted"><a asp-action="Index" asp-controller="Login">Vlasnik je obavezan da se prethodno registruje!</a></small><br />
+</div>
+
+<div>
+    <label asp-for="brojTelefona">Opis restorana: </label>
+    <select asp-items="@Model.blokovi" class="form-control" asp-for="blokId"></select>
+    <span asp-validation-for="brojTelefona"></span>
+    <small class="form-text text-muted">Unesite novu lokaciju!</small><br />
+</div>
+
+
+<div>
+    <label asp-for="naziv">Naziv restorana: </label>
+    <input class="form-control" asp-for="naziv" placeholder="Naziv">
+    <small class="form-text text-muted">Budite unikatni,hvala!</small><br />
+
+</div>
+
+<div>
+    <label asp-for="opis">Opis restorana: </label>
+    <input class="form-control" asp-for="opis" placeholder="Opis">
+    <small class="form-text text-muted">Npr. pizza, paste</small><br />
+</div>
+
+<div>
+    <label asp-for="brojTelefona">Telefon: </label>
+    <input class="form-control" asp-for="brojTelefona" placeholder="Broj telefona">
+    <span asp-validation-for="brojTelefona"></span>
+    <small class="form-text text-muted">Očekujte mnogo poziva!</small><br />
+</div>
+
+<div>
+    <label asp-for="minimalnaCijenaNarudzbe">Minimalna cijena narudžbe: </label>
+    <input class="form-control" asp-for="minimalnaCijenaNarudzbe" placeholder="Minimum">
+    <span asp-validation-for="minimalnaCijenaNarudzbe"></span>
+    <small class="form-text text-muted">Maksimalno 30KM!</small>
+</div>
+
+<div>
+    <input style="top:2px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
+</div>
+    </form>

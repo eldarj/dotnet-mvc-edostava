@@ -15,7 +15,7 @@ namespace eDostava.Web.ViewModels
         }
         public class Row
         {
-            public int RestoranID;
+            public int RestoranID { get; set; }
             public string lokacijaRestorana;
             public string opis;
             public int minimalnaCijenaNarudzbe;
@@ -24,7 +24,7 @@ namespace eDostava.Web.ViewModels
             public string brojTelefona;
             public int brojLajkova;
             public string nazivRestorana;
-           
+            public bool jeVlasnikRestorana;
 
         }
         public Vlasnik vlasnik;

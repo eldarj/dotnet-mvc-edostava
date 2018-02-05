@@ -16,14 +16,14 @@
 <div>
     <label asp-for="vlasnikId">Vlasnik: </label>
     <select asp-items="@Model.vlasnici" class="form-control" asp-for="vlasnikId"></select>
-    <span asp-validation-for="brojTelefona"></span>
+    <span asp-validation-for="vlasnikId"></span>
     <small class="form-text text-muted"><a asp-action="Index" asp-controller="Login">Vlasnik je obavezan da se prethodno registruje!</a></small><br />
 </div>
 
 <div>
-    <label asp-for="brojTelefona">Opis restorana: </label>
+    <label asp-for="brojTelefona">Blok: </label>
     <select asp-items="@Model.blokovi" class="form-control" asp-for="blokId"></select>
-    <span asp-validation-for="brojTelefona"></span>
+    <span asp-validation-for="blokId"></span>
     <small class="form-text text-muted">Unesite novu lokaciju!</small><br />
 </div>
 
@@ -31,6 +31,7 @@
 <div>
     <label asp-for="naziv">Naziv restorana: </label>
     <input class="form-control" asp-for="naziv" placeholder="Naziv">
+    <span asp-validation-for="naziv"></span>
     <small class="form-text text-muted">Budite unikatni,hvala!</small><br />
 
 </div>
@@ -38,6 +39,7 @@
 <div>
     <label asp-for="opis">Opis restorana: </label>
     <input class="form-control" asp-for="opis" placeholder="Opis">
+    <span asp-validation-for="opis"></span>
     <small class="form-text text-muted">Npr. pizza, paste</small><br />
 </div>
 

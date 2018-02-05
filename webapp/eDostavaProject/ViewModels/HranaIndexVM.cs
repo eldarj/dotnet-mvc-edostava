@@ -10,7 +10,7 @@ namespace eDostava.Web.ViewModels
         public int jelovnikID;
         public class Row
         {
-            public int HranaID;
+            public int HranaID { get; set; }
             public string Naziv;
             public double cijena;
             public string opis;
@@ -18,7 +18,7 @@ namespace eDostava.Web.ViewModels
             public int tipkuhinjeID;
             
         }
-
+        public bool jeLogiranVlasnikRestorana;
         public List<Row> Rows;
     }
 }

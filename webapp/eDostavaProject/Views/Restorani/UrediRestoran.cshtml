@@ -1,0 +1,103 @@
+﻿@model eDostava.Web.ViewModels.RestoranUrediVM
+@{
+    ViewData["Title"] = "UrediRestoran";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int b = 0;
+}
+
+
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+
+<h2>Uredi  osnovne podatke o restoranu: </h2><br />
+@*/////////*@
+<form method="post" asp-action="UrediRestoran">
+
+    <input asp-for="RestoranId" hidden />
+    <div>
+        <label asp-for="blokId">Vlasnik: </label>
+        <select asp-items="@Model.vlasnici" class="form-control" asp-for="vlasnikId"></select>
+        <span asp-validation-for="vlasnikId"></span>
+
+    </div>
+    <div>
+        <label asp-for="blokId">Blok: </label>
+        <select asp-items="@Model.blokovi" class="form-control" asp-for="blokId"></select>
+        <span asp-validation-for="blokId"></span>
+
+    </div>
+
+    <div>
+        <label asp-for="naziv">Naziv restorana: </label>
+        <input class="form-control" asp-for="naziv">
+        <span asp-validation-for="naziv"></span>
+    </div>
+
+    <div>
+        <label asp-for="opis">Opis: </label>
+        <input class="form-control" asp-for="opis" placeholder="Opis" />
+        <span asp-validation-for="opis"></span>
+    </div>
+
+    <div>
+        <label asp-for="brTelefona">Telefon: </label>
+        <input class="form-control" asp-for="brTelefona" placeholder="Telefon" />
+        <span asp-validation-for="brTelefona"></span>
+    </div>
+
+    <div>
+        <label asp-for="minimalnaCijenaNarudz">Minimalna cijena narudžbe: </label>
+        <input class="form-control" asp-for="minimalnaCijenaNarudz" placeholder="Minimum">
+        <span asp-validation-for="minimalnaCijenaNarudz"></span>
+    </div>
+
+    <div>
+        <input style="top:5px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
+    </div>
+
+
+</form>
+<br /><br /><hr />
+<h2>Izmijeni jelovnike: </h2><br />
+
+@foreach (var x in Model.jelovnici)
+{
+    <div>
+        <form method="post" asp-action="SnimiJelovnik">
+            <div>
+                <label>Opis jelovnika: </label>
+                <input hidden name="restoranID" value="@x.RestoranID" />
+                <input hidden name="jelovnikid" value="@x.JelovnikID" />
+                <input class="form-control" name="opis" value="@x.Opis">
+            </div>
+            <div>
+                @if (x.Aktivan)
+                {
+                    <input type="radio" name="aktivan" checked value="1"> <text>Active</text> <br />}
+                else
+                {
+                    <input type="radio" name="aktivan" value="1"> <text>Active</text><br />
+
+                }
+                @if (!x.Aktivan)
+                {
+                    <input type="radio" name="aktivan" checked value="0"><text>Disabled</text><br />
+                }
+                else
+                {
+
+                    <input type="radio" name="aktivan" value="0"><text>Disabled</text><br />
+                }
+            </div>
+            <a ajax-poziv="da" ajax-rezultat="jelovnikAjax@(b)" style="float:right" asp-controller="Hrana" asp-action="Index" asp-route-jelovnikid="@x.JelovnikID" class="btn btn-success btn-lg">Prikazi proizvode &rsaquo;&rsaquo;</a>
+            <div>
+                <input style="top:5px;float:left" type="submit" class="btn btn-primary" value="Submit" />
+            </div>
+
+        </form>
+    </div><br /><br />
+      <div id="jelovnikAjax@(b++)"></div>
+
+}

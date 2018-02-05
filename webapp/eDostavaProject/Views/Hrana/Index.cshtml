@@ -3,22 +3,31 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<table class="table table-hover" class="table-striped" style="font-size:120%">
-    <tr  class="table-dark">
+<br />
+<table class="table table-hover"  style="font-size:120%">
+    <tr class="table-dark">
         <th scope="col">Naziv</th>
         <th scope="col">Opis</th>
         <th scope="col">Cijena</th>
         <th scope="col">Prilog</th>
+        @if (Model.jeLogiranVlasnikRestorana)
+        {
+        <th scope="col">Akcija</th>
+        }
     </tr>
-
+    
     @foreach (var x in Model.Rows)
     {
     <tr class="table-success">
+      
         <th scope="row">@x.Naziv</th>
         <td>@x.opis</td>
         <td>@x.cijena KM</td>
         <td>@x.prilog</td>
+        @if (Model.jeLogiranVlasnikRestorana)
+        {
+        <td><a asp-action="UrediProizvod" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Uredi</a></td>
+        }
     </tr>
     }
 </table>

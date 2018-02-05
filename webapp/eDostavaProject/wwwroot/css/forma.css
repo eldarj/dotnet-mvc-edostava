@@ -1,3 +1,6 @@
 ﻿div {
-    color: #B58900
+    color: #B58900;
+}
+span{
+    color:red !important;
 }

@@ -13,11 +13,11 @@
                 <option value="vlasnik">Vlasnik restorana</option>
                 <option value="narucilac">Narucilac</option>
             </select>
-            <input type="text" name="ime" placeholder="Ime" />
-            <input type="text" name="prezime" placeholder="Prezime" />
-            <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" />
-            <input type="email" name="email" placeholder="Email" />
+            <input type="text" name="ime" pattern="^[a-zA-Z ]*$" title="Only letters" placeholder="Ime" required />
+            <input type="text" name="prezime" placeholder="Prezime" pattern="^[a-zA-Z ]*$" title="Only letters" required/>
+            <input type="text" name="username" placeholder="Username" required/>
+            <input type="password" name="password" placeholder="Password" required/>
+            <input type="email" name="email" placeholder="Email" required/>
             <input type="datetime" name="datumKreiranja" placeholder="Datum" value="@today" readonly />
         <select name="blokid" asp-for="blokid" asp-items="@Model.blokovi"></select>
             <button type="submit">create</button>

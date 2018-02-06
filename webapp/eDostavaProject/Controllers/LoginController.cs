@@ -22,7 +22,7 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
 
         public IActionResult Index()
         {
-            BlokLista model = new BlokLista();
+            BlokListaVM model = new BlokListaVM();
              model.blokovi = context.Blokovi.Include(x=>x.Grad).Select(x => new SelectListItem
             {
                 Text = x.Naziv + ", " + x.Grad.Naziv,

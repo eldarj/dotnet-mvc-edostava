@@ -11,6 +11,16 @@
 
 <h2>Unesite podatke o restoranu: </h2><br />
 
+<div id="unesiBlok" style="display:none">
+        <form asp-action="DodajBlok" method="post">
+            <input name="nazivGrada" required pattern="^[a-zA-Z]+$" title="only letters" placeholder="Naziv grada"/>
+            <input name="postanskiBroj" required pattern="^[0-9]+$" title="only numbers" placeholder="Postanski broj" />
+            <input name="nazivBloka" required pattern="^[a-zA-Z]+$" title="only letters" placeholder="Naziv bloka"/>
+            <input type="submit" class="btn btn-primary" value="Submit" />
+
+        </form>
+    </div>
+
 <form asp-action="SnimiRestoran" method="post">
 
 <div>
@@ -21,10 +31,11 @@
 </div>
 
 <div>
-    <label asp-for="brojTelefona">Blok: </label>
+    <label asp-for="blokId">Blok: </label>
     <select asp-items="@Model.blokovi" class="form-control" asp-for="blokId"></select>
     <span asp-validation-for="blokId"></span>
-    <small class="form-text text-muted">Unesite novu lokaciju!</small><br />
+    <small class="form-text text-muted"><a id="novaLokacija" href="#    ">Unesite novu lokaciju!</a></small><br />
+    
 </div>
 
 
@@ -61,3 +72,11 @@
     <input style="top:2px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
 </div>
     </form>
+
+
+<script>
+
+    $("#novaLokacija").click(function (event) {
+        $("#unesiBlok").css("display", "block");
+    });
+</script>

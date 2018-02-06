@@ -1,4 +1,4 @@
-﻿@model eDostava.Web.ViewModels.RestoranUrediVM
+﻿    @model eDostava.Web.ViewModels.RestoranUrediVM
 @{
     ViewData["Title"] = "UrediRestoran";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -54,13 +54,20 @@
     </div>
 
     <div>
+        <br />
         <input style="top:5px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
     </div>
 
 
 </form>
 <br /><br /><hr />
-<h2>Izmijeni jelovnike: </h2><br />
+
+
+<a class="btn btn-primary" style="float:right;color:white" ajax-poziv="da" ajax-rezultat="addJel2" asp-action="DodajJelovnik" asp-route-restoranid="@Model.RestoranId">Dodaj jelovnik</a>
+
+<h2>Izmijeni jelovnike: </h2>
+<br style="clear:both" /><br />
+<div style="float:right" id="addJel2"></div>
 
 @foreach (var x in Model.jelovnici)
 {
@@ -91,13 +98,14 @@
                     <input type="radio" name="aktivan" value="0"><text>Disabled</text><br />
                 }
             </div>
-            <a ajax-poziv="da" ajax-rezultat="jelovnikAjax@(b)" style="float:right" asp-controller="Hrana" asp-action="Index" asp-route-jelovnikid="@x.JelovnikID" class="btn btn-success btn-lg">Prikazi proizvode &rsaquo;&rsaquo;</a>
+            <a ajax-poziv="da" ajax-rezultat="jelovnikAjax@(b)" asp-route-divid="@b" style="float:right" asp-controller="Hrana" asp-action="Index" asp-route-jelovnikid="@x.JelovnikID" class="btn btn-success btn-lg">Prikazi proizvode &rsaquo;&rsaquo;</a>
             <div>
+
                 <input style="top:5px;float:left" type="submit" class="btn btn-primary" value="Submit" />
             </div>
 
         </form>
     </div><br /><br />
-      <div id="jelovnikAjax@(b++)"></div>
+    <div id="jelovnikAjax@(b++)"></div>
 
 }

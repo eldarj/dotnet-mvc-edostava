@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br />
-<table class="table table-hover"  style="font-size:120%">
+<table class="table table-hover" style="font-size:120%">
     <tr class="table-dark">
         <th scope="col">Naziv</th>
         <th scope="col">Opis</th>
@@ -12,23 +12,30 @@
         <th scope="col">Prilog</th>
         @if (Model.jeLogiranVlasnikRestorana)
         {
-        <th scope="col">Akcija</th>
+            <th scope="col">Akcija</th>
         }
     </tr>
-    
+
     @foreach (var x in Model.Rows)
     {
     <tr class="table-success">
-      
+
         <th scope="row">@x.Naziv</th>
         <td>@x.opis</td>
         <td>@x.cijena KM</td>
         <td>@x.prilog</td>
         @if (Model.jeLogiranVlasnikRestorana)
-        {
-        <td><a asp-action="UrediProizvod" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Uredi</a></td>
-        }
+    {
+        <td><a asp-action="UrediProizvod" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-info">Uredi</a>
+        <a asp-action="ObrisiProizvod" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.DivID)" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Ukloni</a></td>
+
+}
     </tr>
     }
 </table>
+
+@if (Model.jeLogiranVlasnikRestorana)
+{
+    <a asp-action="DodajProizvod" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Dodaj proizvod &raquo;</a>
+}
 

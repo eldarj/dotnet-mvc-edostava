@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.ViewModels
 {
-    public class BlokLista
+    public class BlokListaVM
     {
         public int blokid { get; set; }
         public List<SelectListItem> blokovi;

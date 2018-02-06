@@ -1,0 +1,59 @@
+﻿@model eDostava.Web.ViewModels.HranaDodajVM
+@{
+    ViewData["Title"] = "DodajProizvod";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+<h2>Dodaj novi proizvod u jelovnik: </h2>
+<br />
+<form method="post" asp-action="DodajProizvod">
+
+    <div>
+
+        <input hidden asp-for="restoranID" class="form-control" />
+        <input hidden asp-for="jelovnikID" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Naziv">Naziv proizvoda: </label>
+        <input asp-for="Naziv" class="form-control" placeholder="Naziv" />
+        <span asp-validation-for="Naziv"></span>
+    </div>
+
+    <div>
+        <label asp-for="opis">Opis: </label>
+        <input asp-for="opis" class="form-control" placeholder="Opis" />
+        <span asp-validation-for="opis"></span>
+    </div>
+
+    <div>
+        <label asp-for="sifra">Sifra: </label>
+        <input asp-for="sifra" class="form-control" placeholder="Sifra" />
+        <span asp-validation-for="sifra"></span>
+    </div>
+
+    <div>
+        <label asp-for="cijena">Cijena: </label>
+        <input asp-for="cijena" class="form-control" placeholder="Cijena" />
+        <span asp-validation-for="cijena"></span>
+    </div>
+
+    <div>
+        <label asp-for="prilog">Prilog: </label>
+        <input asp-for="prilog" class="form-control" placeholder="Prilog" />
+        <span asp-validation-for="prilog"></span>
+    </div>
+    <div>
+        <label asp-for="tipkuhinjeID">Tip kuhinje: </label>
+        <select class="form-control" asp-for="tipkuhinjeID" asp-items="@Model.tipoviKuhinje"></select>
+        <span asp-validation-for="tipkuhinjeID"></span>
+    </div>
+
+    <div>
+        <br />
+        <input style="top:2px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
+    </div>
+</form>
+

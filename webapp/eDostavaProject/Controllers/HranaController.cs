@@ -21,7 +21,7 @@ namespace eDostava.Web.Controllers
         }
 
 
-        public IActionResult Index(int jelovnikid)
+        public IActionResult Index(int jelovnikid,int divid)
         {
             HranaIndexVM model = new HranaIndexVM();
             model.jelovnikID = jelovnikid;
@@ -34,12 +34,16 @@ namespace eDostava.Web.Controllers
                 prilog = x.Prilog,
                 tipkuhinjeID = x.TipKuhinjeID
             }).ToList();
-
+            model.DivID = divid;
+            model.jeLogiranVlasnikRestorana = false;
             Vlasnik n = HttpContext.GetLogiranogVlasnika();
 
-            if(context.Jelovnici.Include(x=>x.Restoran).Where(x=>x.JelovnikID==jelovnikid).Where(x=>x.Restoran.VlasnikID==n.KorisnikID).SingleOrDefault()!=null)
+            if (n != null)
             {
-                model.jeLogiranVlasnikRestorana = true;
+                if (context.Jelovnici.Include(x => x.Restoran).Where(x => x.JelovnikID == jelovnikid).Where(x => x.Restoran.VlasnikID == n.KorisnikID).SingleOrDefault() != null)
+                {
+                    model.jeLogiranVlasnikRestorana = true;
+                }
             }
             return View(model);
         }
@@ -91,6 +95,70 @@ namespace eDostava.Web.Controllers
             HttpContext.SetLogiranogVlasnika(HttpContext.GetLogiranogVlasnika());
             return RedirectToAction("UrediRestoran", "Restorani", new { restoranid = restoranid });
         }
+
+        [HttpGet]
+        public IActionResult DodajProizvod(int jelovnikid)
+        {
+            HranaDodajVM model = new HranaDodajVM();
+
+            model.tipoviKuhinje = context.TipoviKuhinje.Select(x => new SelectListItem
+            {
+                Text=x.Naziv,
+                Value=x.TipKuhinjeID.ToString()
+            }).ToList();
+
+            model.jelovnikID = jelovnikid;
+            model.restoranID = context.Jelovnici.Where(x => x.JelovnikID == jelovnikid).Select(x => x.RestoranID).FirstOrDefault();
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult DodajProizvod(HranaDodajVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                Hrana n = new Hrana
+                {
+                    Cijena = model.cijena,
+                    Naziv = model.Naziv,
+                    Opis = model.opis,
+                    Prilog = model.prilog,
+                    Sifra = model.sifra,
+                    JelovnikID = model.jelovnikID,
+                    TipKuhinjeID = model.tipkuhinjeID
+
+                };
+
+                context.Proizvodi.Add(n);
+                context.SaveChanges();
+
+                return RedirectToAction("UrediRestoran", "Restorani", new { restoranid = model.restoranID });
+            }
+            else
+            {
+                model.tipoviKuhinje = context.TipoviKuhinje.Select(x => new SelectListItem
+                {
+                    Text = x.Naziv,
+                    Value = x.TipKuhinjeID.ToString()
+                }).ToList();
+
+                model.jelovnikID = model.jelovnikID;
+                model.restoranID = context.Jelovnici.Where(x => x.JelovnikID == model.jelovnikID).Select(x => x.RestoranID).FirstOrDefault();
+
+                return View(model);
+            }
+        }
+
+        public IActionResult ObrisiProizvod(int proizvodid,int jelovnikid)
+        {
+            Hrana n = context.Proizvodi.Where(x => x.HranaID == proizvodid).FirstOrDefault();
+            context.Proizvodi.Remove(n);
+            context.SaveChanges();
+
+
+            return RedirectToAction(nameof(Index),new { jelovnikid=jelovnikid});
+        }
+
+
     }
 
     

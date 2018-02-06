@@ -97,7 +97,7 @@ namespace eDostava.Web.Controllers
             model.lajkovi = context.Lajkovi.Where(x => x.RestoranID == restoranid).Count();
             model.vlasnik = context.Restorani.Include(x=>x.Vlasnik).Where(x => x.RestoranID == restoranid).Select(x => x.Vlasnik.Ime_prezime).FirstOrDefault();
             model.telefon = context.Restorani.Where(x => x.RestoranID == restoranid).Select(x => x.Telefon).FirstOrDefault();
-            
+            model.restoranID = restoranid;
 
             return View(model);
         }
@@ -243,5 +243,68 @@ namespace eDostava.Web.Controllers
             context.SaveChanges();
             return RedirectToAction("UrediRestoran", "Restorani", new { restoranid = restoranID });
         }
+
+        [HttpPost]
+        public IActionResult DodajBlok(string nazivBloka,string nazivGrada,int postanskiBroj)
+        {
+
+            Grad n = new Grad
+            {
+                Naziv = nazivGrada,
+                PoštanskiBroj = postanskiBroj
+
+            };
+            context.Gradovi.Add(n);
+
+            context.SaveChanges();
+
+            Blok n2 = new Blok
+            {
+                Naziv = nazivBloka,
+                GradID = n.GradID
+            };
+            context.Blokovi.Add(n2);
+
+            context.SaveChanges();
+
+            return RedirectToAction("PrijaviRestoran", "Restorani");
+
+        }
+        [HttpGet]
+        public IActionResult DodajJelovnik(int restoranid)
+        {
+            DodajJelovnikVM model = new DodajJelovnikVM();
+            model.restoranid = restoranid;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult DodajJelovnik(DodajJelovnikVM model)
+        {
+            Jelovnik n = new Jelovnik
+            {
+                Aktivan=model.aktivan,
+                Opis=model.opis,
+                RestoranID=model.restoranid
+            };
+
+            context.Jelovnici.Add(n);
+            context.SaveChanges();
+
+            return RedirectToAction("Jelovnik", "Restorani", new { restoranid = model.restoranid });
+        }
+
+
+        public IActionResult ObrisiRestoran(int restoranid)
+        {
+            Restoran n = context.Restorani.Where(x => x.RestoranID == restoranid).FirstOrDefault();
+            context.Restorani.Remove(n);
+            context.SaveChanges();
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
+      
     }
 }

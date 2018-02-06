@@ -17,7 +17,9 @@ namespace eDostava.Web.ViewModels
             public string prilog;
             public int tipkuhinjeID;
             
+            
         }
+        public int DivID { get; set; }
         public bool jeLogiranVlasnikRestorana;
         public List<Row> Rows;
     }

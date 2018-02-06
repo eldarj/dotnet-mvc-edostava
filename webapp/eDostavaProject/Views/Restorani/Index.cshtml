@@ -32,6 +32,10 @@ else
     {
     <div class="col-md-4">
         <h2 style="display:inline;color:#B58900">@x.nazivRestorana  </h2>
+        @if ((int)Model.jeLogiran == 0)
+    {
+        <a asp-action="ObrisiRestoran" asp-route-restoranid="@x.RestoranID" class="btn btn-link" style="float:right;margin-right:2px;color:red" role="spinbutton">X</a>
+}
 
         <hr />
         <span class="badge badge-primary" style="float:right">Liked: @x.brojLajkova</span>
@@ -40,11 +44,14 @@ else
         <p>Minimum : <b style="color:#B58900">@x.minimalnaCijenaNarudzbe KM</b></p>
         <p>@x.opis</p>
 
-        
+
         @if (x.jeVlasnikRestorana)
-        {
+    {
         <p style="float:left"><a class="btn btn-outline-success" asp-action="UrediRestoran" asp-route-restoranid="@x.RestoranID" role="button">Uredi &raquo;</a></p>
-        }
+}
+
+
+
         <p style="float:right"><a class="btn btn-primary" asp-action="Jelovnik" asp-route-restoranid="@x.RestoranID" role="button">Jelovnik &raquo;</a></p>
     </div>
 }

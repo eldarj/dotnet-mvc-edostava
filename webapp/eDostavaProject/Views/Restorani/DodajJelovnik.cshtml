@@ -1,0 +1,30 @@
+﻿@model eDostava.Web.ViewModels.DodajJelovnikVM
+@{
+    ViewData["Title"] = "DodajJelovnik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+    <form asp-action="DodajJelovnik" method="post">
+
+
+        <input asp-for="restoranid" hidden />
+        <div>
+            <label asp-for="opis">Opis jelovnika: </label>
+            <input asp-for="opis" required placeholder="Opis" />
+            <span asp-validation-for="opis"></span>
+        </div>
+        <div>
+            @*<label asp-for="aktivan">Aktivan: </label>*@
+            <input type="radio" asp-for="aktivan" value="true" /> Active
+            
+        </div>
+        <div>
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+
+
+    </form>

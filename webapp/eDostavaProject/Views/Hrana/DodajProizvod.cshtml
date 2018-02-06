@@ -49,8 +49,9 @@
         <label asp-for="tipkuhinjeID">Tip kuhinje: </label>
         <select class="form-control" asp-for="tipkuhinjeID" asp-items="@Model.tipoviKuhinje"></select>
         <span asp-validation-for="tipkuhinjeID"></span>
+        <p class="form-text text-muted"><a asp-action="DodajKuhinju" ajax-poziv="da" asp-route-jelovnikid="@Model.jelovnikID" ajax-rezultat="zaKuhinju2">Dodaj novi tip kuhinje! &raquo; </a></p><br />
     </div>
-
+    <div id="zaKuhinju2"></div>
     <div>
         <br />
         <input style="top:2px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />

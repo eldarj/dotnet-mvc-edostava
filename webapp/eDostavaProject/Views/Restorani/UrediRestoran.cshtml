@@ -1,4 +1,4 @@
-﻿    @model eDostava.Web.ViewModels.RestoranUrediVM
+﻿@model eDostava.Web.ViewModels.RestoranUrediVM
 @{
     ViewData["Title"] = "UrediRestoran";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -63,11 +63,11 @@
 <br /><br /><hr />
 
 
+<div id="addJel2"></div>
 <a class="btn btn-primary" style="float:right;color:white" ajax-poziv="da" ajax-rezultat="addJel2" asp-action="DodajJelovnik" asp-route-restoranid="@Model.RestoranId">Dodaj jelovnik</a>
 
 <h2>Izmijeni jelovnike: </h2>
-<br style="clear:both" /><br />
-<div style="float:right" id="addJel2"></div>
+
 
 @foreach (var x in Model.jelovnici)
 {

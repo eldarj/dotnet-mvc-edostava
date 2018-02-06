@@ -157,8 +157,26 @@ namespace eDostava.Web.Controllers
 
             return RedirectToAction(nameof(Index),new { jelovnikid=jelovnikid});
         }
+        [HttpGet]
+        public IActionResult DodajKuhinju(int jelovnikid)
+        {
+            DodajKuhinjuVM model = new DodajKuhinjuVM();
+            model.jelovnikid=jelovnikid;
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult DodajKuhinju(DodajKuhinjuVM model)
+        {
+            TipKuhinje n = new TipKuhinje {
+                Naziv = model.naziv,
+                Opis = model.opis
+            };
+            context.TipoviKuhinje.Add(n);
+            context.SaveChanges();
+            return RedirectToAction(nameof(DodajProizvod), new { jelovnikid = model.jelovnikid });
 
 
+        }
     }
 
     

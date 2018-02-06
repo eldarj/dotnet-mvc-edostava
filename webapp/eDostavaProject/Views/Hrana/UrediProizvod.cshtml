@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+
+
 <h2>Uredi proizvod: </h2>
 <br />
 <form method="post" asp-action="UrediProizvod">
@@ -39,16 +45,16 @@
     </div>
 
     @*<div>
-        <label asp-for="jelovnikID">Izaberite jelovnik za proizvod: </label>
-        <select asp-items="@Model.jelovnici" class="form-control" asp-for="jelovnikID"></select>
-        <span asp-validation-for="jelovnikID"></span>
-    </div>*@
+            <label asp-for="jelovnikID">Izaberite jelovnik za proizvod: </label>
+            <select asp-items="@Model.jelovnici" class="form-control" asp-for="jelovnikID"></select>
+            <span asp-validation-for="jelovnikID"></span>
+        </div>*@
 
     <div>
         <label asp-for="tipkuhinjeID">Tip kuhinje: </label>
         <select asp-items="@Model.tipoviKuhinje" class="form-control" asp-for="tipkuhinjeID"></select>
         <span asp-validation-for="tipkuhinjeID"></span>
-        <p class="form-text text-muted"><a asp-action="DodajKuhinju" ajax-poziv="da" ajax-rezultat="zaKuhinju">Dodaj novi tip kuhinje! &raquo; </a></p><br />
+        <p class="form-text text-muted"><a asp-route-jelovnikid="@Model.jelovnikID" asp-action="DodajKuhinju" ajax-poziv="da" ajax-rezultat="zaKuhinju">Dodaj novi tip kuhinje! &raquo; </a></p><br />
     </div>
 
     <div id="zaKuhinju"></div>

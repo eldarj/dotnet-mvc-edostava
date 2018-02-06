@@ -5,12 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using eDostava.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
+
 namespace eDostava.Web.ViewModels
 {
     public class RestoranUrediVM
     {
         public int RestoranId { get; set; }
         [Required(ErrorMessage = "Required!")]
+        [Remote(action: nameof(RestoraniController.ValidacijaRestoran), controller: "Restorani")]
         public string naziv { get; set; }
         [Required(ErrorMessage = "Required!")]
         public string opis { get; set; }

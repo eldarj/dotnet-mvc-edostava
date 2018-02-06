@@ -305,6 +305,24 @@ namespace eDostava.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-      
+
+        public IActionResult ValidacijaJelovnik(string opis,int restoranid)
+        {
+            if(context.Jelovnici.Where(x=>x.RestoranID==restoranid).Any(x=>x.Opis==opis))
+            {
+                return Json($"Jelovnik '{opis}' is already in use");
+            }
+            return Json(true);
+        }
+
+
+        public IActionResult ValidacijaRestoran(string naziv)
+        {
+            if (context.Restorani.Any(x => x.Naziv == naziv))
+            {
+                return Json($"Jelovnik '{naziv}' is already in use");
+            }
+            return Json(true);
+        }
     }
 }

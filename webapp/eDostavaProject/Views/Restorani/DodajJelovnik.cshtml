@@ -14,12 +14,12 @@
         <input asp-for="restoranid" hidden />
         <div>
             <label asp-for="opis">Opis jelovnika: </label>
-            <input asp-for="opis" required placeholder="Opis" />
+            <input asp-for="opis" />
             <span asp-validation-for="opis"></span>
         </div>
         <div>
             @*<label asp-for="aktivan">Aktivan: </label>*@
-            <input type="radio" asp-for="aktivan" value="true" /> Active
+            <input type="radio" asp-for="aktivan" value="true" checked /> Active
             <input type="radio" asp-for="aktivan" value="false" /> Disabled 
 
         </div>

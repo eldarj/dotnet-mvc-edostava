@@ -12,7 +12,7 @@
 
 <h2>Uredi proizvod: </h2>
 <br />
-<form method="post" asp-action="UrediProizvod">
+<form ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.divID)" method="post" asp-action="UrediProizvod">
     <div>
 
         <input hidden asp-for="HranaID" class="form-control" />
@@ -54,13 +54,14 @@
         <label asp-for="tipkuhinjeID">Tip kuhinje: </label>
         <select asp-items="@Model.tipoviKuhinje" class="form-control" asp-for="tipkuhinjeID"></select>
         <span asp-validation-for="tipkuhinjeID"></span>
-        <p class="form-text text-muted"><a asp-route-jelovnikid="@Model.jelovnikID" asp-action="DodajKuhinju" ajax-poziv="da" ajax-rezultat="zaKuhinju">Dodaj novi tip kuhinje! &raquo; </a></p><br />
+        <p style="float:left" class="form-text text-muted"><a asp-route-jelovnikid="@Model.jelovnikID" asp-action="DodajKuhinju" ajax-poziv="da" ajax-rezultat="zaKuhinju">Dodaj novi tip kuhinje! &raquo; </a></p>
+
     </div>
 
-    <div id="zaKuhinju"></div>
+  <div style="float:right">
+        <input type="submit" class="btn btn-primary" value="Submit" />
+  </div><br />
 
-    <div>
-        <input style="top:2px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
-    </div>
 
+    <div style="clear:both" id="zaKuhinju"></div>
 </form>

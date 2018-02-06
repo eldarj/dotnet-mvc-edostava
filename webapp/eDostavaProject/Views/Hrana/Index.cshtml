@@ -26,8 +26,8 @@
         <td>@x.prilog</td>
         @if (Model.jeLogiranVlasnikRestorana)
     {
-        <td><a asp-action="UrediProizvod" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-info">Uredi</a>
-        <a asp-action="ObrisiProizvod" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.DivID)" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Ukloni</a></td>
+        <td><a asp-action="UrediProizvod" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.DivID)" asp-route-divid="@Model.DivID" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-info">Uredi</a>
+        <a asp-action="ObrisiProizvod" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.DivID)"  asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Ukloni</a></td>
 
 }
     </tr>
@@ -36,6 +36,6 @@
 
 @if (Model.jeLogiranVlasnikRestorana)
 {
-    <a asp-action="DodajProizvod" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Dodaj proizvod &raquo;</a>
+    <a asp-action="DodajProizvod" asp-route-divid="@Model.DivID" asp-route-jelovnikid="@Model.jelovnikID" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.DivID)" class="btn btn-warning">Dodaj proizvod &raquo;</a>
 }
 

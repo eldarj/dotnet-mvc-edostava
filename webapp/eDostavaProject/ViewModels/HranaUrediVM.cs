@@ -8,6 +8,8 @@ namespace eDostava.Web.ViewModels
 {
     public class HranaUrediVM
     {
+
+        public int divID { get; set; }
         public int jelovnikID { get; set; }
         public List<SelectListItem> jelovnici;
         public int HranaID { get; set; }

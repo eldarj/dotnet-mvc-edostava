@@ -9,6 +9,7 @@ namespace eDostava.Web.ViewModels
 {
     public class HranaDodajVM
     {
+        public int divID { get; set; }
         public int jelovnikID { get; set; }
         [Required(ErrorMessage = "Required!")]
         public string Naziv { get; set; }
@@ -24,3 +25,4 @@ namespace eDostava.Web.ViewModels
         public int restoranID { get; set; }
     }
 }
+

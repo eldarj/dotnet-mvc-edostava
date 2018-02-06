@@ -49,11 +49,11 @@ namespace eDostava.Web.Controllers
         }
 
        [HttpGet]
-        public IActionResult UrediProizvod(int proizvodid, int jelovnikid)
+        public IActionResult UrediProizvod(int proizvodid, int jelovnikid,int divid)
         {
             HranaUrediVM model = new HranaUrediVM();
 
-
+            model.divID = divid;
             model.HranaID = proizvodid;
             model.Naziv = context.Proizvodi.Where(x => x.HranaID == proizvodid).Select(x => x.Naziv).FirstOrDefault();
             model.cijena = context.Proizvodi.Where(x => x.HranaID == proizvodid).Select(x => x.Cijena).FirstOrDefault();
@@ -93,14 +93,15 @@ namespace eDostava.Web.Controllers
             context.SaveChanges();
             int restoranid = context.Jelovnici.Where(x => x.JelovnikID == model.jelovnikID).Select(x => x.RestoranID).FirstOrDefault();
             HttpContext.SetLogiranogVlasnika(HttpContext.GetLogiranogVlasnika());
-            return RedirectToAction("UrediRestoran", "Restorani", new { restoranid = restoranid });
+            //return RedirectToAction("UrediRestoran", "Restorani", new { restoranid = restoranid });
+            return RedirectToAction(nameof(Index), new { jelovnikid = model.jelovnikID, divid = model.divID });
         }
 
         [HttpGet]
-        public IActionResult DodajProizvod(int jelovnikid)
+        public IActionResult DodajProizvod(int jelovnikid, int divid)
         {
             HranaDodajVM model = new HranaDodajVM();
-
+            model.divID = divid;
             model.tipoviKuhinje = context.TipoviKuhinje.Select(x => new SelectListItem
             {
                 Text=x.Naziv,
@@ -131,7 +132,7 @@ namespace eDostava.Web.Controllers
                 context.Proizvodi.Add(n);
                 context.SaveChanges();
 
-                return RedirectToAction("UrediRestoran", "Restorani", new { restoranid = model.restoranID });
+                return RedirectToAction(nameof(Index),new {jelovnikid=model.jelovnikID,divid=model.divID });
             }
             else
             {

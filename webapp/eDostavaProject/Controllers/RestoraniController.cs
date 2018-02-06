@@ -53,7 +53,7 @@ namespace eDostava.Web.Controllers
             }
 
 
-
+            HttpContext.Session.Set("logiranKao", ((RestoranIndexVM.Logiran)model.jeLogiran).ToString());
 
             model.Rows = context.Restorani.Include(x=>x.Vlasnik).Include(x => x.Blok).Include(x => x.Blok.Grad).Select(x => new RestoranIndexVM.Row
             {

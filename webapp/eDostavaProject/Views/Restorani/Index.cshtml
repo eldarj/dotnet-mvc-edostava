@@ -1,22 +1,21 @@
-﻿@model eDostava.Web.ViewModels.RestoranIndexVM
+﻿@using Microsoft.AspNetCore.Http
+@model eDostava.Web.ViewModels.RestoranIndexVM
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
+
 }
 
-<h1 style="text-align:center;color:#B58900" >eDostava</h1>
 
-<p>@Model.jeLogiran is logged.</p>
-<a  asp-action="Index" asp-controller="Login" class="btn btn-warning" style="float:right" role="spinbutton">Logout :(</a>
+<br /><br /><a asp-action="Index" asp-controller="Login" class="btn btn-warning" style="float:right" role="spinbutton">Logout :(</a>
 
 @if ((int)Model.jeLogiran == 0)
 {
-<a asp-action="PrijaviRestoran" class="btn btn-success" style="float:right;margin-right:5px" role="spinbutton">Prijavi restoran!</a>
+    <a asp-action="PrijaviRestoran" class="btn btn-success" style="float:right;margin-right:5px" role="spinbutton">Prijavi restoran!</a>
 }
 else
 {
-<button  id="bt" title="Opcija dopustena samo moderatoru" class="btn btn-warning" style="float:right;margin-right:5px;text-decoration:line-through" role="spinbutton">Prijavi restoran!</button>
+    <button id="bt" title="Opcija dopustena samo moderatoru" class="btn btn-warning" style="float:right;margin-right:5px;text-decoration:line-through" role="spinbutton">Prijavi restoran!</button>
     <div id="val"></div>
 }
 
@@ -27,41 +26,41 @@ else
 
 <div class="row">
 
-    
-        @foreach (var x in Model.Rows)
+
+    @foreach (var x in Model.Rows)
     {
-    <div class="col-md-4">
-        <h2 style="display:inline;color:#B58900">@x.nazivRestorana  </h2>
-        @if ((int)Model.jeLogiran == 0)
-    {
-        <a asp-action="ObrisiRestoran" asp-route-restoranid="@x.RestoranID" class="btn btn-link" style="float:right;margin-right:2px;color:red" role="spinbutton">X</a>
-}
+        <div class="col-md-4">
+            <h2 style="display:inline;color:#B58900">@x.nazivRestorana  </h2>
+            @if ((int)Model.jeLogiran == 0)
+            {
+                <a asp-action="ObrisiRestoran" asp-route-restoranid="@x.RestoranID" class="btn btn-link" style="float:right;margin-right:2px;color:red" role="spinbutton">X</a>
+            }
 
-        <hr />
-        <span class="badge badge-primary" style="float:right">Liked: @x.brojLajkova</span>
-        <p>@x.lokacijaRestorana</p>
-        <p>Radno vrijeme: <select asp-items="@x.radnoVrijeme" class="custom-select" style="width:30%;display:inline;float:right"></select></p>
-        <p>Minimum : <b style="color:#B58900">@x.minimalnaCijenaNarudzbe KM</b></p>
-        <p>@x.opis</p>
-
-
-        @if (x.jeVlasnikRestorana)
-    {
-        <p style="float:left"><a class="btn btn-outline-success" asp-action="UrediRestoran" asp-route-restoranid="@x.RestoranID" role="button">Uredi &raquo;</a></p>
-}
+            <hr />
+            <span class="badge badge-primary" style="float:right">Liked: @x.brojLajkova</span>
+            <p>@x.lokacijaRestorana</p>
+            <p>Radno vrijeme: <select asp-items="@x.radnoVrijeme" class="custom-select" style="width:30%;display:inline;float:right"></select></p>
+            <p>Minimum : <b style="color:#B58900">@x.minimalnaCijenaNarudzbe KM</b></p>
+            <p>@x.opis</p>
 
 
+            @if (x.jeVlasnikRestorana)
+            {
+                <p style="float:left"><a class="btn btn-outline-success" asp-action="UrediRestoran" asp-route-restoranid="@x.RestoranID" role="button">Uredi &raquo;</a></p>
+            }
 
-        <p style="float:right"><a class="btn btn-primary" asp-action="Jelovnik" asp-route-restoranid="@x.RestoranID" role="button">Jelovnik &raquo;</a></p>
-    </div>
-}
-    
-   </div>
+
+
+            <p style="float:right"><a class="btn btn-primary" asp-action="Jelovnik" asp-route-restoranid="@x.RestoranID" role="button">Jelovnik &raquo;</a></p>
+        </div>
+    }
+
+</div>
 
 
 
 <script>
-   
+
 </script>
 
 

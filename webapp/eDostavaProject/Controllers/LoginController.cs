@@ -41,16 +41,25 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
             Moderator n2 = context.Moderatori.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
             Narucilac n3 = context.Narucioci.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
 
-            if (n1 == null && n2==null && n3==null)
+            if (n1 == null && n2 == null && n3 == null)
                 return RedirectToAction("Index");
 
-            if(n1!=null)
-            HttpContext.SetLogiranogVlasnika(n1);
+            if (n1 != null)
+            {
+                HttpContext.SetLogiranogVlasnika(n1);
+                HttpContext.Session.Set("trenutnoLogiran", n1.Ime_prezime);
+            }
 
             if (n2 != null)
+            {
                 HttpContext.SetLogiranogModeratora(n2);
+                HttpContext.Session.Set("trenutnoLogiran", "IB150281");
+            }
             if (n3 != null)
+            {
                 HttpContext.SetLogiranogNarucioca(n3);
+                HttpContext.Session.Set("trenutnoLogiran", n3.Ime_prezime);
+            }
 
 
             return RedirectToAction("Index", "Restorani");

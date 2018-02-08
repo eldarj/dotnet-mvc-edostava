@@ -1,0 +1,51 @@
+﻿@using eDostava.Web.ViewModels
+
+@{
+    ViewData["Title"] = "Narucioci";
+   
+}
+@model eDostava.Web.ViewModels.NarucilacPrikazVM
+
+<h2>Narucioci</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>
+                Svi narucioci
+            </td>
+        </tr>
+        <tr>
+            <td>#</td>
+            <td>Ime</td>
+            <td>Prezime</td>
+            <td>Telefon</td>
+            <td>Email</td>
+            <td>Username</td>
+            <td>Password</td>
+            <td>Datum kreiranja</td>
+            <td>Badge</td>
+            <td>Blok</td>
+            <td>Grad</td>
+            <td>Poštanski broj</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (NarucilacPrikazVM.NaruciociInfo x in Model.Narucioci)
+        {
+            <tr>
+                <td>@x.Narucilac.KorisnikID</td>
+                <td>@x.Ime</td>
+                <td>@x.Prezime</td>
+                <td>@x.Telefon</td>
+                <td>@x.Email</td>
+                <td>@x.Username</td>
+                <td>@x.Password</td>
+                <td>@x.DatumKreiranja</td>
+                <td>@x.BadgeNaziv</td>
+                <td>@x.BlokNaziv</td>
+                <td>@x.GradNaziv</td>
+                <td>@x.PostanskiBroj</td>
+            </tr>
+        }
+    </tbody>
+</table>

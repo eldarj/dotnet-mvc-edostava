@@ -7850,7 +7850,7 @@
       ]
     },
     "NETStandard.Library/2.0.0": {
-      "sha512": "FLEBUPzQTlp1QrEXbOyQh1CuovxyUYj5zr6nMRFTBw9j8sIfcohSFBFPlG90KY/xmalgI4KhfKClYsvhZCUlzA==",
+      "sha512": "7jnbRU+L08FXKMxqUflxEXtVymWvNOrS8yHgu9s6EM8Anr6T/wIX4nZ08j/u3Asz+tCufp3YVwFSEvFTPYmBPA==",
       "type": "package",
       "path": "netstandard.library/2.0.0",
       "files": [
@@ -7978,7 +7978,7 @@
       ]
     },
     "Newtonsoft.Json/10.0.1": {
-      "sha512": "LKABsMYENgXV//IXqJOeL11NKukzhUfXtrVp1BZvgz+LsY+3V5Ic6IFLIzPTEZkz7GFJ/F3OqTDtLaBHxB/j3w==",
+      "sha512": "ebWzW9j2nwxQeBo59As2TYn7nYr9BHicqqCwHOD1Vdo+50HBtLPuqdiCYJcLdTRknpYis/DSEOQz5KmZxwrIAg==",
       "type": "package",
       "path": "newtonsoft.json/10.0.1",
       "files": [
@@ -11492,7 +11492,7 @@
       ]
     },
     "System.Runtime.Serialization.Formatters/4.3.0": {
-      "sha512": "1QCrzrb7gRjGq+9fJOFMzddNIGhdvrhxUjAKMI5n3A136nEdI+hZaHRNi6BRKanJMB+DyDCGButySiHJ0DAJYw==",
+      "sha512": "KT591AkTNFOTbhZlaeMVvfax3RqhH1EJlcwF50Wm7sfnBLuHiOeZRRKrr1ns3NESkM20KPZ5Ol/ueMq5vg4QoQ==",
       "type": "package",
       "path": "system.runtime.serialization.formatters/4.3.0",
       "files": [
@@ -13146,7 +13146,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\user\\.nuget\\packages\\": {},
+    "C:\\Users\\asus\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -13155,17 +13155,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
+      "projectUniqueName": "C:\\Users\\asus\\Desktop\\RS\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
       "projectName": "eDostava.Web",
-      "projectPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostavaProject\\obj\\",
+      "projectPath": "C:\\Users\\asus\\Desktop\\RS\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
+      "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\asus\\Desktop\\RS\\seminarski_rad\\webapp\\eDostavaProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13173,13 +13173,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://packages.nuget.org/v1/FeedService.svc/": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj": {
-              "projectPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj"
+            "C:\\Users\\asus\\Desktop\\RS\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj": {
+              "projectPath": "C:\\Users\\asus\\Desktop\\RS\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj"
             }
           }
         }
@@ -13193,30 +13194,30 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.All": {
-            "target": "Package",
-            "version": "[2.0.3, )"
-          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[2.0.1, )"
-          },
-          "Microsoft.EntityFrameworkCore.SqlServer": {
-            "target": "Package",
-            "version": "[2.0.1, )"
+            "version": "2.0.1"
           },
           "Microsoft.EntityFrameworkCore.Tools": {
             "target": "Package",
-            "version": "[2.0.1, )"
-          },
-          "Microsoft.NETCore.App": {
-            "target": "Package",
-            "version": "[2.0.0, )",
-            "autoReferenced": true
+            "version": "2.0.1"
           },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
-            "version": "[2.0.1, )"
+            "version": "2.0.1"
+          },
+          "Microsoft.NETCore.App": {
+            "target": "Package",
+            "version": "2.0.0",
+            "autoReferenced": true
+          },
+          "Microsoft.EntityFrameworkCore.SqlServer": {
+            "target": "Package",
+            "version": "2.0.1"
+          },
+          "Microsoft.AspNetCore.All": {
+            "target": "Package",
+            "version": "2.0.3"
           }
         },
         "imports": [

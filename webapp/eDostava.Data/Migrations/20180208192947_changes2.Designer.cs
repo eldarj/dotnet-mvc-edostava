@@ -12,9 +12,10 @@ using System;
 namespace eDostava.Data.Migrations
 {
     [DbContext(typeof(MojContext))]
-    partial class MojContextModelSnapshot : ModelSnapshot
+    [Migration("20180208192947_changes2")]
+    partial class changes2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

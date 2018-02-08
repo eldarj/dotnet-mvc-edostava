@@ -34,3 +34,12 @@ C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostava.Data\obj\Deb
 C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.AssemblyInfo.cs
 C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.dll
 C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.pdb
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\bin\Debug\netcoreapp2.0\eDostava.Data.deps.json
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\bin\Debug\netcoreapp2.0\eDostava.Data.dll
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\bin\Debug\netcoreapp2.0\eDostava.Data.pdb
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.csprojResolveAssemblyReference.cache
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.csproj.CoreCompileInputs.cache
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.AssemblyInfoInputs.cache
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.AssemblyInfo.cs
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.dll
+C:\Users\asus\Desktop\RS\seminarski_rad\webapp\eDostava.Data\obj\Debug\netcoreapp2.0\eDostava.Data.pdb

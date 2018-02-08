@@ -5461,7 +5461,7 @@
     "Newtonsoft.Json/10.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LKABsMYENgXV//IXqJOeL11NKukzhUfXtrVp1BZvgz+LsY+3V5Ic6IFLIzPTEZkz7GFJ/F3OqTDtLaBHxB/j3w==",
+      "sha512": "sha512-ebWzW9j2nwxQeBo59As2TYn7nYr9BHicqqCwHOD1Vdo+50HBtLPuqdiCYJcLdTRknpYis/DSEOQz5KmZxwrIAg==",
       "path": "newtonsoft.json/10.0.1",
       "hashPath": "newtonsoft.json.10.0.1.nupkg.sha512"
     },
@@ -6133,7 +6133,7 @@
     "System.Runtime.Serialization.Formatters/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-1QCrzrb7gRjGq+9fJOFMzddNIGhdvrhxUjAKMI5n3A136nEdI+hZaHRNi6BRKanJMB+DyDCGButySiHJ0DAJYw==",
+      "sha512": "sha512-KT591AkTNFOTbhZlaeMVvfax3RqhH1EJlcwF50Wm7sfnBLuHiOeZRRKrr1ns3NESkM20KPZ5Ol/ueMq5vg4QoQ==",
       "path": "system.runtime.serialization.formatters/4.3.0",
       "hashPath": "system.runtime.serialization.formatters.4.3.0.nupkg.sha512"
     },
@@ -6425,7 +6425,7 @@
     "NETStandard.Library/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-FLEBUPzQTlp1QrEXbOyQh1CuovxyUYj5zr6nMRFTBw9j8sIfcohSFBFPlG90KY/xmalgI4KhfKClYsvhZCUlzA==",
+      "sha512": "sha512-7jnbRU+L08FXKMxqUflxEXtVymWvNOrS8yHgu9s6EM8Anr6T/wIX4nZ08j/u3Asz+tCufp3YVwFSEvFTPYmBPA==",
       "path": "netstandard.library/2.0.0",
       "hashPath": "netstandard.library.2.0.0.nupkg.sha512"
     }

@@ -13,6 +13,6 @@ namespace eDostava.Data.Models
         public string Password  { get; set; }
         public string Email { get; set; }
 
-        public DateTime DatumKreiranja { get; set; }
+        public DateTime? DatumKreiranja { get; set; }
     }
 }

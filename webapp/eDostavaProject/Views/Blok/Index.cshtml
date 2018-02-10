@@ -1,0 +1,49 @@
+﻿@using eDostava.Data.Models
+@using eDostava.Web.ViewModels
+
+@model BlokPrikazVM
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>
+                Svi blokovi
+            </td>
+        </tr>
+        <tr>
+            <td>#</td>
+            <td>Naziv</td>
+            <td>Ukupno naručioca</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.Blokovi)
+        {
+            <tr>
+                <td>@x.BlokId</td>
+                <td>@x.Naziv</td>
+                <td>@x.BrojNarucioca</td>
+                <td>
+                    <a href="/Blok/Uredi?blokId=@x.BlokId" ajax-poziv="da" ajax-rezultat="ajax-stavke-wrap" class="btn btn-info">Uredi</a>
+                    <a href="/Blok/Obrisi?blokId=@x.BlokId" ajax-poziv="da" ajax-rezultat="ajax-stavke-wrap" class="btn btn-danger">Obriši</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button ajax-url="/Blok/Dodaj?gradId=@Model.GradId" ajax-rezultat="ajax-stavke-wrap" class="btn btn-default" ajax-poziv="da">Dodaj</button>
+<script>
+    $(document).ready(function () {
+            $("button[ajax-poziv='da']").click(function (event) {
+                $(this).attr("ajax-poziv", "dodan");
+
+                event.preventDefault();
+                var urlZaPoziv = $(this).attr("ajax-url");
+                var divZaRezultat = $(this).attr("ajax-rezultat");
+
+                $.get(urlZaPoziv, function (data, status) {
+                    $("#" + divZaRezultat).html(data);
+                });
+            });
+    });
+</script>

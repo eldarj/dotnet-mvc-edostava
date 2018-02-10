@@ -1,0 +1,17 @@
+﻿@using eDostava.Web.ViewModels
+@{
+    ViewData["Title"] = "Uredi";
+}
+
+@model BlokDodajVM
+
+<h2>Blok</h2>
+<form action="/Blok/Snimi" ajax-poziv="da" ajax-url="/Blok/Snimi" ajax-rezultat="ajax-stavke-wrap">
+    <input type="hidden" name="gradId" value="@Model.GradId" />
+    <input type="hidden" name="blokId" value="@Model.BlokId" />
+    <div class="form-group">
+        <label>Naziv:</label>
+        <input type="text" name="naziv" value="@Model.nazivBloka" />
+    </div>
+    <button class="btn btn-success" type="submit" value="Snimi">Snimi</button>
+</form>

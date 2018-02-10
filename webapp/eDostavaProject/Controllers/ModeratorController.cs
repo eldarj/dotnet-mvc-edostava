@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using eDostava.Data;
 using eDostava.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using eDostava.Data.Models;
 
 namespace eDostava.Web.Controllers
 {
@@ -40,6 +41,7 @@ namespace eDostava.Web.Controllers
         }
         public IActionResult Index()
         {
+           
             return View();
         }
     }

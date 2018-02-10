@@ -27,6 +27,7 @@
             <td>Blok</td>
             <td>Grad</td>
             <td>Poštanski broj</td>
+            <td>Opcije</td>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +46,13 @@
                 <td>@x.BlokNaziv</td>
                 <td>@x.GradNaziv</td>
                 <td>@x.PostanskiBroj</td>
+                <td>
+                    <a asp-action="Uredi" asp-route-Id="@x.NarucilacId" class="btn btn-info">Uredi</a>
+                    <a asp-action="Obrisi" asp-route-Id="@x.NarucilacId" class="btn btn-warning">Obriši</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<a asp-action="Dodaj" class="btn btn-info">Dodaj</a>

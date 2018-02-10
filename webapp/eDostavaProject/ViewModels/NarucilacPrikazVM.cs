@@ -12,6 +12,7 @@ namespace eDostava.Web.ViewModels
         public class NaruciociInfo
         {
             public Narucilac Narucilac;
+            public int NarucilacId { get; set; }
             public string Ime { get; set; }
             public string Prezime { get; set; }
             public string Username { get; set; }

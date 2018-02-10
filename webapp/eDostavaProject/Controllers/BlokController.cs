@@ -39,10 +39,9 @@ namespace eDostava.Web.Controllers
         }
         public IActionResult Dodaj(int gradId)
         {
-            BlokDodajVM Model = new BlokDodajVM();
-            Model.GradId = gradId;
-
-            return PartialView("Uredi", Model);
+            return PartialView("Uredi", new BlokDodajVM {
+                GradId = gradId
+            });
         }
         public IActionResult Uredi(int blokId)
         {

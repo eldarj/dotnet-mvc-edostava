@@ -1,0 +1,47 @@
+﻿@using eDostava.Web.ViewModels
+@{
+    ViewData["Title"] = "Uredi";
+}
+@model NarucilacUrediVM
+
+<h2>Naručilac</h2>
+<form asp-action="Snimi" asp-controller="Narucilac">
+    <input asp-for="NarucilacID" type="hidden" />
+    <div class="form-group">
+        <label>Ime:</label>
+        <input type="text" asp-for="Ime" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Prezime:</label>
+        <input type="text" asp-for="Prezime" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Telefon:</label>
+        <input type="text" asp-for="Telefon" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Email:</label>
+        <input type="text" asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Username:</label>
+        <input type="text" asp-for="Username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Password:</label>
+        <input type="text" asp-for="Password" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Blok:</label>
+        <select asp-for="BlokID" asp-items="@Model.Blokovi" class="form-control">
+            <option>Odaberite jedan od blokova</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Badge:</label>
+        <select asp-for="BadgeID" asp-items="@Model.Badgevi" class="form-control">
+            <option>Odaberite jedan od Badgeva</option>
+        </select>
+    </div>
+    <input type="submit" value="Snimi" />
+</form>

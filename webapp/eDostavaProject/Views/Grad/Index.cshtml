@@ -1,0 +1,44 @@
+﻿@using eDostava.Data.Models
+@using eDostava.Web.ViewModels
+
+@model GradPrikazVM
+
+<h1>Moderator</h1>
+<div class="opcije col-sm-5">
+    <p>Prikaži sve naručioce</p>
+    <a href="/Moderator/Narucioci" class="btn btn-primary btn-lg">Naručioci</a>
+</div>
+<h2>Gradovi</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>
+                Svi gradovi
+            </td>
+        </tr>
+        <tr>
+            <td>#</td>
+            <td>Naziv</td>
+            <td>Poštanski Broj</td>
+            <td>Ukupno naručioca</td>
+            <td>Settings</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.Rows)
+        {
+            <tr>
+                <td>@x.GradId</td>
+                <td>@x.Naziv</td>
+                <td>@x.PostanskiBroj</td>
+                <td>@x.UkupnoNarucioca</td>
+                <td>
+                    <a href="/Grad/Uredi?id=@x.GradId" class="btn btn-info">Uredi</a>
+                    <a href="/Grad/Obrisi?id=@x.GradId" class="btn btn-danger">Obriši</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/Grad/Dodaj" class="btn btn-warning">Dodaj</a>
+

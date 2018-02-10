@@ -3,22 +3,22 @@
 
 @model GradUrediVM
 
-<h2>Uredi Grad</h2>
-<form action="/Grad/Snimi">
-    <input type="text" name="id" class="form-control" value="@Model.GradId" />
+<h2>Grad</h2>
+<form asp-action="Snimi" asp-controller="Grad">
+    <input asp-for="GradId" type="hidden" class="form-control"/>
     <div class="form-group">
         <label>Naziv</label>
-        <input type="text" name="naziv" class="form-control" value="@Model.Naziv" />
+        <input asp-for="Naziv" type="text" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Poštanski Broj</label>
-        <input type="number" name="postanskiBroj" class="form-control" value="@Model.PostanskiBroj" />
+        <input asp-for="PostanskiBroj" type="number" class="form-control"/>
     </div>
     <div class="form-group">
         <label>Broj blokova</label>
-        <input type="number" name="brojBlokova" class="form-control" value="@Model.BrojBlokova" readonly />
+        <input type="number" asp-for="BrojBlokova" class="form-control" readonly />
     </div>
-    <input type="submit" value="Snimi" />
+    <input type="submit" value="Snimi" class="btn btn-warning" />
 </form>
 
 <div id="ajax-stavke-wrap" style="border: 1px solid lightblue;">

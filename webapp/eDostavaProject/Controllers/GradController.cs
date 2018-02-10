@@ -45,8 +45,7 @@ namespace eDostava.Web.Controllers
 
         public IActionResult Dodaj()
         {
-            
-            return View();
+            return View("Uredi", new GradUrediVM());
         }
 
         public IActionResult Uredi(int id)

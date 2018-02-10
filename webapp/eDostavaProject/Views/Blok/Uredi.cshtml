@@ -6,12 +6,12 @@
 @model BlokDodajVM
 
 <h2>Blok</h2>
-<form action="/Blok/Snimi" ajax-poziv="da" ajax-url="/Blok/Snimi" ajax-rezultat="ajax-stavke-wrap">
-    <input type="hidden" name="gradId" value="@Model.GradId" />
-    <input type="hidden" name="blokId" value="@Model.BlokId" />
+<form asp-action="Snimi" asp-controller="Blok" ajax-poziv="da" ajax-url="/Blok/Snimi" ajax-rezultat="ajax-stavke-wrap">
+    <input asp-for="GradId" type="hidden" />
+    <input asp-for="BlokId" type="hidden" />
     <div class="form-group">
         <label>Naziv:</label>
-        <input type="text" name="naziv" value="@Model.nazivBloka" />
+        <input type="text" asp-for="nazivBloka" class="form-control"/>
     </div>
-    <button class="btn btn-success" type="submit" value="Snimi">Snimi</button>
+    <input type="submit" value="Snimi" />
 </form>

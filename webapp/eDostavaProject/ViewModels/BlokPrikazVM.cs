@@ -11,10 +11,12 @@ namespace eDostava.Web.ViewModels
         public class BlokPrikazInfo
         {
             public int BlokId { get; set; }
+            public int GradId { get; set; }
+            public Grad Grad { get; set; }
             public string Naziv { get; set; }
             public int BrojNarucioca { get; set; }
         }
-        public int GradId { get; set; }
+        public int? GradId { get; set; }
         public List<BlokPrikazInfo> Blokovi;
     }
 }

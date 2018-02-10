@@ -16,21 +16,26 @@ namespace eDostava.Web.Controllers
         {
             context = db;
         }
-        public IActionResult Index(int gradId)
+        public IActionResult Index(int? gradId = null)
         {
             BlokPrikazVM Model = new BlokPrikazVM();
-            Model.GradId = gradId;
+            Model.GradId =  gradId;
             Model.Blokovi = context.Blokovi
-                .Where(x => x.GradID == gradId)
                 .Select(x => new BlokPrikazVM.BlokPrikazInfo()
                 {
                     BlokId = x.BlokID,
+                    GradId = x.GradID,
+                    Grad = x.Grad,
                     Naziv = x.Naziv,
                     BrojNarucioca = context.Narucioci.Where(s=>s.BlokID == x.BlokID).Count()
                 })
                 .ToList();
-
-            return PartialView(Model);
+            if (gradId != null)
+            {
+                Model.Blokovi = Model.Blokovi.Where(x => x.GradId == gradId).ToList();
+                return PartialView(Model);
+            }
+            return View(Model);
         }
         public IActionResult Dodaj(int gradId)
         {
@@ -49,23 +54,25 @@ namespace eDostava.Web.Controllers
                 nazivBloka = x.Naziv
             });
         }
-        public IActionResult Snimi(int blokId, int gradId, string naziv)
+        public IActionResult Snimi(BlokDodajVM model)
         {
             Blok blok;
-            if (blokId == 0)
+            if (model.BlokId == 0)
             {
-                blok = new Blok();
-                blok.GradID = gradId;
+                blok = new Blok
+                {
+                    GradID = model.GradId
+                };
                 context.Blokovi.Add(blok);
             }
             else
             {
-                blok = context.Blokovi.Find(blokId);
+                blok = context.Blokovi.Find(model.BlokId);
             }
-            blok.Naziv = naziv;
+            blok.Naziv = model.nazivBloka;
 
             context.SaveChanges();
-            return Redirect("/Blok/Index?gradId=" + gradId);
+            return Redirect("/Blok/Index?gradId=" + model.GradId);
         }
 
         public IActionResult Obrisi(int blokId)
@@ -75,7 +82,7 @@ namespace eDostava.Web.Controllers
             context.Blokovi.Remove(x);
             context.SaveChanges();
 
-            return Redirect("/Blok/Index?Id=" + gradId);
+            return Redirect("/Blok/Index?gradId=" + gradId);
         }
     }
 }

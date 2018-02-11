@@ -5,9 +5,8 @@
 body {
     padding-top:40px;
 }
-/* Navbar style */
 
-
+/* Header container, Logo & Text style */
 .main-header-container {
     width: 100%;
     background-image: url(../images/wallpapers/main_background.jpg);
@@ -18,7 +17,6 @@ body {
 .logo-home {
     padding: 100px 50px 25px 50px;
 }
-
 .main-logo {
     background: #CB202D;
     border-radius: 5px;
@@ -27,29 +25,24 @@ body {
     display: flex;
     margin: auto;
 }
-
 .main-logo-name {
     margin: auto;
     font-size: 37px;
     color: #fff;
 }
-
-    .main-logo-name:hover {
-        text-decoration: none;
-        color: #fff;
-    }
-
+.main-logo-name:hover {
+    text-decoration: none;
+    color: #fff;
+}
 .main-header-container .text-wrap {
     padding-bottom: 25px;
 }
-
 .header-text h1.main-title {
     color: #fff;
     text-align: center;
     line-height: 34px;
     font-size: 65px;
 }
-
 .header-text h2.main-subtitle {
     color: #fff;
     text-align: center;
@@ -78,7 +71,15 @@ body {
 .small-logo-text {
     display: inline-block;
 }
+.small-logo-text .header-text h1.main-title {
+   font-size: 45px;
+}
 
-    .small-logo-text .header-text h1.main-title {
-        font-size: 45px;
-    }
+/* Clickable <tr> */
+tr.row-link-clickable:hover > td {
+    background: rgba(255,255,255,.5);
+    color: #333;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: all .1s;
+}

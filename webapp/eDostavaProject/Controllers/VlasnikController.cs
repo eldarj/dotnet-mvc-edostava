@@ -73,7 +73,7 @@ namespace eDostava.Web.Controllers
                 vlasnik = context.Vlasnici.Find(model.VlasnikId);
             }
 
-            vlasnik.KorisnikID = model.VlasnikId,
+            vlasnik.KorisnikID = model.VlasnikId;
             vlasnik.Ime = model.Ime;
             vlasnik.Prezime = model.Prezime;
             vlasnik.Username = model.Username;

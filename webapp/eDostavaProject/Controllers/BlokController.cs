@@ -55,6 +55,11 @@ namespace eDostava.Web.Controllers
         }
         public IActionResult Snimi(BlokDodajVM model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Uredi", model);
+            }
+
             Blok blok;
             if (model.BlokId == 0)
             {

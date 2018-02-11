@@ -2,6 +2,7 @@
 @using eDostava.Web.ViewModels
 
 @model BlokPrikazVM
+<h2>Blokovi</h2>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -33,4 +34,4 @@
     </tbody>
 </table>
 
-<a asp-action="Dodaj" asp-route-gradId="@Model.GradId" ajax-rezultat="ajax-stavke-wrap" class="btn btn-default" ajax-poziv="da">Dodaj</a>
+<a asp-action="Dodaj" asp-route-gradId="@Model.GradId" ajax-rezultat="ajax-stavke-wrap" class="btn btn-info" ajax-poziv="da">Dodaj</a>

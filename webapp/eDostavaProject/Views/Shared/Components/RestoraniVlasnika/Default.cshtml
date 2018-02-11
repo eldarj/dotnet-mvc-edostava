@@ -1,0 +1,34 @@
+﻿@using eDostava.Web.ViewModels
+
+@{
+    ViewData["Title"] = "Default";
+}
+
+@model RestoranIndexVM
+
+<h4>Lista svih restorana vlasnika: @Model.vlasnik.Ime @Model.vlasnik.Prezime</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Restorani vlasnika</td>
+        </tr>
+        <tr>
+            <td>#</td>
+            <td>Naziv</td>
+            <td>Lokacija</td>
+            <td>Telefon</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (RestoranIndexVM.Row x in Model.Rows)
+        {
+            <tr  class='row-link-clickable' data-href='/Restorani/Jelovnik?restoranid=@x.RestoranID'>
+                <td>@x.RestoranID</td>
+                <td>@x.nazivRestorana</td>
+                <td>@x.lokacijaRestorana</td>
+                <td>@x.brojTelefona</td>
+            </tr>
+
+        }
+    </tbody>
+</table>

@@ -13155,11 +13155,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
       "projectName": "eDostava.Web",
-      "projectPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
+      "projectPath": "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostavaProject\\eDostava.Web.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostavaProject\\obj\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostavaProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13178,8 +13178,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj": {
-              "projectPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj"
+            "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj"
             }
           }
         }

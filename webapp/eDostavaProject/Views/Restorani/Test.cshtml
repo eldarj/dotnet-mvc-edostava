@@ -1,0 +1,11 @@
+﻿@model eDostava.Web.ViewModels.RestoraniPretraga
+@{
+    ViewData["Title"] = "Test";
+}
+
+<h2>Test</h2>
+
+@foreach (var x in Model.lista)
+{
+    <p>@x.Naziv</p><br />
+}

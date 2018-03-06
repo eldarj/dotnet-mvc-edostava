@@ -12,9 +12,9 @@ namespace eDostava.Web.ViewModels
 {
     public class RestoranUrediVM
     {
+        public string vlasnikNaziv { get; set; }
+        public string BlokNaziv { get; set; }
         public int RestoranId { get; set; }
-        [Required(ErrorMessage = "Required!")]
-        [Remote(action: nameof(RestoraniController.ValidacijaRestoran), controller: "Restorani")]
         public string naziv { get; set; }
         [Required(ErrorMessage = "Required!")]
         public string opis { get; set; }

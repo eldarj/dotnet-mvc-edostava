@@ -52,6 +52,55 @@ namespace eDostava.Web.Controllers
             return View(model);
         }
 
+
+
+        public IActionResult IndexNarudzba(int jelovnikid, int tipkuhinjeid = 0)
+        {
+
+
+
+
+            HranaNarudzbaIndexVM model = new HranaNarudzbaIndexVM();
+            model.jelovnikID = jelovnikid;
+            model.listaKuhinja = context.TipoviKuhinje.Select(x => new SelectListItem
+            {
+                Text = x.Naziv,
+                Value = x.TipKuhinjeID.ToString()
+            }).ToList();
+            if (tipkuhinjeid == 0)
+            {
+                model.Rows = context.Proizvodi.Where(x => x.JelovnikID == jelovnikid).Select(x => new HranaNarudzbaIndexVM.Row
+                {
+                    HranaID = x.HranaID,
+                    cijena = x.Cijena,
+                    Naziv = x.Naziv,
+                    opis = x.Opis,
+                    prilog = x.Prilog,
+                    tipkuhinjeID = x.TipKuhinjeID
+                }).ToList();
+            }
+            else
+            {
+                model.Rows = context.Proizvodi.Where(x => x.JelovnikID == jelovnikid && x.TipKuhinjeID==tipkuhinjeid).Select(x => new HranaNarudzbaIndexVM.Row
+                {
+                    HranaID = x.HranaID,
+                    cijena = x.Cijena,
+                    Naziv = x.Naziv,
+                    opis = x.Opis,
+                    prilog = x.Prilog,
+                    tipkuhinjeID = x.TipKuhinjeID
+                }).ToList();
+            }
+            model.jeLogiranNarucilac = false;
+            Narucilac n = HttpContext.GetLogiranogNarucioca();
+
+            if (n != null)
+            {
+                    model.jeLogiranNarucilac = true;   
+            }
+            return View(model);
+        }
+
        [HttpGet]
         public IActionResult UrediProizvod(int proizvodid, int jelovnikid,int divid)
         {
@@ -177,20 +226,21 @@ namespace eDostava.Web.Controllers
             }
         }
 
-        public IActionResult ObrisiProizvod(int proizvodid,int jelovnikid)
+        public IActionResult ObrisiProizvod(int proizvodid,int jelovnikid,int divid)
         {
             Hrana n = context.Proizvodi.Where(x => x.HranaID == proizvodid).FirstOrDefault();
             context.Proizvodi.Remove(n);
             context.SaveChanges();
 
 
-            return RedirectToAction(nameof(Index),new { jelovnikid=jelovnikid});
+            return RedirectToAction(nameof(Index),new { jelovnikid=jelovnikid,divid=divid});
         }
         [HttpGet]
-        public IActionResult DodajKuhinju(int jelovnikid)
+        public IActionResult DodajKuhinju(int jelovnikid,int divid)
         {
             DodajKuhinjuVM model = new DodajKuhinjuVM();
             model.jelovnikid=jelovnikid;
+            model.divid = divid;
             return View(model);
         }
 

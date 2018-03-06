@@ -1,7 +1,7 @@
 ﻿@model eDostava.Web.ViewModels.HranaDodajVM
 @{
     ViewData["Title"] = "DodajProizvod";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null; //!
 }
 @section Styles {
     <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
@@ -15,11 +15,12 @@
 
         <input hidden asp-for="restoranID" class="form-control" />
         <input hidden asp-for="jelovnikID" class="form-control" />
+        <input hidden asp-for="divID" class="form-control" />
     </div>
     <div>
         <label asp-for="Naziv">Naziv proizvoda: </label>
         <input asp-for="Naziv" class="form-control" placeholder="Naziv" />
-        <span asp-validation-for="Naziv"></span>
+        <span  asp-validation-for="Naziv"></span>
     </div>
 
     <div>
@@ -49,13 +50,14 @@
         <label asp-for="tipkuhinjeID">Tip kuhinje: </label>
         <select class="form-control" asp-for="tipkuhinjeID" asp-items="@Model.tipoviKuhinje"></select>
         <span asp-validation-for="tipkuhinjeID"></span>
-        <p class="form-text text-muted"><a asp-action="DodajKuhinju" ajax-poziv="da" asp-route-jelovnikid="@Model.jelovnikID" ajax-rezultat="zaKuhinju2">Dodaj novi tip kuhinje! &raquo; </a></p><br />
+        <p class="form-text text-muted"><a asp-action="DodajKuhinju" ajax-poziv="da" asp-route-jelovnikid="@Model.jelovnikID" ajax-rezultat="zaKuhinju2">Dodaj novi tip kuhinje! &raquo; </a></p>
     </div>
 
     <div>
-        <input style="float:right" type="submit" class="btn btn-primary" value="Submit" />
+        <input  type="submit" class="btn btn-primary" value="Submit" />
     </div>
+    </form>
     <br />
     <div id="zaKuhinju2"></div>
-</form>
+
 

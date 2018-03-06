@@ -26,10 +26,23 @@ else
 
 <div class="row">
 
-
+    @if (Model.Rows != null)
+    {
     @foreach (var x in Model.Rows)
     {
+
         <div class="col-md-4">
+            @if ((int)Model.jeLogiran == 2)
+            {
+                @if (x.jeLajkan)
+                {
+                       <a style="float:right;color:#4682B4"  asp-controller="Narucilac" asp-action="LikeRestoran" asp-route-restoranid="@x.RestoranID"><span class="badge badge-info">Like 👍</span></a>
+                }
+                else
+                {
+                       <a style="float:right;color:#4682B4"  asp-controller="Narucilac" asp-action="UnlikeRestoran" asp-route-restoranid="@x.RestoranID"><span class="badge badge-warning">Unlike 👎</span></a>
+                }
+            }
             <h2 style="display:inline;color:#B58900">@x.nazivRestorana  </h2>
             @if ((int)Model.jeLogiran == 0)
             {
@@ -39,7 +52,7 @@ else
             <hr />
             <span class="badge badge-primary" style="float:right">Liked: @x.brojLajkova</span>
             <p>@x.lokacijaRestorana</p>
-            <p>Radno vrijeme: <select asp-items="@x.radnoVrijeme" class="custom-select" style="width:30%;display:inline;float:right"></select></p>
+            <p>Radno vrijeme: <select asp-items="@x.radnoVrijeme" class="custom-select" style="width:40%;display:inline;float:right"></select></p>
             <p>Minimum : <b style="color:#B58900">@x.minimalnaCijenaNarudzbe KM</b></p>
             <p>@x.opis</p>
 
@@ -53,8 +66,9 @@ else
 
             <p style="float:right"><a class="btn btn-primary" asp-action="Jelovnik" asp-route-restoranid="@x.RestoranID" role="button">Jelovnik &raquo;</a></p>
         </div>
-    }
 
+    }
+    }
 </div>
 
 

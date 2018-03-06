@@ -14,51 +14,61 @@
 <h2>Uredi  osnovne podatke o restoranu: </h2><br />
 @*/////////*@
 <form method="post" asp-action="UrediRestoran">
-
-    <input asp-for="RestoranId" hidden />
     <div>
-        <label asp-for="blokId">Vlasnik: </label>
-        <select asp-items="@Model.vlasnici" class="form-control" asp-for="vlasnikId"></select>
-        <span asp-validation-for="vlasnikId"></span>
+        <input asp-for="RestoranId" hidden />
+
+            
+            <input class="form-control" asp-for="vlasnikId" hidden />
+     
+            <input class="form-control" asp-for="blokId" hidden />
+            
+
+
+
+
+        <div>
+            <label asp-for="vlasnikNaziv">Vlasnik: </label>
+            <input class="form-control" asp-for="vlasnikNaziv" readonly />
+            
+
+        </div>
+        <div>
+            <label asp-for="BlokNaziv">Blok: </label>
+            <input class="form-control" asp-for="BlokNaziv" readonly />
+            
+
+        </div>
+
+        <div>
+            <label asp-for="naziv">Naziv restorana: </label>
+            <input class="form-control" asp-for="naziv">
+            <span asp-validation-for="naziv"></span>
+        </div>
+
+        <div>
+            <label asp-for="opis">Opis: </label>
+            <input class="form-control" asp-for="opis" placeholder="Opis" />
+            <span asp-validation-for="opis"></span>
+        </div>
+
+        <div>
+            <label asp-for="brTelefona">Telefon: </label>
+            <input class="form-control" asp-for="brTelefona" placeholder="Telefon" />
+            <span asp-validation-for="brTelefona"></span>
+        </div>
+
+        <div>
+            <label asp-for="minimalnaCijenaNarudz">Minimalna cijena narudžbe: </label>
+            <input class="form-control" asp-for="minimalnaCijenaNarudz" placeholder="Minimum">
+            <span asp-validation-for="minimalnaCijenaNarudz"></span>
+        </div>
+
+        <div>
+            <br />
+            <input style="top:5px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
+        </div>
 
     </div>
-    <div>
-        <label asp-for="blokId">Blok: </label>
-        <select asp-items="@Model.blokovi" class="form-control" asp-for="blokId"></select>
-        <span asp-validation-for="blokId"></span>
-
-    </div>
-
-    <div>
-        <label asp-for="naziv">Naziv restorana: </label>
-        <input class="form-control" asp-for="naziv">
-        <span asp-validation-for="naziv"></span>
-    </div>
-
-    <div>
-        <label asp-for="opis">Opis: </label>
-        <input class="form-control" asp-for="opis" placeholder="Opis" />
-        <span asp-validation-for="opis"></span>
-    </div>
-
-    <div>
-        <label asp-for="brTelefona">Telefon: </label>
-        <input class="form-control" asp-for="brTelefona" placeholder="Telefon" />
-        <span asp-validation-for="brTelefona"></span>
-    </div>
-
-    <div>
-        <label asp-for="minimalnaCijenaNarudz">Minimalna cijena narudžbe: </label>
-        <input class="form-control" asp-for="minimalnaCijenaNarudz" placeholder="Minimum">
-        <span asp-validation-for="minimalnaCijenaNarudz"></span>
-    </div>
-
-    <div>
-        <br />
-        <input style="top:5px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
-    </div>
-
-
 </form>
 <br /><br /><hr />
 
@@ -66,39 +76,42 @@
 <div id="addJel2"></div>
 <a class="btn btn-primary" style="float:right;color:white" ajax-poziv="da" ajax-rezultat="addJel2" asp-action="DodajJelovnik" asp-route-restoranid="@Model.RestoranId">Dodaj jelovnik</a>
 
-<h2>Izmijeni jelovnike: </h2><br />
-
+<h2>Izmijeni jelovnike: </h2>
+<hr />
 
 @foreach (var x in Model.jelovnici)
 {
     <div>
         <form method="post" asp-action="SnimiJelovnik">
             <div>
+                <a style="float:right;color:red;font-size:150%" asp-action="ObrisiJelovnik" asp-route-jelovnikid="@x.JelovnikID">X</a>
                 <label>Opis jelovnika: </label>
                 <input hidden name="restoranID" value="@x.RestoranID" />
                 <input hidden name="jelovnikid" value="@x.JelovnikID" />
-                <input class="form-control" name="opis" value="@x.Opis">
+                <div style="width:40%">
+                    <input class="form-control" name="opis" value="@x.Opis">
+                </div>
             </div>
             <div>
                 @if (x.Aktivan)
                 {
-                    <input type="radio" name="aktivan" checked value="1"> <text>Active</text> <br />}
+                    <input type="radio" name="aktivan" checked value="true"> <text>Active</text> <br />}
                 else
                 {
-                    <input type="radio" name="aktivan" value="1"> <text>Active</text><br />
+                    <input type="radio" name="aktivan" value="true"> <text>Active</text><br />
 
                 }
                 @if (!x.Aktivan)
                 {
-                    <input type="radio" name="aktivan" checked value="0"><text>Disabled</text><br />
+                    <input type="radio" name="aktivan" checked value="false"><text>Disabled</text><br />
                 }
                 else
                 {
 
-                    <input type="radio" name="aktivan" value="0"><text>Disabled</text><br />
+                    <input type="radio" name="aktivan" value="false"><text>Disabled</text><br />
                 }
             </div>
-            <a ajax-poziv="da" ajax-rezultat="jelovnikAjax@(b)" asp-route-divid="@b" style="float:right" asp-controller="Hrana" asp-action="Index" asp-route-jelovnikid="@x.JelovnikID" class="btn btn-success btn-lg">Prikazi proizvode &rsaquo;&rsaquo;</a>
+            <a ajax-poziv="da" ajax-rezultat="jelovnikAjax@(b)" asp-route-divid="@(b)" style="float:right" asp-controller="Hrana" asp-action="Index" asp-route-jelovnikid="@x.JelovnikID" class="btn btn-success btn-lg">Prikazi proizvode &rsaquo;&rsaquo;</a>
             <div>
 
                 <input style="top:5px;float:left" type="submit" class="btn btn-primary" value="Submit" />

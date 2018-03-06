@@ -10,5 +10,6 @@ namespace eDostava.Web.ViewModels
         public string naziv { get; set; }
         public string opis { get; set; }
         public int jelovnikid { get; set; }
+        public int divid { get; set; }
     }
 }

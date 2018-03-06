@@ -7,13 +7,13 @@ namespace eDostava.Data.Models
 {
     public enum Dani
     {
-        Ponedjeljak,
-        Utorak,
-        Srijeda,
-        Cetvrtak,
-        Petak,
-        Subota,
-        Nedjelja 
+        Pon,
+        Uto,
+        Sri,
+        Cet,
+        Pet,
+        Sub,
+        Ned 
     }
     public class RadnoVrijeme
     {

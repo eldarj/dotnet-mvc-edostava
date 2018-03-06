@@ -50,3 +50,16 @@ C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostavaProject\obj\D
 C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.AssemblyInfo.cs
 C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.dll
 C:\Users\user\Desktop\rs1-seminarski\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.pdb
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\bin\Debug\netcoreapp2.0\eDostava.Web.deps.json
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\bin\Debug\netcoreapp2.0\eDostava.Web.runtimeconfig.json
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\bin\Debug\netcoreapp2.0\eDostava.Web.runtimeconfig.dev.json
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\bin\Debug\netcoreapp2.0\eDostava.Web.dll
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\bin\Debug\netcoreapp2.0\eDostava.Web.pdb
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\bin\Debug\netcoreapp2.0\eDostava.Data.dll
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\bin\Debug\netcoreapp2.0\eDostava.Data.pdb
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.AssemblyInfoInputs.cache
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.AssemblyInfo.cs
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.dll
+C:\Users\user\Desktop\SEMINARSKIRAD\seminarski_rad\webapp\eDostavaProject\obj\Debug\netcoreapp2.0\eDostava.Web.pdb

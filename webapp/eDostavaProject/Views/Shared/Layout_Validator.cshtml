@@ -3,7 +3,6 @@
 @{ 
     string trenutnoLogiran = Context.Session.GetString("trenutnoLogiran");
     string logiranKao = Context.Session.GetString("logiranKao");
-    
 }
 
 <!DOCTYPE html>
@@ -59,7 +58,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">👱 Logged: @logiranKao - @trenutnoLogiran</a>
+        <a class="navbar-brand"  href="#">Logged: @logiranKao - @trenutnoLogiran </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -83,10 +82,9 @@
                 </li>
             </ul>
             
-            <form asp-action="Index" asp-controller="Restorani" method="get" class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" id="searchString" name="searchString" size="48"  placeholder="Pretraga restorana po nazivu,opisu ili lokaciji." >
-                
-                <button  class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>

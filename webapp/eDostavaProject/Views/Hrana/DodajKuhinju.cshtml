@@ -1,7 +1,7 @@
 ﻿@model eDostava.Web.ViewModels.DodajKuhinjuVM
 @{
     ViewData["Title"] = "DodajKuhinju";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 @section Styles {
@@ -11,9 +11,10 @@
 
 <h2>Podaci za novi tip kuhinje: </h2>
 
-<form asp-action="DodajKuhinju" method="post">
+<form asp-action="DodajKuhinju" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.divid)" method="post">
 
     <div>
+        
         <label asp-for="naziv">Naziv kuhinje: </label>
         <input asp-for="naziv"  required placeholder="Naziv"/>
     </div>

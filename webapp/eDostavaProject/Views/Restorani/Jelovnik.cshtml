@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     int b = 0;
 }
-
+<br />
 <div class="row">
     <div style="text-align:left;color:#B58900;font-size:120%" class="col-md-8">
         
@@ -20,14 +20,14 @@
 </div>
 <div style="text-align:center">
 
-    <h2>Izbor jelovnika: </h2>
+    <h2>Pregled jelovnika: </h2>
    
     @foreach (var x in Model.Rows)
     {
 
         @if (x.isAktivan)
         {
-            <a  ajax-poziv="da" ajax-rezultat="ajaxDiv" asp-controller="Hrana" asp-action="Index" asp-route-jelovnikid="@x.JelovnikID"  class="btn btn-success btn-lg">@x.OpisJelovnika</a>
+            <a  ajax-poziv="da" ajax-rezultat="ajaxDiv" asp-controller="Hrana" asp-action="IndexNarudzba" asp-route-jelovnikid="@x.JelovnikID"  class="btn btn-success btn-lg">@x.OpisJelovnika</a>
 
         }
         else

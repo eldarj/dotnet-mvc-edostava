@@ -3402,11 +3402,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj",
       "projectName": "eDostava.Data",
-      "projectPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj",
+      "projectPath": "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostava.Data\\eDostava.Data.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Desktop\\rs1-seminarski\\seminarski_rad\\webapp\\eDostava.Data\\obj\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\SEMINARSKIRAD\\seminarski_rad\\webapp\\eDostava.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

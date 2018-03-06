@@ -25,6 +25,8 @@ namespace eDostava.Web.ViewModels
             public int brojLajkova;
             public string nazivRestorana;
             public bool jeVlasnikRestorana;
+            public bool jeLajkan;
+            public bool pretrazen;
 
         }
         public Vlasnik vlasnik;

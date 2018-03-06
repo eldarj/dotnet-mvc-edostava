@@ -1,7 +1,7 @@
 ﻿@model eDostava.Web.ViewModels.DodajJelovnikVM
 @{
     ViewData["Title"] = "DodajJelovnik";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 @section Styles {
@@ -10,7 +10,7 @@
 }
     <form asp-action="DodajJelovnik" method="post">
 
-
+        
         <input asp-for="restoranid" hidden />
         <div>
             <label asp-for="opis">Opis jelovnika: </label>

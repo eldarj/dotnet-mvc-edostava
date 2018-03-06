@@ -42,7 +42,10 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
             Narucilac n3 = context.Narucioci.Where(x => x.Username == username && x.Password == password).FirstOrDefault();
 
             if (n1 == null && n2 == null && n3 == null)
+            {
+                TempData["error"] = "Incorrect username or password.";
                 return RedirectToAction("Index");
+            }
 
             if (n1 != null)
             {
@@ -85,6 +88,8 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
                 context.Vlasnici.Add(n);
                 context.SaveChanges();
                 HttpContext.SetLogiranogVlasnika(n);
+                HttpContext.Session.Set("trenutnoLogiran", n.Ime_prezime);
+                HttpContext.Session.Set("logiranKao", "Vlasnik");
                 return RedirectToAction("Index","Restorani");
             }
             else
@@ -106,6 +111,8 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
                 context.Narucioci.Add(n);
                 context.SaveChanges();
                 HttpContext.SetLogiranogNarucioca(n);
+                HttpContext.Session.Set("logiranKao", "Narucilac");
+                HttpContext.Session.Set("trenutnoLogiran", n.Ime_prezime);
                 return RedirectToAction("Index", "Restorani");
             }
 

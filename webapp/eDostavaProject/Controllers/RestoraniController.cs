@@ -19,70 +19,13 @@ namespace eDostava.Web.Controllers
         {
             context = db;
         }
-        public IActionResult Index()
-
-        {
-            
-            if (HttpContext.GetLogiranogNarucioca()==null && HttpContext.GetLogiranogVlasnika() == null && HttpContext.GetLogiranogModeratora() == null)
-                return RedirectToAction("Index", "Login");
-
-
-            RestoranIndexVM model = new RestoranIndexVM();
-
-            model.vlasnik = new Vlasnik();
-
-            if (HttpContext.GetLogiranogVlasnika() != null)
-            {
-                Vlasnik n = HttpContext.GetLogiranogVlasnika();
-                model.jeLogiran = (RestoranIndexVM.Logiran)1;
-                model.vlasnik = n;
-            }
-
-            if (HttpContext.GetLogiranogModeratora() != null)
-            {
-                model.jeLogiran = (RestoranIndexVM.Logiran)0;
-               
-                
-            }
-
-            if (HttpContext.GetLogiranogNarucioca() != null)
-            {
-                model.jeLogiran = (RestoranIndexVM.Logiran)2;
-               
-                 
-            }
-
-
-            HttpContext.Session.Set("logiranKao", ((RestoranIndexVM.Logiran)model.jeLogiran).ToString());
-
-            model.Rows = context.Restorani.Include(x=>x.Vlasnik).Include(x => x.Blok).Include(x => x.Blok.Grad).Select(x => new RestoranIndexVM.Row
-            {
-  
-                jeVlasnikRestorana=model.vlasnik.KorisnikID==x.VlasnikID?true:false,
-                nazivRestorana=x.Naziv,
-                RestoranID = x.RestoranID,
-                brojTelefona = x.Telefon,
-                lokacijaRestorana = x.Blok.Naziv + ", " + x.Blok.Grad.Naziv,
-                minimalnaCijenaNarudzbe = x.MinimalnaCijenaNarudžbe,
-                brojLajkova = context.Lajkovi.Where(y => y.RestoranID == x.RestoranID).Count(),
-                opis = x.Opis,
-                vlasnik=x.Vlasnik.Ime_prezime,
-                radnoVrijeme = context.VrijemeRada.Where(y => y.RestoranID == x.RestoranID).Select(y => new SelectListItem
-                {
-                    Value= ((Dani)y.Dan).ToString() + " : " + y.VrijemeOtvaranja.ToString() + " - " + y.VrijemeZatvaranja.ToString()
-        }).ToList()
-            }).ToList();
-
-
-
-          
-
-            return View(model);
-        }
 
         
         public IActionResult Jelovnik(int restoranid)
         {
+
+            
+            
             JelovnikVM model = new JelovnikVM();
             model.Rows = context.Jelovnici.Where(x => x.RestoranID == restoranid).Select(x => new JelovnikVM.Row
             {
@@ -169,19 +112,21 @@ namespace eDostava.Web.Controllers
         public IActionResult UrediRestoran(int restoranid)
         {
             RestoranUrediVM model = new RestoranUrediVM();
-            model.blokovi = context.Blokovi.Include(x => x.Grad).Select(x => new SelectListItem
-            {
-                Text = x.Naziv + ", " + x.Grad.Naziv,
-                Value = x.BlokID.ToString()
+            //model.blokovi = context.Blokovi.Include(x => x.Grad).Select(x => new SelectListItem
+            //{
+            //    Text = x.Naziv + ", " + x.Grad.Naziv,
+            //    Value = x.BlokID.ToString()
 
-            }).ToList();
+            //}).ToList();
             model.blokId= context.Restorani.Where(x => x.RestoranID == restoranid).Select(x => x.BlokID).FirstOrDefault();
-            model.vlasnici = context.Vlasnici.Select(x => new SelectListItem
-            {
-                Text = x.Ime_prezime,
-                Value = x.KorisnikID.ToString()
+            model.BlokNaziv = context.Restorani.Include(x=>x.Blok).Where(x => x.RestoranID == restoranid).Select(x => x.Blok.Naziv).FirstOrDefault();
+            //model.vlasnici = context.Vlasnici.Select(x => new SelectListItem
+            //{
+            //    Text = x.Ime_prezime,
+            //    Value = x.KorisnikID.ToString()
 
-            }).ToList();
+            //}).ToList();
+            model.vlasnikNaziv= context.Restorani.Include(x=>x.Vlasnik).Where(x => x.RestoranID == restoranid).Select(x => x.Vlasnik.Ime_prezime).FirstOrDefault();
             model.vlasnikId = context.Restorani.Where(x => x.RestoranID == restoranid).Select(x => x.VlasnikID).FirstOrDefault();
             model.jelovnici = context.Jelovnici.Where(x => x.RestoranID == restoranid).ToList();
 
@@ -227,6 +172,7 @@ namespace eDostava.Web.Controllers
                     Value = x.KorisnikID.ToString()
 
                 }).ToList();
+                model.naziv = context.Restorani.Where(x => x.RestoranID == model.RestoranId).Select(x => x.Naziv).FirstOrDefault();
                 model.jelovnici = context.Jelovnici.Where(x => x.RestoranID == model.RestoranId).ToList();
                 model.vlasnikId = context.Restorani.Where(x => x.RestoranID == model.RestoranId).Select(x => x.VlasnikID).FirstOrDefault();
                 model.blokId = context.Restorani.Where(x => x.RestoranID == model.RestoranId).Select(x => x.BlokID).FirstOrDefault();
@@ -236,7 +182,8 @@ namespace eDostava.Web.Controllers
         }
         public IActionResult SnimiJelovnik(string opis,bool aktivan,int jelovnikid,int restoranID)
         {
-            Jelovnik n = context.Jelovnici.Where(x => x.JelovnikID == jelovnikid).FirstOrDefault();
+            
+        Jelovnik n = context.Jelovnici.Where(x => x.JelovnikID == jelovnikid).FirstOrDefault();
             n.Opis = opis;
             n.Aktivan = aktivan;
             context.Jelovnici.Update(n);
@@ -291,9 +238,19 @@ namespace eDostava.Web.Controllers
             context.Jelovnici.Add(n);
             context.SaveChanges();
 
-            return RedirectToAction("Jelovnik", "Restorani", new { restoranid = model.restoranid });
+            return RedirectToAction("UrediRestoran", "Restorani", new { restoranid = model.restoranid });
         }
 
+        public IActionResult ObrisiJelovnik(int jelovnikid)
+        {
+            int restoranid = context.Jelovnici.Where(x => x.JelovnikID == jelovnikid).Select(x => x.RestoranID).FirstOrDefault();
+            Jelovnik n = context.Jelovnici.Where(x => x.JelovnikID == jelovnikid).FirstOrDefault();
+            context.Jelovnici.Remove(n);
+            context.SaveChanges();
+
+          
+            return RedirectToAction(nameof(UrediRestoran), new { restoranid = restoranid });
+        }
 
         public IActionResult ObrisiRestoran(int restoranid)
         {
@@ -306,9 +263,9 @@ namespace eDostava.Web.Controllers
         }
 
 
-        public IActionResult ValidacijaJelovnik(string opis,int restoranid)
+        public IActionResult ValidacijaJelovnik(string opis, int restoranid)
         {
-            if(context.Jelovnici.Where(x=>x.RestoranID==restoranid).Any(x=>x.Opis==opis))
+            if (context.Jelovnici.Where(x => x.RestoranID == restoranid).Any(x => x.Opis == opis))
             {
                 return Json($"Jelovnik '{opis}' is already in use");
             }
@@ -320,9 +277,142 @@ namespace eDostava.Web.Controllers
         {
             if (context.Restorani.Any(x => x.Naziv == naziv))
             {
-                return Json($"Jelovnik '{naziv}' is already in use");
+                return Json($"restoran '{naziv}' is already in use");
             }
             return Json(true);
         }
+
+        public IActionResult Index(string searchString)
+
+        {
+
+            if (HttpContext.GetLogiranogNarucioca() == null && HttpContext.GetLogiranogVlasnika() == null && HttpContext.GetLogiranogModeratora() == null)
+                return RedirectToAction("Index", "Login");
+
+
+            RestoranIndexVM model = new RestoranIndexVM();
+
+            model.vlasnik = new Vlasnik();
+
+            if (HttpContext.GetLogiranogVlasnika() != null)
+            {
+                Vlasnik n = HttpContext.GetLogiranogVlasnika();
+                model.jeLogiran = (RestoranIndexVM.Logiran)1;
+                model.vlasnik = n;
+            }
+
+            if (HttpContext.GetLogiranogModeratora() != null)
+            {
+                model.jeLogiran = (RestoranIndexVM.Logiran)0;
+
+
+            }
+
+            if (HttpContext.GetLogiranogNarucioca() != null)
+            {
+                model.jeLogiran = (RestoranIndexVM.Logiran)2;
+
+
+            }
+
+
+            HttpContext.Session.Set("logiranKao", ((RestoranIndexVM.Logiran)model.jeLogiran).ToString());
+
+            if (HttpContext.GetLogiranogNarucioca() != null)
+            {
+                IQueryable<Restoran> searched = context.Restorani.Where(X => X.Naziv != null);
+                if (!String.IsNullOrEmpty(searchString))
+                {
+
+                    searched = context.Restorani.Where(s => s.Naziv.Contains(searchString));
+
+                    if (searched.Count() == 0)
+                    {
+                        searched = context.Restorani.Where(z => z.Opis.Contains(searchString));
+                    }
+                    if (searched.Count() == 0)
+                    {
+                        searched = context.Restorani.Include(x => x.Blok).Include(x => x.Blok.Grad).Where(z => z.Blok.Naziv.Contains(searchString));
+                    }
+                    if (searched.Count() == 0)
+                    {
+                        searched = context.Restorani.Include(x => x.Blok).Include(x => x.Blok.Grad).Where(z => z.Blok.Grad.Naziv.Contains(searchString));
+                    }
+                }
+                model.Rows = searched.Include(x => x.Vlasnik).Include(x => x.Blok).Include(x => x.Blok.Grad).Select(x => new RestoranIndexVM.Row
+                {
+
+                    jeLajkan = context.Lajkovi.Where(s => s.NarucilacID == HttpContext.GetLogiranogNarucioca().KorisnikID && s.RestoranID == x.RestoranID).Count() > 0 ? false : true,
+                    jeVlasnikRestorana = model.vlasnik.KorisnikID == x.VlasnikID ? true : false,
+                    nazivRestorana = x.Naziv,
+                    RestoranID = x.RestoranID,
+                    brojTelefona = x.Telefon,
+                    lokacijaRestorana = x.Blok.Naziv + ", " + x.Blok.Grad.Naziv,
+                    minimalnaCijenaNarudzbe = x.MinimalnaCijenaNarudžbe,
+                    brojLajkova = context.Lajkovi.Where(y => y.RestoranID == x.RestoranID).Count(),
+                    opis = x.Opis,
+                    vlasnik = x.Vlasnik.Ime_prezime,
+                    radnoVrijeme = context.VrijemeRada.Where(y => y.RestoranID == x.RestoranID).Select(y => new SelectListItem
+                    {
+                        Text = ((Dani)y.Dan).ToString() + " : " + y.VrijemeOtvaranja.ToString() + " - " + y.VrijemeZatvaranja.ToString(),
+                        Value = y.Dan.ToString()
+                    }).ToList()
+                    }).ToList();
+                
+            }
+            else
+                {
+                IQueryable<Restoran> searched = context.Restorani.Where(X=>X.Naziv!=null);
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                   
+                      searched = context.Restorani.Where(s => s.Naziv.Contains(searchString));
+
+                    if (searched.Count() == 0)
+                    {
+                        searched = context.Restorani.Where(z => z.Opis.Contains(searchString));
+                    }
+                    if (searched.Count() == 0)
+                    {
+                        searched = context.Restorani.Include(x => x.Blok).Include(x => x.Blok.Grad).Where(z => z.Blok.Naziv.Contains(searchString));
+                    }
+                    if(searched.Count()==0)
+                    {
+                        searched = context.Restorani.Include(x => x.Blok).Include(x => x.Blok.Grad).Where(z => z.Blok.Grad.Naziv.Contains(searchString));
+                    }
+                }
+                    model.Rows = searched.Include(x => x.Vlasnik).Include(x => x.Blok).Include(x => x.Blok.Grad).Select(x => new RestoranIndexVM.Row
+                    {
+
+                        jeVlasnikRestorana = model.vlasnik.KorisnikID == x.VlasnikID ? true : false,
+                        nazivRestorana = x.Naziv,
+                        RestoranID = x.RestoranID,
+                        brojTelefona = x.Telefon,
+                        lokacijaRestorana = x.Blok.Naziv + ", " + x.Blok.Grad.Naziv,
+                        minimalnaCijenaNarudzbe = x.MinimalnaCijenaNarudžbe,
+                        brojLajkova = context.Lajkovi.Where(y => y.RestoranID == x.RestoranID).Count(),
+                        opis = x.Opis,
+                        vlasnik = x.Vlasnik.Ime_prezime,
+                        radnoVrijeme = context.VrijemeRada.Where(y => y.RestoranID == x.RestoranID).Select(y => new SelectListItem
+                        {
+                            Text = ((Dani)y.Dan).ToString() + ". " + y.VrijemeOtvaranja.TotalHours + " - " + y.VrijemeZatvaranja.TotalHours + " h",
+                            Value = y.Dan.ToString()
+                        }).ToList()
+                    }).ToList();
+                
+            }
+
+
+
+
+            return View("Index",model);
+        }
+
+
+
+
+
+
     }
 }

@@ -1,0 +1,59 @@
+﻿@model eDostava.Web.ViewModels.HranaNarudzbaIndexVM
+@{
+    ViewData["Title"] = "IndexNarudzba";
+    Layout = null;
+}
+
+
+<br />
+<div>
+    <form asp-action="IndexNarudzba" ajax-poziv="da" ajax-rezultat="ajaxDiv">
+
+        <label>Tip kuhinje: </label>
+        <input name="jelovnikid" value="@Model.jelovnikID" hidden />
+        <select class="custom-select" style="width:15%;display:inline;"  name="tipkuhinjeid">
+            <option selected value="0">>>Odaberite<<</option>
+            @foreach (var x in Model.listaKuhinja)
+            {
+                <option value="@x.Value">@x.Text</option>
+            }
+
+        </select>
+
+        <input class="btn btn-secondary my-2 my-sm-0" type="submit" value="Search" />
+    </form>
+</div>
+<br />
+<table class="table table-hover" style="font-size:120%">
+    <tr class="table-dark">
+        <th scope="col">Naziv</th>
+        <th scope="col">Opis</th>
+        <th scope="col">Cijena</th>
+        <th scope="col">Prilog</th>
+        @if (Model.jeLogiranNarucilac)
+        {
+            <th scope="col">Akcija</th>
+        }
+    </tr>
+
+    @foreach (var x in Model.Rows)
+    {
+        <tr class="table-success">
+
+            <th scope="row">@x.Naziv</th>
+            <td>@x.opis</td>
+            <td>@x.cijena KM</td>
+            <td>@x.prilog</td>
+            @if (Model.jeLogiranNarucilac)
+            {
+                <td>
+                    <a asp-action="DodajUKorpu"  class="btn btn-warning">Dodaj u korpu &raquo; </a>
+                </td>
+
+            }
+        </tr>
+    }
+</table>
+
+
+

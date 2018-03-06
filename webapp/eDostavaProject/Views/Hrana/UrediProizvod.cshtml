@@ -1,0 +1,67 @@
+﻿@model eDostava.Web.ViewModels.HranaUrediVM
+@{
+    ViewData["Title"] = "UrediProizvod";
+    Layout = null;
+}
+
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+
+
+<h2>Uredi proizvod: </h2>
+<br />
+<form ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.divID)" method="post" asp-action="UrediProizvod">
+    <div>
+
+        <input hidden asp-for="HranaID" class="form-control" />
+        <input hidden asp-for="jelovnikID" class="form-control" />
+        <input hidden asp-for="divID" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Naziv">Naziv proizvoda: </label>
+        <input asp-for="Naziv" class="form-control" placeholder="Naziv" />
+        <span asp-validation-for="Naziv"></span>
+    </div>
+    <div>
+        <label asp-for="sifra">Sifra: </label>
+        <input asp-for="sifra" class="form-control" placeholder="Sifra" />
+        <span asp-validation-for="sifra"></span>
+    </div>
+    <div>
+        <label asp-for="opis">Opis: </label>
+        <input asp-for="opis" class="form-control" placeholder="Opis" />
+        <span asp-validation-for="opis"></span>
+    </div>
+    <div>
+        <label asp-for="cijena">Cijena: </label>
+        <input asp-for="cijena" class="form-control" placeholder="Cijena" />
+        <span asp-validation-for="cijena"></span>
+    </div>
+    <div>
+        <label asp-for="prilog">Prilog: </label>
+        <input asp-for="prilog" class="form-control" placeholder="Prilog" />
+        <span asp-validation-for="prilog"></span>
+    </div>
+
+    @*<div>
+            <label asp-for="jelovnikID">Izaberite jelovnik za proizvod: </label>
+            <select asp-items="@Model.jelovnici" class="form-control" asp-for="jelovnikID"></select>
+            <span asp-validation-for="jelovnikID"></span>
+        </div>*@
+
+    <div>
+        <label asp-for="tipkuhinjeID">Tip kuhinje: </label>
+        <select asp-items="@Model.tipoviKuhinje" class="form-control" asp-for="tipkuhinjeID"></select>
+        <span asp-validation-for="tipkuhinjeID"></span>
+        <p style="float:left" class="form-text text-muted"><a asp-route-jelovnikid="@Model.jelovnikID" asp-action="DodajKuhinju" ajax-poziv="da" ajax-rezultat="zaKuhinju2">Dodaj novi tip kuhinje! &raquo; </a></p>
+
+    </div>
+
+    <div style="float:right">
+        <input style="margin:3px" type="submit" class="btn btn-primary" value="Submit" />
+    </div><br />
+</form>
+
+    <div style="clear:both" id="zaKuhinju2"></div>

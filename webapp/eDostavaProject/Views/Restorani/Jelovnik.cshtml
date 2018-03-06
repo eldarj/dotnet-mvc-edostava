@@ -1,0 +1,58 @@
+﻿@model eDostava.Web.ViewModels.JelovnikVM
+@{
+    ViewData["Title"] = "Jelovnik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int b = 0;
+}
+<br />
+<div class="row">
+    <div style="text-align:left;color:#B58900;font-size:120%" class="col-md-8">
+        
+        <p class="badge badge-primary" style="float:right;color:white">Liked: @Model.lajkovi</p>
+        <h1 >@Model.nazivRestorana</h1>
+        <p>@Model.lokacija</p>
+        <p>Minimalna cijena za dostavu: <b> @Model.minimalanIznos KM</b></p>
+        <p>Vl. @Model.vlasnik /  Tel. @Model.telefon</p>
+
+        <br /><hr />
+
+    </div>
+</div>
+<div style="text-align:center">
+
+    <h2>Pregled jelovnika: </h2>
+   
+    @foreach (var x in Model.Rows)
+    {
+
+        @if (x.isAktivan)
+        {
+            <a  ajax-poziv="da" ajax-rezultat="ajaxDiv" asp-controller="Hrana" asp-action="IndexNarudzba" asp-route-jelovnikid="@x.JelovnikID"  class="btn btn-success btn-lg">@x.OpisJelovnika</a>
+
+        }
+        else
+        {
+
+            <button  type="button" class="btn btn-warning btn-lg" style="text-decoration:line-through;">@x.OpisJelovnika</button>
+
+        }
+    }
+
+</div>
+<br /><hr />
+
+
+<div id="ajaxDiv"></div>
+
+
+
+@*<script>
+    $(document).ready(function () {
+        $.get("/Hrana/Index?jelovnikid=@Model.Rows[0].JelovnikID", function (data, status) {
+            $("#ajaxDiv").html(data);
+
+        });
+
+    });
+</script>*@
+

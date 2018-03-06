@@ -1,0 +1,31 @@
+﻿@model eDostava.Web.ViewModels.DodajKuhinjuVM
+@{
+    ViewData["Title"] = "DodajKuhinju";
+    Layout = null;
+}
+
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+
+<h2>Podaci za novi tip kuhinje: </h2>
+
+<form asp-action="DodajKuhinju" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.divid)" method="post">
+
+    <div>
+        
+        <label asp-for="naziv">Naziv kuhinje: </label>
+        <input asp-for="naziv"  required placeholder="Naziv"/>
+    </div>
+    <div>
+        <label asp-for="opis">Opis kuhinje: </label>
+        <input asp-for="opis"  required placeholder="Opis"/>
+    </div>
+    <div>
+        <input type="submit"  value="Submit" class="btn btn-sm" />
+    </div>
+</form>
+
+
+

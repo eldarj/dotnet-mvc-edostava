@@ -1,0 +1,82 @@
+﻿@model eDostava.Web.ViewModels.RestoranPrijavaVM
+@{
+    ViewData["Title"] = "PrijaviRestoran";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section Styles {
+    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
+
+}
+
+<h2>Unesite podatke o restoranu: </h2><br />
+
+<div id="unesiBlok" style="display:none">
+        <form asp-action="DodajBlok" method="post">
+            <input name="nazivGrada" required pattern="^[a-zA-Z]+$" title="only letters" placeholder="Naziv grada"/>
+            <input name="postanskiBroj" required pattern="^[0-9]+$" title="only numbers" placeholder="Postanski broj" />
+            <input name="nazivBloka" required pattern="^[a-zA-Z]+$" title="only letters" placeholder="Naziv bloka"/>
+            <input type="submit" class="btn btn-primary" value="Submit" />
+
+        </form>
+    </div>
+
+<form asp-action="SnimiRestoran" method="post">
+
+<div>
+    <label asp-for="vlasnikId">Vlasnik: </label>
+    <select asp-items="@Model.vlasnici" class="form-control" asp-for="vlasnikId"></select>
+    <span asp-validation-for="vlasnikId"></span>
+    <small class="form-text text-muted"><a asp-action="Index" asp-controller="Login">Vlasnik je obavezan da se prethodno registruje!</a></small><br />
+</div>
+
+<div>
+    <label asp-for="blokId">Blok: </label>
+    <select asp-items="@Model.blokovi" class="form-control" asp-for="blokId"></select>
+    <span asp-validation-for="blokId"></span>
+    <small class="form-text text-muted"><a id="novaLokacija" href="#    ">Unesite novu lokaciju!</a></small><br />
+    
+</div>
+
+
+<div>
+    <label asp-for="naziv">Naziv restorana: </label>
+    <input class="form-control" asp-for="naziv" placeholder="Naziv">
+    <span asp-validation-for="naziv"></span>
+    <small class="form-text text-muted">Budite unikatni,hvala!</small><br />
+
+</div>
+
+<div>
+    <label asp-for="opis">Opis restorana: </label>
+    <input class="form-control" asp-for="opis" placeholder="Opis">
+    <span asp-validation-for="opis"></span>
+    <small class="form-text text-muted">Npr. pizza, paste</small><br />
+</div>
+
+<div>
+    <label asp-for="brojTelefona">Telefon: </label>
+    <input class="form-control" asp-for="brojTelefona" placeholder="Broj telefona">
+    <span asp-validation-for="brojTelefona"></span>
+    <small class="form-text text-muted">Očekujte mnogo poziva!</small><br />
+</div>
+
+<div>
+    <label asp-for="minimalnaCijenaNarudzbe">Minimalna cijena narudžbe: </label>
+    <input class="form-control" asp-for="minimalnaCijenaNarudzbe" placeholder="Minimum">
+    <span asp-validation-for="minimalnaCijenaNarudzbe"></span>
+    <small class="form-text text-muted">Maksimalno 30KM!</small>
+</div>
+
+<div>
+    <input style="top:2px;float:right" type="submit" class="btn btn-primary btn-lg" value="Submit" />
+</div>
+    </form>
+
+
+<script>
+
+    $("#novaLokacija").click(function (event) {
+        $("#unesiBlok").css("display", "block");
+    });
+</script>

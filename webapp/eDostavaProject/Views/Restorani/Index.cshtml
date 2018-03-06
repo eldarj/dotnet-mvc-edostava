@@ -52,7 +52,7 @@ else
             <hr />
             <span class="badge badge-primary" style="float:right">Liked: @x.brojLajkova</span>
             <p>@x.lokacijaRestorana</p>
-            <p>Radno vrijeme: <select asp-items="@x.radnoVrijeme" class="custom-select" style="width:40%;display:inline;float:right"></select></p>
+            <p>Radno vrijeme: <select asp-for="@x.radnoVrijemeid" asp-items="@x.radnoVrijeme" class="custom-select" style="width:45%;display:inline;float:right"></select></p>
             <p>Minimum : <b style="color:#B58900">@x.minimalnaCijenaNarudzbe KM</b></p>
             <p>@x.opis</p>
 

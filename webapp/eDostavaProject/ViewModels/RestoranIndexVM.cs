@@ -21,6 +21,7 @@ namespace eDostava.Web.ViewModels
             public int minimalnaCijenaNarudzbe;
             public string vlasnik;
             public List<SelectListItem> radnoVrijeme;
+            public int radnoVrijemeid { get; set; }
             public string brojTelefona;
             public int brojLajkova;
             public string nazivRestorana;

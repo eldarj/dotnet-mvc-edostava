@@ -354,10 +354,11 @@ namespace eDostava.Web.Controllers
                     vlasnik = x.Vlasnik.Ime_prezime,
                     radnoVrijeme = context.VrijemeRada.Where(y => y.RestoranID == x.RestoranID).Select(y => new SelectListItem
                     {
-                        Text = ((Dani)y.Dan).ToString() + " : " + y.VrijemeOtvaranja.ToString() + " - " + y.VrijemeZatvaranja.ToString(),
-                        Value = y.Dan.ToString()
-                    }).ToList()
-                    }).ToList();
+                        Text = ((Dani)y.Dan).ToString() + ". " + y.VrijemeOtvaranja.Hours + ":" + y.VrijemeOtvaranja.Minutes + (Convert.ToInt32(y.VrijemeOtvaranja.Minutes) < 10 ? "0" : "") + " - " + y.VrijemeZatvaranja.Hours + ":" + y.VrijemeZatvaranja.Minutes + (Convert.ToInt32(y.VrijemeZatvaranja.Minutes) < 10 ? "0" : "") + " h", 
+                        Value = ((int)(y.Dan) + 1).ToString()
+                    }).ToList(),
+                    radnoVrijemeid= ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek
+            }).ToList();
                 
             }
             else
@@ -396,9 +397,11 @@ namespace eDostava.Web.Controllers
                         vlasnik = x.Vlasnik.Ime_prezime,
                         radnoVrijeme = context.VrijemeRada.Where(y => y.RestoranID == x.RestoranID).Select(y => new SelectListItem
                         {
-                            Text = ((Dani)y.Dan).ToString() + ". " + y.VrijemeOtvaranja.TotalHours + " - " + y.VrijemeZatvaranja.TotalHours + " h",
-                            Value = y.Dan.ToString()
-                        }).ToList()
+                            Text = ((Dani)y.Dan).ToString() + ". " + y.VrijemeOtvaranja.Hours + ":" + y.VrijemeOtvaranja.Minutes + (Convert.ToInt32(y.VrijemeOtvaranja.Minutes)<10?"0":"") + " - " + y.VrijemeZatvaranja.Hours +":"+y.VrijemeZatvaranja.Minutes + (Convert.ToInt32(y.VrijemeZatvaranja.Minutes) < 10 ? "0" : "") + " h",
+                            Value = ((int)(y.Dan)+1).ToString()
+                        }).ToList(),
+                        radnoVrijemeid = ((int)DateTime.Now.DayOfWeek == 0) ? 7 : (int)DateTime.Now.DayOfWeek
+
                     }).ToList();
                 
             }

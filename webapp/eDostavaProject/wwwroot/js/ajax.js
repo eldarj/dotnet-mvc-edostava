@@ -1,6 +1,4 @@
-﻿
-
-function DodajAjaxEvente() {
+﻿function DodajAjaxEvente() {
     $("button[ajax-poziv='da']").click(function (event) {
         $(this).attr("ajax-poziv", "dodan");
 
@@ -20,6 +18,32 @@ function DodajAjaxEvente() {
             ("#val").html("Opcija dopustena samo moderatoru");
 
         });
+    });
+
+    $("a[ajax-poziv='ajaxDa']").off().click(function (event) {
+        $(this).attr("ajax-poziv", "dodan");
+        event.preventDefault();
+        var urlZaPoziv1 = $(this).attr("ajax-url");
+        var urlZaPoziv2 = $(this).attr("href");
+        var divZaRezultat = $(this).attr("ajax-rezultat");
+
+        var urlZaPoziv;
+
+        if (urlZaPoziv1 instanceof String)
+            urlZaPoziv = urlZaPoziv1;
+        else
+            urlZaPoziv = urlZaPoziv2;
+
+        $.ajax({
+            type: "GET",
+            url: urlZaPoziv,
+            async: true,
+            success: function (data) {
+                $("#" + divZaRezultat).html(data);
+            }
+        });
+
+
     });
 
     $("a[ajax-poziv='da']").click(function (event) {

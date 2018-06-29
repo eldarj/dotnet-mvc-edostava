@@ -17,12 +17,37 @@ namespace eDostava.Web.Controllers
         {
             context = db;
         }
+        public IActionResult Index(int? GradId)
+        {       
+            NarucilacPrikazVM Model = new NarucilacPrikazVM();
+            Model.Narucioci = context.Narucioci
+            .Select(x => new NarucilacPrikazVM.NaruciociInfo()
+            {
+                Narucilac = x,
+                NarucilacId = x.KorisnikID,
+                Ime = x.Ime,
+                Prezime = x.Prezime,
+                Username = x.Username,
+                Password = x.Password,
+                Email = x.Email,
+                Telefon = x.Telefon,
+                DatumKreiranja = x.DatumKreiranja.ToString(),
+                BlokNaziv = x.Blok.Naziv,
+                BadgeNaziv = x.Badge.Naziv,
+                GradNaziv = x.Blok.Grad.Naziv,
+                Grad = x.Blok.Grad,
+                PostanskiBroj = x.Blok.Grad.PoštanskiBroj,
+            })
+            .ToList();
 
-        //public IActionResult Index()
-        //{
-           //Prikaz narudzbe
-          // return View();
-        //}
+            if (GradId != null)
+            {
+                Model.Grad = context.Gradovi.Where(x => x.GradID == GradId).FirstOrDefault();
+                Model.Narucioci = Model.Narucioci.Where(x => x.Grad.GradID == GradId).ToList();
+            }
+
+            return View(Model);
+        }
 
         public IActionResult LikeRestoran(int restoranid)
         {

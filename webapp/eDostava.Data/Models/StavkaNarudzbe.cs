@@ -13,11 +13,21 @@ namespace eDostava.Data.Models
         [ForeignKey("Narudzba")]
         public int NarudzbaID { get; set; }
         public Narudzba Narudzba { get; set; }
-        
         [ForeignKey("Hrana")]
         public int HranaID { get; set; }
         public Hrana Hrana { get; set; }
         public int Kolicina { get; set; }
+
+        public double CalcCijena => Hrana.Cijena * Kolicina;
+
+        public override bool Equals(object value)
+        {
+            StavkaNarudzbe stavka = value as StavkaNarudzbe;
+
+            return !Object.ReferenceEquals(null, stavka)
+                && int.Equals(HranaID, stavka.HranaID);
+        }
+
 
     }
 }

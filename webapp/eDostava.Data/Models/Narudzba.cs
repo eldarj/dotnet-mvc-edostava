@@ -10,22 +10,21 @@ namespace eDostava.Data.Models
     {
         Prihvacena,
         Odbijena,
-        Isporucena
+        Isporucena,
+        [Display(Name = "Nemate narudžbi")]
+        NePostoji
     }
     public class Narudzba
     {
         [Key]
         public int NarudzbaID { get; set; }
-           
-        public int Sifra { get; set; }
-
-        public DateTime DatumVrijeme { get; set; }
-        public int UkupnaCijena { get; set; }
-
-       public Stanje Status { get; set; }
+        public Guid Sifra { get; set; } = Guid.NewGuid();
+        public DateTime DatumVrijeme { get; set; } = DateTime.UtcNow;
+        public double UkupnaCijena { get; set; } = 0;
+        public Stanje Status { get; set; } = Stanje.NePostoji;
         [ForeignKey("Kupon")]
-        public  int?  KuponID { get; set; }
-
+        public int? KuponID { get; set; }
         public Kupon Kupon { get; set; }
+        public string GetKuponOpis => Kupon == null ? "~" : (Kupon.Opis ?? "~");
     }
 }

@@ -222,7 +222,7 @@ namespace eDostava.Web.Controllers
         {
             DodajJelovnikVM model = new DodajJelovnikVM();
             model.restoranid = restoranid;
-            return View(model);
+            return PartialView(model);
         }
 
         [HttpPost]

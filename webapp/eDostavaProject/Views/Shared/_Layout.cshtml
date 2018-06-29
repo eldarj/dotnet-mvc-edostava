@@ -1,9 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using KorpaSessionExtensions
 
 @{ 
     string trenutnoLogiran = Context.Session.GetString("trenutnoLogiran");
     string logiranKao = Context.Session.GetString("logiranKao");
-    
+
+    bool? _jeNarucilac = Context.Session.JeNarucilac();
 }
 
 <!DOCTYPE html>
@@ -72,12 +74,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" asp-action="Index" asp-controller="Restorani">Home <span class="sr-only">(current)</span></a>
                 </li>
-                @*<li class="nav-item">
-                    <a class="nav-link" >Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>*@
                 <li class="nav-item">
                     <a asp-action="Index" asp-controller="Login" class="nav-link" style="color:red;margin-right:5px">Logout</a>
                 </li>
@@ -90,15 +86,38 @@
             </form>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
+    <div class="container-fluid body-content">
+        @{
+            var home = ViewBag.IsHome;
+        }
+        @if(home == true) {
+            @Html.Partial("../Shared/Partials/BigHeader.cshtml")
+        }
+        else
+        {
+            @Html.Partial("../Shared/Partials/SmallHeader.cshtml")
+        }
+        <div class="container">
+            <div class="row">
+                @if (_jeNarucilac == true)
+                {
+                    <div class="col-sm-12 col-md-9">
+                        @RenderBody()
+                    </div>
+                    <div id="korpa" class="col-sm-12 col-md-3">
+                        @await Component.InvokeAsync("Korpa")
+                    </div>
+                }
+                else
+                {
+                    <div class="col-sm-12 col-md-12">
+                        @RenderBody()
+                    </div>
+                }
+            </div>
         <hr />
-        <footer>
-         
-        </footer>
+        <footer></footer>
     </div>
-
-   
 
     @RenderSection("Scripts", required: false)
 </body>

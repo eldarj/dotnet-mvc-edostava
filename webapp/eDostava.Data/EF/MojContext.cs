@@ -6,25 +6,36 @@ namespace eDostava.Data
 {
     public class MojContext:DbContext
     {
-
         public MojContext(DbContextOptions<MojContext> options)
           : base(options)
         {
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-
             modelBuilder.Entity<RestoranLike>()
-           .HasOne(pt => pt.Restoran)
-           .WithMany()
-           .HasForeignKey(pt => pt.RestoranID)
-           .OnDelete(DeleteBehavior.Restrict);
-        }
+                .HasOne(pt => pt.Restoran)
+                .WithMany()
+                .HasForeignKey(pt => pt.RestoranID)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<HranaPrilog>()
+                .HasKey(a => new { a.HranaID, a.PrilogID });
+
+            modelBuilder.Entity<HranaPrilog>()
+                .HasOne(a => a.Prilog)
+                .WithMany(a => a.PrilogOd)
+                .HasForeignKey(a => a.PrilogID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<HranaPrilog>()
+                .HasOne(a => a.Hrana)
+                .WithMany(a => a.Prilozi)
+                .HasForeignKey(a => a.HranaID);
+
+        }
 
         public DbSet<Grad> Gradovi { get; set; }
         public DbSet<Blok> Blokovi { get; set; }
@@ -43,10 +54,5 @@ namespace eDostava.Data
         public DbSet<Zalba> Zalbe { get; set; }
         public DbSet<TipKuhinje> TipoviKuhinje { get; set; }
         public DbSet<Badge> Badgevi { get; set; }
-      
-
-
-
-
     }
 }

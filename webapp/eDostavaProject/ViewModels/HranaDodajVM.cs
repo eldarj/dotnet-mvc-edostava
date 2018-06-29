@@ -20,7 +20,6 @@ namespace eDostava.Web.ViewModels
         public double cijena { get; set; }
         [Required(ErrorMessage = "Required!"),RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Only letters allowed.")]
         public string opis { get; set; }
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Only letters allowed.")]
         public string prilog { get; set; }
         public int tipkuhinjeID { get; set; }
         [Required(ErrorMessage = "Required!"), Range(1, int.MaxValue,ErrorMessage ="Only integer allowed!")]

@@ -1,0 +1,42 @@
+﻿@using eDostava.Web.ViewModels
+@using eDostava.Web.Helper
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model KorpaPrikazVM
+
+<h2>Korpa</h2>
+<div class="narudzba-container">
+    <p><span>ID: </span>@Model.Narudzba.NarudzbaID</p>
+    <p><span>Datum: </span>@Model.Narudzba.DatumVrijeme</p>
+    <p><span>Sifra: </span>@Model.Narudzba.Sifra</p>
+    <p><span>Status: </span>@Model.Narudzba.Status.GetDisplay()</p>
+</div>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Količina</th>
+            <th>Naziv</th>
+            <th>Cijena</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var x in Model.Stavke)
+        {
+            <tr>
+                <td><input type="number" value="@x.Kolicina" /></td>
+                <td>
+                    <span>@x.Naziv, @x.Opis</span>
+                    <p>@x.Prilog</p>
+                </td>
+                <td>@x.Cijena</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="narudzba-container">
+    <p><span>Kupon: </span>@(Model.Narudzba.GetKuponOpis)</p>
+    <p><span>Ukupno: </span>@Model.Narudzba.UkupnaCijena</p>
+</div>

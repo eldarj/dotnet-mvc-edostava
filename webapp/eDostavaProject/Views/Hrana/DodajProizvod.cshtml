@@ -1,12 +1,4 @@
 ﻿@model eDostava.Web.ViewModels.HranaDodajVM
-@{
-    ViewData["Title"] = "DodajProizvod";
-    Layout = null; //!
-}
-@section Styles {
-    <link href="@Url.Content("~/css/forma.css")" rel="stylesheet" type="text/css" />
-
-}
 <h2>Dodaj novi proizvod u jelovnik: </h2>
 <br />
 <form method="post" ajax-rezultat="jelovnikAjax@(Model.divID)" ajax-poziv="da" asp-action="DodajProizvod">

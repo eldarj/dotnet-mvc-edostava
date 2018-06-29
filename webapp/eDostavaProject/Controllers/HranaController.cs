@@ -49,7 +49,7 @@ namespace eDostava.Web.Controllers
                     model.jeLogiranVlasnikRestorana = true;
                 }
             }
-            return View(model);
+            return PartialView(model);
         }
 
 
@@ -187,7 +187,7 @@ namespace eDostava.Web.Controllers
 
             model.jelovnikID = jelovnikid;
             model.restoranID = context.Jelovnici.Where(x => x.JelovnikID == jelovnikid).Select(x => x.RestoranID).FirstOrDefault();
-            return View(model);
+            return PartialView(model);
         }
         [HttpPost]
         public IActionResult DodajProizvod(HranaDodajVM model)

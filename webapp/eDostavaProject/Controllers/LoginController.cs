@@ -62,6 +62,7 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
             {
                 HttpContext.SetLogiranogNarucioca(n3);
                 HttpContext.Session.Set("trenutnoLogiran", n3.Ime_prezime);
+                HttpContext.Session.SetBoolean("jeNarucilac", true);
             }
 
 

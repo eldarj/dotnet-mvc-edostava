@@ -14,7 +14,7 @@ namespace eDostava.Data.Models
         Isporucena,
         [Display(Name = "Dodane stavke:")]
         Aktivna,
-        [Display(Name = "Dodajte hranu")]
+        [Display(Name = "Korpa je prazna. Pregledajte sve restorane i jelovnike, te izaberite nešto fino!")]
         Prazna
     }
     public class Narudzba

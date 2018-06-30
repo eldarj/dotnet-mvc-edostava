@@ -99,7 +99,7 @@ body {
     padding: 0 10px;
 }
 .korpa-stavka {
-    border-bottom: 1.5px dotted #ccc;
+    border-bottom: 1.75px dotted #FFCB9C;
     padding: 10px 0;
 }
 .korpa-stavka .stavka-main {
@@ -113,7 +113,8 @@ body {
     padding: 10px 0;
 }
 .korpa-top {
-    font-size: 17px;
+    font-size: 15px;
+    border-bottom: 1.75px dotted #FFCB9C;
 }
 #korpa .panel-heading .panel-title {
     font-size: 18px;
@@ -151,4 +152,5 @@ body {
     color: #fff;
     background-color: #CB202D;
     border-color: #CB202D;
+}
 }

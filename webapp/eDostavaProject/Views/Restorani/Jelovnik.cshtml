@@ -27,7 +27,7 @@
 
         @if (x.isAktivan)
         {
-            <a  ajax-poziv="da" ajax-rezultat="ajaxDiv" asp-controller="Hrana" asp-action="IndexNarudzba" asp-route-jelovnikid="@x.JelovnikID"  class="btn btn-success btn-lg">@x.OpisJelovnika</a>
+            <a ajax-poziv="da" ajax-rezultat="ajaxDiv" asp-controller="Hrana" asp-action="Index" asp-route-jelovnikid="@x.JelovnikID" class="btn btn-success btn-lg">@x.OpisJelovnika</a>
 
         }
         else

@@ -52,55 +52,6 @@ namespace eDostava.Web.Controllers
             return PartialView(model);
         }
 
-
-
-        public IActionResult IndexNarudzba(int jelovnikid, int tipkuhinjeid = 0)
-        {
-
-
-
-
-            HranaNarudzbaIndexVM model = new HranaNarudzbaIndexVM();
-            model.jelovnikID = jelovnikid;
-            model.listaKuhinja = context.TipoviKuhinje.Select(x => new SelectListItem
-            {
-                Text = x.Naziv,
-                Value = x.TipKuhinjeID.ToString()
-            }).ToList();
-            if (tipkuhinjeid == 0)
-            {
-                model.Rows = context.Proizvodi.Where(x => x.JelovnikID == jelovnikid).Select(x => new HranaNarudzbaIndexVM.Row
-                {
-                    HranaID = x.HranaID,
-                    cijena = x.Cijena,
-                    Naziv = x.Naziv,
-                    opis = x.Opis,
-                    prilog = x.Prilog,
-                    tipkuhinjeID = x.TipKuhinjeID
-                }).ToList();
-            }
-            else
-            {
-                model.Rows = context.Proizvodi.Where(x => x.JelovnikID == jelovnikid && x.TipKuhinjeID==tipkuhinjeid).Select(x => new HranaNarudzbaIndexVM.Row
-                {
-                    HranaID = x.HranaID,
-                    cijena = x.Cijena,
-                    Naziv = x.Naziv,
-                    opis = x.Opis,
-                    prilog = x.Prilog,
-                    tipkuhinjeID = x.TipKuhinjeID
-                }).ToList();
-            }
-            model.jeLogiranNarucilac = false;
-            Narucilac n = HttpContext.GetLogiranogNarucioca();
-
-            if (n != null)
-            {
-                    model.jeLogiranNarucilac = true;   
-            }
-            return View(model);
-        }
-
        [HttpGet]
         public IActionResult UrediProizvod(int proizvodid, int jelovnikid,int divid)
         {

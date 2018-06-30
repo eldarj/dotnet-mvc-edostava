@@ -1,0 +1,46 @@
+﻿
+@model eDostava.Web.ViewModels.ProfilVM
+
+<h1>Profil</h1>
+<h2>@Model.Ime_prezime</h2>
+<div class="profil col-sm-5">
+    <div class="info">
+        <p>Username: @Model.Username</p>
+    </div>
+    <form method="post" asp-action="Snimi">
+        <div>
+            <input hidden asp-for="ProfilID" class="form-control" />
+        </div>
+        <div>
+            <label asp-for="Ime">Ime: </label>
+            <input asp-for="Ime" class="form-control" placeholder="Ime" />
+            <span asp-validation-for="Ime"></span>
+        </div>
+        <div>
+            <label asp-for="Prezime">Prezime: </label>
+            <input asp-for="Prezime" class="form-control" placeholder="Prezime" />
+            <span asp-validation-for="Prezime"></span>
+        </div>
+        <div>
+            <label asp-for="Telefon">Telefon: </label>
+            <input asp-for="Telefon" class="form-control" placeholder="Telefon" />
+            <span asp-validation-for="Telefon"></span>
+        </div>
+        <div>
+            <div>
+                <label asp-for="BlokId">Blok: </label>
+                <select asp-items="@Model.Blok" class="form-control" asp-for="BlokId"></select>
+                <span asp-validation-for="BlokId"></span>
+            </div>
+            <div>
+                <label asp-for="BadgeId">Badge: </label>
+                <select asp-items="@Model.Badge" class="form-control" asp-for="BadgeId"></select>
+                <span asp-validation-for="BadgeId"></span>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-default btn-lg" value="Izmijeni" />
+                <a href="/Korisnik" class="btn btn-primary btn-lg">Nazad</a>
+            </div>
+        </div>
+    </form>
+</div>

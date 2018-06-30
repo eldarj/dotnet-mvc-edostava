@@ -15,10 +15,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
     @RenderSection("Styles", false)
     <environment include="Development, Production">
-        <!-- Custom JS -->
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/js/ajax.js"></script>
-
         <!-- jQuery -->
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
@@ -33,7 +29,11 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/style.css" />
+        <link rel="stylesheet" href="~/css/style.css" />        
+        
+        <!-- Custom JS -->
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/ajax.js"></script>
     </environment>
 </head>
 <body>

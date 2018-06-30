@@ -74,6 +74,21 @@ namespace eDostava.Web.Controllers
                 HttpContext.SetStavke(stavke);
             }
 
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Ukloni(int id)
+        {
+            Narudzba narudzba = HttpContext.GetNarudzba();
+            List<StavkaNarudzbe> stavke = HttpContext.GetStavke();
+            StavkaNarudzbe stavka = stavke.Find(x => x.HranaID == id);
+
+            if (stavke.UmanjiKolicinu(stavka))
+            {
+                narudzba.UkupnaCijena -= stavka.Hrana.Cijena;
+                HttpContext.SetNarudzba(narudzba);
+                HttpContext.SetStavke(stavke);
+            }
 
             return RedirectToAction("Index");
         }

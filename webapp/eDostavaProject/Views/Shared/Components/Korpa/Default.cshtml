@@ -19,7 +19,15 @@
                 @foreach (var x in Model.Stavke)
             {
                     <div class="korpa-stavka">
-                        <div class="stavka-main">@x.Kolicina  x @x.Naziv</div>
+                        <div class="stavka-main">
+                            <span>@x.Kolicina  x @x.Naziv</span>
+                            <a asp-action="Ukloni"
+                               asp-controller="Korpa"
+                               asp-route-id="@x.ProizvodID"
+                               ajax-poziv="ajaxDa"
+                               ajax-rezultat="korpa"
+                               class="btn btn-main-color-1 btn-stavka-ukloni full-circle pull-right"><i class="fas fa-times"></i></a>
+                        </div>
                         <div class="stavka-detalji">Cijena: @x.Cijena KM</div>
                     </div>
                 }
@@ -27,7 +35,7 @@
             <div class="korpa-sum">
                 <p><span>Kupon: </span>@(Model.Narudzba.GetKuponOpis)</p>
                 <p><span>Ukupno: </span>@Model.Narudzba.UkupnaCijena KM</p>
-                <div class="btn btn-sm btn-danger btn-main-1 full-width">Naruči</div>
+                <div class="btn btn-sm btn-danger btn-main-color-1 full-width">Naruči</div>
             </div>
             <div class="korpa-details">
                 <p><span>Sifra: </span>@Model.Narudzba.Sifra</p>

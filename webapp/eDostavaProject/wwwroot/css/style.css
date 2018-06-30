@@ -8,6 +8,14 @@ body {
     padding-top: 40px;
     font-family: 'Open Sans', sans-serif;
 }
+.full-width {
+    width: 100%;
+}
+.full-circle {
+    border-radius: 100%;
+}
+
+
 /* Navbar style */
 .main-header-container {
     width: 100%;
@@ -125,14 +133,22 @@ body {
     position: fixed;
     width: inherit;
 }
-
+.btn-stavka-ukloni {
+    font-size: 10px;
+    padding: 1.4px 4.75px;
+    transition: opacity .2s;
+    opacity: .3;
+}
+.btn-stavka-ukloni:hover,
+.btn-stavka-ukloni:focus,
+.btn-stavka-ukloni:active {
+    color: #fff;
+    opacity: 1;
+}
 /* --- Custom Button styles --- */
 /* Main 1 button style */
-.btn-main-1 {
+.btn-main-color-1 {
     color: #fff;
     background-color: #CB202D;
     border-color: #CB202D;
-}
-.full-width {
-    width: 100%;
 }

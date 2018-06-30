@@ -1,4 +1,4 @@
-﻿html, body {
+html, body {
     padding: 0;
     margin: 0;
 }
@@ -85,7 +85,67 @@ body {
 .small-logo-text {
     display: inline-block;
 }
+.small-logo-text .header-text h1.main-title {
+    font-size: 45px;
+}
 
-    .small-logo-text .header-text h1.main-title {
-        font-size: 45px;
-    }
+/* --- Korpa styles --- */
+#korpa {
+    padding: 10px 15px;
+}
+.korpa-main-wrap .panel-default {
+    border: 1px solid #ccc;
+    border-radius: 3.5px;
+}
+.korpa-main-wrap.affix .panel-default {
+    margin-right: 30px;
+}
+.korpa-stavke {
+    padding: 0 10px;
+}
+.korpa-stavka {
+    border-bottom: 1.5px dotted #ccc;
+    padding: 10px 0;
+}
+.korpa-stavka .stavka-main {
+    font-size: 14px;
+}
+.korpa-details {
+    font-size: 9px;
+    color: #aaa;
+}
+.korpa-sum {
+    padding: 10px 0;
+}
+.korpa-top {
+    font-size: 17px;
+}
+#korpa .panel-heading .panel-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+.korpa-stavka .stavka-detalji {
+    font-size: 12px;
+    color: #aaa;
+}
+#korpa .panel-heading {
+    background: transparent;
+    border: none;
+    padding: 15px 15px 0 15px;
+}
+#korpa .korpa-main-wrap.affix {
+    top: 50px;
+    position: fixed;
+    width: inherit;
+}
+
+/* --- Custom Button styles --- */
+/* Main 1 button style */
+.btn-main-1 {
+    color: #fff;
+    background-color: #CB202D;
+    border-color: #CB202D;
+}
+.full-width {
+    width: 100%;
+}

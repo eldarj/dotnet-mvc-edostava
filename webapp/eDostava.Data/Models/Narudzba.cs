@@ -12,7 +12,7 @@ namespace eDostava.Data.Models
         NijeValidna,
         [Display(Name = "Narudžba isporučena!")]
         Isporucena,
-        [Display(Name = "Vaša narudžba:")]
+        [Display(Name = "Dodane stavke:")]
         Aktivna,
         [Display(Name = "Dodajte hranu")]
         Prazna

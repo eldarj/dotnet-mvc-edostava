@@ -27,14 +27,6 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/style.css" />        
-        
-        <!-- Custom JS -->
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/js/ajax.js"></script>
-
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
@@ -42,6 +34,18 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
               integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
               crossorigin="anonymous">
+
+        <!-- Alertify popups -->
+        <link rel="stylesheet" href="~/lib/alertify.js/dist/css/alertify.css" />
+
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/style.css" />
+
+        <!-- Custom JS -->
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/ajax.js"></script>
     </environment>
 </head>
 <body>
@@ -112,6 +116,7 @@
         </div>
         <hr />
         <footer></footer>
+    <script src="~/lib/alertify.js/dist/js/alertify.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

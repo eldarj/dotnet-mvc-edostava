@@ -153,4 +153,6 @@ body {
     background-color: #CB202D;
     border-color: #CB202D;
 }
+.alertify-logs .btn {
+    margin-left: 25px;
 }

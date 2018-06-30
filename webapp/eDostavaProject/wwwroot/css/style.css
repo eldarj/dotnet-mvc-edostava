@@ -1,14 +1,14 @@
+/* --- General styles --- */
 html, body {
     padding: 0;
     margin: 0;
+    font-family: 'Open Sans', sans-serif;
 }
-
 body {
     padding-top: 40px;
+    font-family: 'Open Sans', sans-serif;
 }
 /* Navbar style */
-
-
 .main-header-container {
     width: 100%;
     background-image: url(../images/wallpapers/main_background.jpg);
@@ -16,11 +16,9 @@ body {
     background-size: cover;
     min-height: 425px;
 }
-
 .logo-home {
     padding: 100px 50px 25px 50px;
 }
-
 .main-logo {
     background: #CB202D;
     border-radius: 5px;
@@ -29,59 +27,48 @@ body {
     display: flex;
     margin: auto;
 }
-
 .main-logo-name {
     margin: auto;
     font-size: 37px;
     color: #fff;
 }
-
-    .main-logo-name:hover {
-        text-decoration: none;
-        color: #fff;
-    }
-
+.main-logo-name:hover {
+    text-decoration: none;
+    color: #fff;
+}
 .main-header-container .text-wrap {
     padding-bottom: 25px;
 }
-
 .header-text h1.main-title {
     color: #fff;
     text-align: center;
     line-height: 34px;
     font-size: 65px;
 }
-
 .header-text h2.main-subtitle {
     color: #fff;
     text-align: center;
     font-size: 26px;
     font-weight: 400;
 }
-
 /* Small logo */
 .small-logo .main-logo {
     margin: 25px 50px;
     width: 100px;
     height: 100px;
 }
-
 .main-header-container.small-header {
     min-height: auto;
 }
-
 .small-logo .logo-home {
     padding: 0;
 }
-
 .small-logo .main-logo .main-logo-name {
     font-size: 20px;
 }
-
 .small-logo {
     display: inline-block;
 }
-
 .small-logo-text {
     display: inline-block;
 }

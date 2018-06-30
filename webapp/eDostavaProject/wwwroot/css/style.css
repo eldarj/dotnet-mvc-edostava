@@ -85,7 +85,7 @@ body {
 }
 
 /* --- Korpa styles --- */
-#korpa {
+.korpa-outer-wrap {
     padding: 10px 15px;
 }
 .korpa-main-wrap .panel-default {
@@ -128,7 +128,7 @@ body {
     border: none;
     padding: 15px 15px 0 15px;
 }
-#korpa .korpa-main-wrap.affix {
+#korpa.korpa-main-wrap.affix {
     top: 50px;
     position: fixed;
     width: inherit;

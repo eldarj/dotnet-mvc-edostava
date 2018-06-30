@@ -95,8 +95,11 @@
                     <div class="col-sm-12 col-md-9">
                         @RenderBody()
                     </div>
-                    <div id="korpa" class="col-sm-12 col-md-3">
-                        @await Component.InvokeAsync("Korpa")
+                    <div class="korpa-outer-wrap col-sm-12 col-md-3">
+
+                        <div id="korpa" class="korpa-main-wrap panel" data-smart-affix>
+                            @await Component.InvokeAsync("Korpa")
+                        </div>
                     </div>
                 }
                 else

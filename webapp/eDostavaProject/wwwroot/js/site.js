@@ -2,7 +2,7 @@
 $(document).ready(function () {
     $(function () {
         // Korpa element
-        let korpa = $("#korpa");
+        let korpa = $(".korpa-outer-wrap");
         korpa.dynamicWidth = function () {
             korpa.css("width", korpa[0].getBoundingClientRect().width);
         }

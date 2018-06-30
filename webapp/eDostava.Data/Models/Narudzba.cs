@@ -8,11 +8,14 @@ namespace eDostava.Data.Models
 
     public enum Stanje
     {
-        Prihvacena,
-        Odbijena,
+        [Display(Name = "Narudžba nije validna!")]
+        NijeValidna,
+        [Display(Name = "Narudžba isporučena!")]
         Isporucena,
-        [Display(Name = "Nemate narudžbi")]
-        NePostoji
+        [Display(Name = "Vaša narudžba:")]
+        Aktivna,
+        [Display(Name = "Dodajte hranu")]
+        Prazna
     }
     public class Narudzba
     {
@@ -21,7 +24,7 @@ namespace eDostava.Data.Models
         public Guid Sifra { get; set; } = Guid.NewGuid();
         public DateTime DatumVrijeme { get; set; } = DateTime.UtcNow;
         public double UkupnaCijena { get; set; } = 0;
-        public Stanje Status { get; set; } = Stanje.NePostoji;
+        public Stanje Status { get; set; } = Stanje.Prazna;
         [ForeignKey("Kupon")]
         public int? KuponID { get; set; }
         public Kupon Kupon { get; set; }

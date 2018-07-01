@@ -1,5 +1,13 @@
-﻿<h1>Korisnik</h1>
-
-<div class="korisnik col-sm-5">
-    <a href="/Korisnik/Profil" class="btn btn-primary btn-lg">Podaci</a>
+﻿<h1>Moj profil</h1>
+<hr />
+<div class="korisnik-page-wrap">
+    <div class="korisnik-left-wrap col-sm-3">
+        <div class="btn-group-vertical">
+            <a asp-action="Profil" ajax-poziv="ajaxDa" ajax-rezultat="korisnik-right-wrap" type="button" class="btn btn-default">Korisnički podaci</a>
+            <a type="button" class="btn btn-default">Narudžbe</a>
+        </div>
+    </div>
+    <div id="korisnik-right-wrap" class="korisnik col-sm-9">
+        ...
+    </div>
 </div>

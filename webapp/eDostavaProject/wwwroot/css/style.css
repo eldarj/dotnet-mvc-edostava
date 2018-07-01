@@ -164,3 +164,28 @@ body {
 .alertify-logs .btn {
     margin-left: 25px;
 }
+
+/* Moj profil */
+.korisnik-page-wrap {
+    display: flex;
+}
+.korisnik-left-wrap .btn-group-vertical {
+    width: 100%;
+}
+.korisnik-left-wrap .btn-group-vertical a {
+    transition: border .2s;
+    text-align: left;
+}
+.korisnik-left-wrap {
+    padding-left: 0;
+    border-right: 1px solid #eee;
+}
+.korisnik-left-wrap .btn-group-vertical a.btn:focus,
+.korisnik-left-wrap .btn-group-vertical a.btn:active {
+    border-color: #d4d4d4;
+    background: #fff;
+    border-left: 4px solid #CB202D;
+    border-radius: 0;
+    outline: 0;
+    box-shadow: none;
+}

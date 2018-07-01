@@ -26,17 +26,17 @@ namespace eDostava.Web.Controllers
 
         public IActionResult Profil()
         {
-            Narucilac n = new Narucilac();
-            n = HttpContext.GetLogiranogNarucioca();
+            Narucilac n = context.Narucioci.Where(s => s.KorisnikID == HttpContext.GetLogiranogNarucioca().KorisnikID).First();
 
             ProfilVM profil = new ProfilVM
             {
-                ProfilID = n.KorisnikID,
+                KorisnikID = n.KorisnikID,
                 Ime = n.Ime,
                 Prezime = n.Prezime,
                 Username = n.Username,
                 Password = n.Password,
                 Telefon = n.Telefon,
+                Email = n.Email,
                 BadgeId = n.BadgeID,
                 Badge = Badgevi(),
                 BlokId = n.BlokID,
@@ -44,13 +44,34 @@ namespace eDostava.Web.Controllers
             };
 
 
-            return View(profil);
+            return PartialView(profil);
         }
 
-        public IActionResult Snimi(ProfilVM profil)
+        public IActionResult Snimi(ProfilVM model)
         {
-            
-            return View("Index");
+            Narucilac narucilac;
+            if (model.KorisnikID == 0)
+            {
+                narucilac = new Narucilac();
+                context.Narucioci.Add(narucilac);
+            }
+            else
+            {
+                narucilac = context.Narucioci.Find(model.KorisnikID);
+            }
+
+            narucilac.Ime = model.Ime;
+            narucilac.Prezime = model.Prezime;
+            narucilac.Telefon = model.Telefon;
+            narucilac.Username = model.Username;
+            narucilac.Password = model.Password;
+            narucilac.Email = model.Email;
+            narucilac.DatumKreiranja = Convert.ToDateTime(model.DatumKreiranja);
+            narucilac.BadgeID = (int) model.BadgeId;
+            narucilac.BlokID = (int)model.BlokId;
+
+            context.SaveChanges();
+            return RedirectToAction("Profil");
         }
 
         private List<SelectListItem> Blokovi()

@@ -46,6 +46,14 @@ namespace KorpaSessionExtensions
         /// Vraća listu <see cref="List{T}"/> sa stavkama - <see cref="StavkaNarudzbe"/> iz korisničke sesije.
         /// </summary>
         public static List<StavkaNarudzbe> GetStavke(this HttpContext context) => context.Session.Get<List<StavkaNarudzbe>>(_stavke) ?? new List<StavkaNarudzbe>();
+
+        public static List<StavkaNarudzbe> InitStavke(this HttpContext context)
+        {
+            List<StavkaNarudzbe> stavke = new List<StavkaNarudzbe>();
+            SetStavke(context, stavke);
+
+            return stavke;
+        }
     }
 
 }

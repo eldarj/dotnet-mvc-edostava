@@ -152,6 +152,14 @@ body {
     color: #fff;
     background-color: #CB202D;
     border-color: #CB202D;
+    opacity: .9;
+    transition: opacity .2s;
+}
+.btn-main-color-1:hover,
+.btn-main-color-1:focus,
+.btn-main-color-1:active {
+    color: #fff;
+    opacity: 1;
 }
 .alertify-logs .btn {
     margin-left: 25px;

@@ -34,12 +34,15 @@
             <div class="korpa-sum">
                 <p><span>Kupon: </span>@(Model.Narudzba.GetKuponOpis)</p>
                 <p><span>Ukupno: </span>@Model.Narudzba.UkupnaCijena KM</p>
-                <div class="btn btn-sm btn-danger btn-main-color-1 full-width"
-                     data-alertify
-                     data-alertify-text="Narudžba je isporučena!"
-                     data-alertify-btn-pre-text="Pogledajte detalje vaše narudžbe:"
-                     data-alertify-btn-text="Narudžba">Naruči</div>
-
+                <a class="btn btn-sm btn-main-color-1 full-width "
+                   asp-action="Naruci"
+                   asp-controller="Korpa"
+                   ajax-poziv="ajaxDa"
+                   ajax-rezultat="korpa"
+                   data-alertify
+                   data-alertify-text="Narudžba je isporučena!"
+                   data-alertify-btn-pre-text="Pogledajte detalje vaše ifrudžbe:"
+                   data-alertify-btn-text="Narudžba">Naruči</a>
             </div>
             <div class="korpa-details">
                 <p><span>Sifra: </span>@Model.Narudzba.Sifra</p>

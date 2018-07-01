@@ -65,10 +65,7 @@ namespace eDostava.Web.Controllers
 
             if (stavke.AddUnique(_stavka))
             {
-                if (narudzba.Status != Stanje.Aktivna)
-                {
-                    narudzba.Status = Stanje.Aktivna;
-                }
+                narudzba.Status = Stanje.Aktivna;
                 narudzba.UkupnaCijena += _stavka.CalcCijena;
                 HttpContext.SetNarudzba(narudzba);
                 HttpContext.SetStavke(stavke);
@@ -86,9 +83,41 @@ namespace eDostava.Web.Controllers
             if (stavke.UmanjiKolicinu(stavka))
             {
                 narudzba.UkupnaCijena -= stavka.Hrana.Cijena;
+
+                if (!stavke.Any())
+                {
+                    narudzba.Status = Stanje.Prazna;
+                }
+
                 HttpContext.SetNarudzba(narudzba);
                 HttpContext.SetStavke(stavke);
             }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Naruci()
+        {
+            Narudzba narudzba = HttpContext.GetNarudzba();
+            List<StavkaNarudzbe> stavke = HttpContext.GetStavke();
+
+            narudzba.Status = Stanje.Isporucena;
+
+            context.Narudzbe.Add(narudzba);
+            context.SaveChanges();
+
+            foreach (var s in stavke)
+            {
+                context.StavkeNarudzbe.Add(new StavkaNarudzbe {
+                    NarudzbaID = narudzba.NarudzbaID,
+                    HranaID = s.HranaID,
+                    Kolicina = s.Kolicina
+                });
+            }
+            context.SaveChanges();
+
+            HttpContext.InitNarudzba();
+            HttpContext.InitStavke();
 
             return RedirectToAction("Index");
         }

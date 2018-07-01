@@ -34,6 +34,23 @@
         else
             urlZaPoziv = urlZaPoziv2;
 
+        // Takođe provjeri linkove sa alertify.js popup-om
+        if (typeof $(this).attr('data-alertify') !== 'undefined') {
+            console.log("YES!");
+            let self = $(this);
+            let msg = '';
+            if (self.attr('data-alertify-text')) {
+                msg += `<p> ${self.attr('data-alertify-text')} </p>`;
+            }
+            if (self.attr('data-alertify-btn-pre-text')) {
+                msg += `<span> ${self.attr('data-alertify-btn-pre-text')} </span>`;
+            }
+            if (self.attr('data-alertify-btn-text')) {
+                msg += `<a class="btn btn-sm btn-danger center" href="#">${self.attr('data-alertify-btn-text')}</a>`;
+            }
+            alertify.log(msg);
+        }
+
         $.ajax({
             type: "GET",
             url: urlZaPoziv,

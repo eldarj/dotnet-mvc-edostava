@@ -101,8 +101,6 @@ namespace eDostava.Web.Controllers
             Narudzba narudzba = HttpContext.GetNarudzba();
             List<StavkaNarudzbe> stavke = HttpContext.GetStavke();
 
-            narudzba.Status = Stanje.Isporucena;
-
             context.Narudzbe.Add(narudzba);
             context.SaveChanges();
 
@@ -116,7 +114,7 @@ namespace eDostava.Web.Controllers
             }
             context.SaveChanges();
 
-            HttpContext.InitNarudzba();
+            HttpContext.IsporuciNarudzbu();
             HttpContext.InitStavke();
 
             return RedirectToAction("Index");

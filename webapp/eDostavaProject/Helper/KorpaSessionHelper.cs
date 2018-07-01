@@ -36,6 +36,17 @@ namespace KorpaSessionExtensions
 
             return narudzba;
         }
+
+        public static Narudzba IsporuciNarudzbu(this HttpContext context)
+        {
+            Narudzba narudzba = new Narudzba {
+                Status = Stanje.Isporucena
+            };
+
+            SetNarudzba(context, narudzba);
+
+            return narudzba;
+        }
         /// <summary>
         /// Prima listu <see cref="List{T}"/> sa stavkama - <see cref="StavkaNarudzbe"/> i setuje u korisničku sesiju.
         /// </summary>

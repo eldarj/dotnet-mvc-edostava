@@ -10,6 +10,11 @@
     padding-right: 15px;
 }
 
+/* Navbar */
+.navbar li.nav-item a {
+    color: rgba(0, 0, 0, .5);
+} 
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;

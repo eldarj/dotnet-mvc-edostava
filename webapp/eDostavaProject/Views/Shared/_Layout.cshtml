@@ -2,9 +2,6 @@
 @using KorpaSessionExtensions
 
 @{ 
-    string trenutnoLogiran = Context.Session.GetString("trenutnoLogiran");
-    string logiranKao = Context.Session.GetString("logiranKao");
-
     bool? _jeNarucilac = Context.Session.JeNarucilac();
 }
 <!DOCTYPE html>
@@ -34,6 +31,9 @@
                     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" 
                     crossorigin="anonymous"></script>
 
+            <!-- Custom styles for BS4 Album template  -->
+            <link href="/css/offcanvas.css" rel="stylesheet">
+
             <!-- Fonts -->
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
@@ -56,38 +56,8 @@
         </environment>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">Logged: @logiranKao - @trenutnoLogiran </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Index" asp-controller="Restorani">Restorani</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Index" asp-controller="Korisnik">Moj Profil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Index" asp-controller="Grad">Gradovi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-action="Index" asp-controller="Login" class="nav-link" style="color:red;margin-right:5px">Logout</a>
-                    </li>
-                </ul>
-            
-                <form asp-action="Index" asp-controller="Restorani" method="get" class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" id="searchString" name="searchString" size="48"  placeholder="Pretraga restorana po nazivu,opisu ili lokaciji." >
-                
-                    <button  class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
+        @Html.Partial("../Shared/Partials/Mainnav.cshtml")
+        @Html.Partial("../Shared/Partials/Subnav.cshtml")
         <div class="container-fluid body-content">
             @{
                 var home = ViewBag.IsHome;

@@ -6,50 +6,50 @@
 }
 
 @model KorpaPrikazVM
-    <div class="panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Moja narudžba</h3>
+<div class="panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Moja narudžba</h3>
+    </div>
+    <div class="panel-body">
+        <div class="korpa-top">
+            <p>@Model.Narudzba.Status.GetDisplay()</p>
         </div>
-        <div class="panel-body">
-            <div class="korpa-top">
-                <p>@Model.Narudzba.Status.GetDisplay()</p>
-            </div>
-            <div class="korpa-stavke">
-                @foreach (var x in Model.Stavke)
-            {
-                    <div class="korpa-stavka">
-                        <div class="stavka-main">
-                            <span>@x.Kolicina  x @x.Naziv</span>
-                            <a asp-action="Ukloni"
-                               asp-controller="Korpa"
-                               asp-route-id="@x.ProizvodID"
-                               ajax-poziv="ajaxDa"
-                               ajax-rezultat="korpa"
-                               class="btn btn-main-color-1 btn-stavka-ukloni full-circle pull-right"><i class="fas fa-times"></i></a>
-                        </div>
-                        <div class="stavka-detalji">Cijena: @x.Cijena KM</div>
+        <div class="korpa-stavke">
+            @foreach (var x in Model.Stavke)
+        {
+                <div class="korpa-stavka">
+                    <div class="stavka-main">
+                        <span>@x.Kolicina  x @x.Naziv</span>
+                        <a asp-action="Ukloni"
+                            asp-controller="Korpa"
+                            asp-route-id="@x.ProizvodID"
+                            ajax-poziv="ajaxDa"
+                            ajax-rezultat="korpa"
+                            class="btn btn-main-color-1 btn-stavka-ukloni full-circle pull-right"><i class="fas fa-times"></i></a>
                     </div>
-                }
-            </div>
-            <div class="korpa-sum">
-                <p><span>Kupon: </span>@(Model.Narudzba.GetKuponOpis)</p>
-                <p><span>Ukupno: </span>@Model.Narudzba.UkupnaCijena KM</p>
-                <a class="btn btn-sm btn-main-color-1 full-width
-                    @if (Model.Narudzba.Status != eDostava.Data.Models.Stanje.Aktivna)
-                    {
-                        @:disabled
-                    } "
-                   asp-action="Naruci"
-                   asp-controller="Korpa"
-                   ajax-poziv="ajaxDa"
-                   ajax-rezultat="korpa"
-                   data-alertify
-                   data-alertify-text="Narudžba isporučena!"
-                   data-alertify-btn-pre-text="Pogledajte detalje vaše narudžbe:"
-                   data-alertify-btn-text="Detalji">Naruči</a>
-            </div>
-            <div class="korpa-details">
-                <p><span>Sifra: </span>@Model.Narudzba.Sifra</p>
-            </div>
+                    <div class="stavka-detalji">Cijena: @x.Cijena KM</div>
+                </div>
+            }
+        </div>
+        <div class="korpa-sum">
+            <p><span>Kupon: </span>@(Model.Narudzba.GetKuponOpis)</p>
+            <p><span>Ukupno: </span>@Model.Narudzba.UkupnaCijena KM</p>
+            <a class="btn btn-sm btn-main-color-1 full-width
+                @if (Model.Narudzba.Status != eDostava.Data.Models.Stanje.Aktivna)
+                {
+                    @:disabled
+                } "
+                asp-action="Naruci"
+                asp-controller="Korpa"
+                ajax-poziv="ajaxDa"
+                ajax-rezultat="korpa"
+                data-alertify
+                data-alertify-text="Narudžba isporučena!"
+                data-alertify-btn-pre-text="Pogledajte detalje vaše narudžbe:"
+                data-alertify-btn-text="Detalji">Naruči</a>
+        </div>
+        <div class="korpa-details">
+            <p><span>Sifra: </span>@Model.Narudzba.Sifra</p>
         </div>
     </div>
+</div>

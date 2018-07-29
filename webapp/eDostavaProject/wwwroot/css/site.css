@@ -34,8 +34,6 @@
     }
 }
 
-
-
 .center-div {
     position: absolute;
     margin: auto;
@@ -47,4 +45,9 @@
     height: 100px;
     background-color: #ccc;
     border-radius: 3px;
+}
+
+.korpa-main-wrap.panel {
+    position: sticky;
+    top: 60px;
 }

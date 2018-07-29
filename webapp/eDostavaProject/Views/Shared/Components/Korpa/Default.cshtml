@@ -6,28 +6,28 @@
 }
 
 @model KorpaPrikazVM
-<div class="panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Moja narudžba</h3>
+<div class="panel-default rounded border">
+    <div class="panel-heading p-2">
+        <h5 class="panel-title">Moja narudžba</h5>
     </div>
-    <div class="panel-body">
+    <div class="panel-body p-2">
         <div class="korpa-top">
             <p>@Model.Narudzba.Status.GetDisplay()</p>
         </div>
-        <div class="korpa-stavke">
+        <div class="korpa-stavke px-2">
             @foreach (var x in Model.Stavke)
-        {
-                <div class="korpa-stavka">
-                    <div class="stavka-main">
+            {
+                <div class="korpa-stavka py-2 d-flex flex-column">
+                    <div class="stavka-main d-flex align-items-center">
                         <span>@x.Kolicina  x @x.Naziv</span>
                         <a asp-action="Ukloni"
                             asp-controller="Korpa"
                             asp-route-id="@x.ProizvodID"
                             ajax-poziv="ajaxDa"
                             ajax-rezultat="korpa"
-                            class="btn btn-main-color-1 btn-stavka-ukloni full-circle pull-right"><i class="fas fa-times"></i></a>
+                            class="btn-main-color-1 btn-stavka-ukloni rounded-circle float-right ml-auto d-flex justify-content-center align-items-center"><i class="fas fa-times"></i></a>
                     </div>
-                    <div class="stavka-detalji">Cijena: @x.Cijena KM</div>
+                    <div class="stavka-detalji small text-secondary">Cijena: @x.Cijena KM</div>
                 </div>
             }
         </div>
@@ -48,7 +48,7 @@
                 data-alertify-btn-pre-text="Pogledajte detalje vaše narudžbe:"
                 data-alertify-btn-text="Detalji">Naruči</a>
         </div>
-        <div class="korpa-details">
+        <div class="korpa-details  text-secondary">
             <p><span>Sifra: </span>@Model.Narudzba.Sifra</p>
         </div>
     </div>

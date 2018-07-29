@@ -30,7 +30,10 @@ namespace KorpaSessionExtensions
 
         public static Narudzba InitNarudzba(this HttpContext context)
         {
-            Narudzba narudzba = new Narudzba();
+            Narucilac narucilac = context.GetLogiranogNarucioca();
+            Narudzba narudzba = new Narudzba{
+                NarucilacID = narucilac.KorisnikID
+            };
 
             SetNarudzba(context, narudzba);
 

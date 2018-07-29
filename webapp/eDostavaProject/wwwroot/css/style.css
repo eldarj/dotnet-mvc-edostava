@@ -5,7 +5,7 @@ html, body {
     font-family: 'Open Sans', sans-serif;
 }
 body {
-    padding-top: 55px;
+    /* padding-top: 55px; */
     font-family: 'Open Sans', sans-serif;
 }
 .full-width {
@@ -17,6 +17,11 @@ body {
 
 
 /* Navbar style */
+.navbar {
+    position: sticky;
+    z-index: 5;
+    top: 0;
+}
 .main-header-container {
     width: 100%;
     background-image: url(../images/wallpapers/main_background.jpg);
@@ -86,7 +91,7 @@ body {
 
 /* --- Korpa styles --- */
 .korpa-outer-wrap {
-    padding: 10px 15px;
+    /* padding: 10px 0px; */
 }
 .korpa-stavka {
     border-bottom: 1.75px dotted #FFCB9C;

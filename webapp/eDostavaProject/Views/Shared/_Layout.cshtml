@@ -56,8 +56,8 @@
         </environment>
     </head>
     <body>
-        @Html.Partial("../Shared/Partials/Mainnav.cshtml")
         @Html.Partial("../Shared/Partials/Subnav.cshtml")
+        @Html.Partial("../Shared/Partials/Mainnav.cshtml")
         <div class="container-fluid body-content">
             @{
                 var home = ViewBag.IsHome;
@@ -71,22 +71,17 @@
             }
             <div class="container">
                 <div class="row">
+                    <div class="col-sm-12 col-md-9 p-2">
+                        <div class="border rounded bg-white shadow py-2 px-3">
+                            @RenderBody()
+                        </div>
+                    </div>
                     @if (_jeNarucilac == true)
                     {
-                        <div class="col-sm-12 col-md-9">
-                            @RenderBody()
-                        </div>
-                        <div class="korpa-outer-wrap px-3 py-2 col-sm-12 col-md-3">
-
-                            <div id="korpa" class="korpa-main-wrap panel">
+                        <div class="korpa-outer-wrap py-2 col-sm-12 col-md-3 px-0 py-1">
+                            <div id="korpa" class="korpa-main-wrap panel shadow">
                                 @await Component.InvokeAsync("Korpa")
                             </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-sm-12 col-md-12">
-                            @RenderBody()
                         </div>
                     }
                 </div>

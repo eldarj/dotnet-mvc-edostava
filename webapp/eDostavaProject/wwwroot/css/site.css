@@ -54,7 +54,5 @@
 
 .korpa-main-wrap.panel {
     position: sticky;
-    top: 60px;
-    
-     /* required */
+    top: 70px;
 }

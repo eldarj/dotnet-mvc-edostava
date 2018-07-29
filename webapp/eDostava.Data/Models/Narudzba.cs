@@ -25,6 +25,8 @@ namespace eDostava.Data.Models
         public DateTime DatumVrijeme { get; set; } = DateTime.UtcNow;
         public double UkupnaCijena { get; set; } = 0;
         public Stanje Status { get; set; } = Stanje.Prazna;
+        [ForeignKey("Narucilac")]
+        public int NarucilacID { get; set; }
         [ForeignKey("Kupon")]
         public int? KuponID { get; set; }
         public Kupon Kupon { get; set; }

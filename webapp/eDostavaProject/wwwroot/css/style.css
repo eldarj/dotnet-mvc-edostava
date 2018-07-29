@@ -108,6 +108,8 @@ body {
 }
 .btn-stavka-ukloni {
     padding: 1px 2px;
+    height: 20px;
+    width: 20px;
 }
 .btn-stavka-ukloni i {
     font-size: 9px;

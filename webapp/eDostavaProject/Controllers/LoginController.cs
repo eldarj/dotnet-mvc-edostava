@@ -22,6 +22,11 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.GetLogiranogNarucioca() != null || HttpContext.GetLogiranogVlasnika() != null || HttpContext.GetLogiranogModeratora() != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             BlokListaVM model = new BlokListaVM();
              model.blokovi = context.Blokovi.Include(x=>x.Grad).Select(x => new SelectListItem
             {
@@ -66,11 +71,16 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
             }
 
 
-            return RedirectToAction("Index", "Restorani");
+            return RedirectToAction("Index", "Home");
 
 
         }
 
+        public IActionResult Odjava()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
 
         public IActionResult Registracija(int blokid, string korisnik,string ime,string prezime,string username,string password,string email, DateTime datumKreiranja)
         {

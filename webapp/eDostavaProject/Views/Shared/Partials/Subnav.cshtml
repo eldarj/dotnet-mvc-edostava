@@ -5,12 +5,9 @@
 <div class="container">
     <div class="nav-scroller bg-white d-flex">
         <nav class="nav nav-underline ml-auto">
-            <a class="nav-link" href="/login">Login</a>
-            <a class="nav-link" href="/register">Register</a>
-
+            <a class="nav-link text-dark">Dobrodošli <span class="text-warning">@trenutnoLogiran</span>!</a>
             <a class="nav-link" asp-action="Index" asp-controller="Korisnik">Profil</a>
-            <a class="nav-link" href="/chat/signup">Dobrodošli <span class="text-warning">@trenutnoLogiran</span>!</a>
-            <a class="nav-link" asp-action="Index" asp-controller="Login">Logout</a>
+            <a class="nav-link" asp-action="Odjava" asp-controller="Login">Logout</a>
         </nav>
     </div>
 </div>

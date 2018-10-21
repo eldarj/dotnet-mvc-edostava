@@ -9,6 +9,16 @@
 <div class="panel-default rounded border">
     <div class="panel-heading py-2 px-3">
         <h5 class="panel-title">Moja narudžba</h5>
+        @if (Model.Stavke.Count > 0)
+        {
+            <a asp-controller="Korpa"
+               asp-action="Odbaci"
+               ajax-poziv="da"
+               ajax-rezultat="korpa"
+               class="korpa-delete-all my-2 mx-3 btn btn-sm btn-main-color-1">
+                <i class="fa fa-trash-alt"></i>
+            </a>
+        }
     </div>
     <div class="panel-body py-2 px-3">
         <div class="korpa-top">

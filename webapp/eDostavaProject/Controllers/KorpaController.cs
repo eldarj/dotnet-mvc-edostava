@@ -119,5 +119,12 @@ namespace eDostava.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Odbaci()
+        {
+            HttpContext.InitStavke();
+            HttpContext.InitNarudzba();
+            return RedirectToAction("Index");
+        }
     }
 }

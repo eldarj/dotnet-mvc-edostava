@@ -114,6 +114,11 @@ body {
 .btn-stavka-ukloni i {
     font-size: 9px;
 }
+.korpa-delete-all {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 /* --- Custom Button styles --- */
 /* Main 1 button style */
 .btn-main-color-1 {

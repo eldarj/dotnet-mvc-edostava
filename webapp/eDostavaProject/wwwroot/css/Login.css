@@ -9,7 +9,30 @@ login-page {
     padding: 8% 0 0;
     margin: auto;
 }
-
+.logo-login {
+    margin-bottom: 20px;
+}
+.main-logo {
+    background: #CB202D;
+    border-radius: 5px;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    margin-right: auto;
+}
+.main-logo-name {
+    margin: auto;
+    text-decoration: none;
+    font-size: 24px;
+    color: #fff;
+}
+.text-left {
+    text-align:left;
+}
+.main-logo-name:hover {
+    text-decoration: none;
+    color: #fff;
+}
 .form {
     position: relative;
     z-index: 1;
@@ -46,10 +69,10 @@ login-page {
     }
 
     .form button {
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         text-transform: uppercase;
         outline: 0;
-        background: #045266;
+        background: #CB202D;
         width: 100%;
         border: 0;
         padding: 15px;
@@ -58,28 +81,27 @@ login-page {
         -webkit-transition: all 0.3 ease;
         transition: all 0.3 ease;
         cursor: pointer;
+        opacity: .9;
     }
 
         .form button:hover, .form button:active, .form button:focus {
-            background: #0087aa;
+            opacity: 1;
         }
 
     .form .message {
         margin: 15px 0 0;
-        color: #0087aa;
         font-size: 15px;
         
     }
      
        .form .message a:hover
        {
-           color:blue;
            text-decoration:underline;
            
        }
 
         .form .message a {
-            color: #0087aa;
+            color: #CB202D;
             text-decoration: none;
             font-size: 110%;
         }
@@ -130,10 +152,10 @@ login-page {
 
 body {
     background: #76b852; /* fallback for old browsers */
-    background: -webkit-linear-gradient(right, #002b36, #045266);
-    background: -moz-linear-gradient(right, #002b36, #045266);
-    background: -o-linear-gradient(right, #002b36, #045266);
-    background: linear-gradient(to left, #002b36, #045266);
+    background: -webkit-linear-gradient(right, #fff, #fafafa);
+    background: -moz-linear-gradient(right, #fff, #fafafa);
+    background: -o-linear-gradient(right, #fff, #fafafa);
+    background: linear-gradient(to left, #fff, #fafafa);
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -27,8 +27,7 @@ namespace eDostava.Web.Controllers
         public IActionResult Profil()
         {
             Narucilac n = context.Narucioci.Where(s => s.KorisnikID == HttpContext.GetLogiranogNarucioca().KorisnikID).First();
-
-            ProfilVM profil = new ProfilVM
+            return PartialView(new ProfilVM
             {
                 KorisnikID = n.KorisnikID,
                 Ime = n.Ime,
@@ -41,10 +40,7 @@ namespace eDostava.Web.Controllers
                 Badge = Badgevi(),
                 BlokId = n.BlokID,
                 Blok = Blokovi(),
-            };
-
-
-            return PartialView(profil);
+            });
         }
 
         public IActionResult Snimi(ProfilVM model)
@@ -64,21 +60,55 @@ namespace eDostava.Web.Controllers
             narucilac.Prezime = model.Prezime;
             narucilac.Telefon = model.Telefon;
             narucilac.Username = model.Username;
-            narucilac.Password = model.Password;
             narucilac.Email = model.Email;
             narucilac.DatumKreiranja = Convert.ToDateTime(model.DatumKreiranja);
-            narucilac.BadgeID = (int) model.BadgeId;
             narucilac.BlokID = (int)model.BlokId;
 
             context.SaveChanges();
             return RedirectToAction("Profil");
         }
 
+        public IActionResult Lozinka()
+        {
+            Narucilac n = context.Narucioci.Where(s => s.KorisnikID == HttpContext.GetLogiranogNarucioca().KorisnikID).First();
+            return PartialView(new ProfilLozinkaVM
+            {
+                KorisnikID = n.KorisnikID
+            });
+        }
+
+        public IActionResult SnimiLozinku(ProfilLozinkaVM model)
+        {
+            Narucilac narucilac = context.Narucioci.Find(model.KorisnikID);
+
+            if (model.Password == narucilac.Password && model.NoviPassword == model.NoviPasswordPonovo)
+            {
+                narucilac.Password = model.NoviPassword;
+                HttpContext.SetLogiranogNarucioca(narucilac);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Profil");
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public IActionResult ProvjeriLozinku(string Password)
+        {
+            Narucilac narucilac = HttpContext.GetLogiranogNarucioca();
+
+            if (narucilac.Password != Password)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
         private List<SelectListItem> Blokovi()
         {
             var blokovi = new List<SelectListItem>();
             blokovi.Add(new SelectListItem { Value = null, Text = "Izaberite blok" });
-            blokovi.AddRange(context.Blokovi.Select(x => new SelectListItem { Value = x.BlokID.ToString(), Text = x.Naziv }));
+            blokovi.AddRange(context.Blokovi.Select(x => new SelectListItem { Value = x.BlokID.ToString(), Text = x.Grad.Naziv + ", " + x.Naziv }));
             return blokovi;
         }
         private List<SelectListItem> Badgevi()

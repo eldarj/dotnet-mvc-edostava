@@ -139,6 +139,26 @@ body {
 }
 
 /* Moj profil */
+.live-edit .edit .live-edit-section {
+    color: #007bff;
+}
+.live-edit-section  {
+    color: #aaa;
+    cursor: pointer;
+}
+.live-edit-section:hover {
+    color: #007bff;
+}
+.live-edit div:not(.edit) input,
+.live-edit div:not(.edit) label,
+.live-edit div:not(.edit) select {
+    border-color: transparent;
+    pointer-events: none;
+}
+.live-edit:not(.edit) input[type=submit],
+.live-edit:not(.edit) a.cancel {
+    visibility: hidden;
+}
 .korisnik-page-wrap {
     display: flex;
 }
@@ -155,12 +175,7 @@ body {
 }
 .korisnik-left-wrap .btn-group-vertical a.btn:focus,
 .korisnik-left-wrap .btn-group-vertical a.btn:active {
-    border-color: #d4d4d4;
-    background: #fff;
-    border-left: 4px solid #CB202D;
-    border-radius: 0;
-    outline: 0;
-    box-shadow: none;
+    background: #5a6268;
 }
 :root {
     --jumbotron-padding-y: 3rem;
@@ -205,3 +220,14 @@ footer {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+/* Input fields - password toggle visibility btns */
+.see-password-input {
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity .25s;
+}
+.see-password-input:hover,
+.see-password-input:focus,
+.see-password-input:active {
+    opacity: .7;
+}

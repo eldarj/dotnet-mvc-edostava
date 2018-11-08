@@ -7,12 +7,12 @@ using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.AdminModul.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using eDostava.Web.Areas.AdminModul.Helper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eDostava.Web.Areas.AdminModul.Controllers
 {
-    [Area("AdminModul")]
-    public class NarucilacController : Controller
+    public class NarucilacController : AdminController
     {
         private MojContext context;
         public NarucilacController(MojContext db)
@@ -21,10 +21,10 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
         }
         public IActionResult Index()
         {
-            return View(GetAllNaruciociVM());
+            return View(PrepareAllNarucioce());
         }
 
-        private NarucilacPrikazVM GetAllNaruciociVM()
+        private NarucilacPrikazVM PrepareAllNarucioce()
         {
             return new NarucilacPrikazVM()
             {
@@ -74,6 +74,12 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
         public IActionResult Snimi(NarucilacUrediVM Model)
         {
+            if (!ModelState.IsValid)
+            {
+                Model.Blokovi = SviBlokovi();
+                return PartialView("Uredi", Model);
+            }
+
             Narucilac narucilac;
             if (Model.Id == 0)
             {
@@ -96,7 +102,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
             context.SaveChanges();
 
-            return PartialView("Index", GetAllNaruciociVM());
+            return PartialView("Index", PrepareAllNarucioce());
         }
 
         public IActionResult Obrisi(int id)
@@ -105,7 +111,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
             context.Narucioci.Remove(n);
             context.SaveChanges();
 
-            return PartialView("Index", GetAllNaruciociVM());
+            return PartialView("Index", PrepareAllNarucioce());
         }
 
         public IActionResult Detaljno(int id)

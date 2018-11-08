@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.Helper
 {
+    // Extension klasa za List<> - Helper za upravljanje stavkama narudzbi (Korpa)
     public static class ListExtensions
     {
         public static bool AddUnique(this List<StavkaNarudzbe> list, StavkaNarudzbe stavka)

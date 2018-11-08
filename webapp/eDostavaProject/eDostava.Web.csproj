@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\KorisnikModul\Data\" />
     <Folder Include="wwwroot\uploads\images\restoran\" />
   </ItemGroup>
 

@@ -45,6 +45,11 @@ namespace eDostava.Web.Controllers
 
         public IActionResult Snimi(ProfilVM model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Profil");
+            }
+
             Narucilac narucilac;
             if (model.KorisnikID == 0)
             {
@@ -79,6 +84,11 @@ namespace eDostava.Web.Controllers
 
         public IActionResult SnimiLozinku(ProfilLozinkaVM model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Lozinka");
+            }
+
             Narucilac narucilac = context.Narucioci.Find(model.KorisnikID);
 
             if (model.Password == narucilac.Password && model.NoviPassword == model.NoviPasswordPonovo)

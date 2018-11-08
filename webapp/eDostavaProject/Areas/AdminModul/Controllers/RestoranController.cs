@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using eDostava.Data.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using eDostava.Web.Areas.AdminModul.Helper;
 using Microsoft.AspNetCore.Authorization;
 
 namespace eDostava.Web.Areas.AdminModul.Controllers
 {
-    [Area("AdminModul")]
-    public class RestoranController : Controller
+    public class RestoranController : AdminController
     {
         private MojContext context;
         private IHostingEnvironment _appEnvironment;
@@ -28,10 +28,10 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
         }
         public IActionResult Index()
         {
-            return View(GetAllRestoraniVM());
+            return View(PrepareAllRestorani());
         }
 
-        private RestoranPrikazVM GetAllRestoraniVM()
+        private RestoranPrikazVM PrepareAllRestorani()
         {
             return new RestoranPrikazVM
             {
@@ -118,7 +118,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
                 string Filename = GetUniqueFileName(Model.Slika.FileName);
                 string Uploads = Path.Combine(_appEnvironment.WebRootPath, UploadFolder);
                 string FilePath = Path.Combine(Uploads, Filename); // Pripremi path i ime slike
-                Model.Slika.CopyTo(new FileStream(FilePath, FileMode.Create)); // Kopiraj content (uploaduj) slike
+                Model.Slika.CopyTo(new FileStream(FilePath, FileMode.Create)); // Uploaduj filestream (content/sliku)
                 
                 restoran.Slika = UploadFolder + "/" + Filename;
             }
@@ -130,7 +130,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
                 return RedirectToAction("IndexPartial", "Vlasnik", new { area = "AdminModul" });
             }
 
-            return PartialView("Index", GetAllRestoraniVM());
+            return PartialView("Index", PrepareAllRestorani());
         }
 
         public IActionResult Obrisi(int id)
@@ -140,7 +140,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
             context.Restorani.Remove(x);
             context.SaveChanges();
 
-            return PartialView("Index", GetAllRestoraniVM());
+            return PartialView("Index", PrepareAllRestorani());
         }
 
         private List<SelectListItem> SviBlokovi()

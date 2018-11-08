@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using eDostava.Data;
 using eDostava.Web.Areas.AdminModul.ViewModels;
+using eDostava.Web.Areas.AdminModul.Helper;
 using eDostava.Data.Models;
 
 namespace eDostava.Web.Areas.AdminModul.Controllers
 {
-    [Area("AdminModul")]
-    public class VlasnikController : Controller
+    public class VlasnikController : AdminController
     {
         private MojContext context;
         public VlasnikController(MojContext db)
@@ -19,15 +19,15 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
         }
         public IActionResult Index()
         {
-            return View(GetAllVlasniciVM());
+            return View(PrepareAllVlasnici());
         }
 
         public IActionResult IndexPartial()
         {
-            return PartialView("Index", GetAllVlasniciVM());
+            return PartialView("Index", PrepareAllVlasnici());
         }
 
-        private VlasnikPrikazVM GetAllVlasniciVM()
+        private VlasnikPrikazVM PrepareAllVlasnici()
         {
             return new VlasnikPrikazVM
             {
@@ -68,6 +68,11 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
         public IActionResult Snimi(VlasnikUrediVM Model)
         {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("Uredi", Model);
+            }
+
             Vlasnik vlasnik;
             if (Model.Id == 0)
             {
@@ -87,7 +92,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
             context.SaveChanges();
 
-            return PartialView("Index", GetAllVlasniciVM());
+            return PartialView("Index", PrepareAllVlasnici());
         }
 
         public IActionResult Obrisi(int id)
@@ -97,7 +102,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
             context.Vlasnici.Remove(x);
             context.SaveChanges();
 
-            return PartialView("Index", GetAllVlasniciVM());
+            return PartialView("Index", PrepareAllVlasnici());
         }
     }
 }

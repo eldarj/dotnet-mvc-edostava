@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.AdminModul.ViewModels;
+using eDostava.Web.Areas.AdminModul.Helper;
 
 namespace eDostava.Web.Areas.AdminModul.Controllers
 {
-    [Area("AdminModul")]
-    public class GradController : Controller
+    public class GradController : AdminController
     {
         private MojContext context;
         public GradController(MojContext db)
@@ -20,15 +20,15 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
         public IActionResult Index()
         {
-            return View(GetAllGradoviVM());
+            return View(PrepareAllGradove());
         }
 
         public IActionResult IndexPartial()
         {
-            return PartialView("Index", GetAllGradoviVM());
+            return PartialView("Index", PrepareAllGradove());
         }
 
-        public GradPrikazVM GetAllGradoviVM()
+        public GradPrikazVM PrepareAllGradove()
         {
             return new GradPrikazVM
             {
@@ -66,6 +66,11 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
         public IActionResult Snimi(GradUrediVM Model)
         {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("Uredi", Model);
+            }
+
             Grad grad;
             if (Model.Id == 0)
             {

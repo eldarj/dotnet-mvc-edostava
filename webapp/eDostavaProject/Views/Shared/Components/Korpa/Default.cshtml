@@ -1,10 +1,6 @@
 ﻿@using eDostava.Web.ViewModels
 @using eDostava.Web.Helper
 
-@{
-    ViewData["Title"] = "Index";
-}
-
 @model KorpaPrikazVM
 <div class="panel-default rounded border">
     <div class="panel-heading py-2 px-3">
@@ -53,7 +49,7 @@
                 ajax-poziv="ajaxDa"
                 ajax-rezultat="korpa"
                 data-alertify
-                data-alertify-goto-url="/Narudzba"
+                data-alertify-goto-url="/KorisnikModul/Korisnik?narudzbe=true"
                 data-alertify-text="Narudžba isporučena!"
                 data-alertify-btn-pre-text="Pogledajte detalje vaše narudžbe:"
                 data-alertify-btn-text="Detalji">Naruči</a>

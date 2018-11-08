@@ -22,34 +22,10 @@ namespace eDostava.Web.Controllers
 
         public IActionResult Index() => ViewComponent("Korpa");
 
-        //public IActionResult Index()
-        //{
-        //KorpaPrikazVM Model = new KorpaPrikazVM()
-        //{
-        //    Stavke = HttpContext.GetStavke()
-        //        .Select(x => new KorpaPrikazVM.KorpaStavkeInfo()
-        //        {
-        //            ProizvodID = x.HranaID,
-        //            Naziv = x.Hrana.Naziv,
-        //            Cijena = x.CalcCijena,
-        //            Opis = x.Hrana.Opis,
-        //            Prilog = x.Hrana.Prilog,
-        //            Kolicina = x.Kolicina,
-        //            JelovnikID = x.Hrana.JelovnikID,
-        //            Jelovnik = x.Hrana.Jelovnik,
-        //        })
-        //        .ToList(),
-        //    Narudzba = HttpContext.GetNarudzba()
-        //};
-
-        //return View(model: Model);
-        //}
-
         public IActionResult Dodaj(int id)
         {
             Narudzba narudzba = HttpContext.GetNarudzba();
 
-            //List<StavkaNarudzbe> stavke = new List<StavkaNarudzbe>();
             List<StavkaNarudzbe> stavke = HttpContext.GetStavke();
 
             Hrana _proizvod = context.Proizvodi.Where(x => x.HranaID == id).FirstOrDefault();

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace KorpaSessionExtensions
 {
+    // Session Helper za Korpu
     public static class KorpaSessionHelper
     {
         private const string _stavke = "stavke";
@@ -16,18 +17,13 @@ namespace KorpaSessionExtensions
 
         public static bool? JeNarucilac(this ISession session) => session.GetBoolean(_jeNarucilac); 
 
-        /// <summary>
-        /// Prima listu <see cref="List{T}"/> sa stavkama - <see cref="StavkaNarudzbe"/> i setuje u korisničku sesiju.
-        /// </summary>
-        /// <param name="stavke"><see cref="List{T}"/> od <see cref="StavkaNarudzbe"/></param>
+        // Prima narudzbu (Narudzba) i setuje u korisnicku sesiju
         public static void SetNarudzba(this HttpContext context, Narudzba narudzba) => context.Session.Set(_narudzba, narudzba);
 
-        /// <summary>
-        /// Prima listu <see cref="List{T}"/> sa stavkama - <see cref="StavkaNarudzbe"/> i setuje u korisničku sesiju.
-        /// </summary>
-        /// <param name="stavke"><see cref="List{T}"/> od <see cref="StavkaNarudzbe"/></param>
+        // Vraca postojecu ili inicijalizuje i vraca novu narudzbu
         public static Narudzba GetNarudzba(this HttpContext context) => context.Session.Get<Narudzba>(_narudzba) ?? InitNarudzba(context);
 
+        // Inicijalizuje novu narudzbu i setuje u sesiju
         public static Narudzba InitNarudzba(this HttpContext context)
         {
             Narucilac narucilac = context.GetLogiranogNarucioca();
@@ -50,17 +46,14 @@ namespace KorpaSessionExtensions
 
             return narudzba;
         }
-        /// <summary>
-        /// Prima listu <see cref="List{T}"/> sa stavkama - <see cref="StavkaNarudzbe"/> i setuje u korisničku sesiju.
-        /// </summary>
-        /// <param name="stavke"><see cref="List{T}"/> od <see cref="StavkaNarudzbe"/></param>
+
+        // Prima listu stavki (List<StavkaNarudzbe>) i setuje u korisničku sesiju 
         public static void SetStavke(this HttpContext context, List<StavkaNarudzbe> stavke) => context.Session.Set(_stavke, stavke);
 
-        /// <summary>
-        /// Vraća listu <see cref="List{T}"/> sa stavkama - <see cref="StavkaNarudzbe"/> iz korisničke sesije.
-        /// </summary>
+        // Vraća listu stavki (List<StavkaNarudzbe>) iz  sesije
         public static List<StavkaNarudzbe> GetStavke(this HttpContext context) => context.Session.Get<List<StavkaNarudzbe>>(_stavke) ?? new List<StavkaNarudzbe>();
 
+        // Resetuje listu stavki (List<StavkeNarudzbe>) i setuje u sesiju
         public static List<StavkaNarudzbe> InitStavke(this HttpContext context)
         {
             List<StavkaNarudzbe> stavke = new List<StavkaNarudzbe>();

@@ -7,7 +7,9 @@ namespace eDostavaProject.Controllers
     {
         public IActionResult Index()
         {
-            if (HttpContext.GetLogiranogNarucioca() == null && HttpContext.GetLogiranogVlasnika() == null && HttpContext.GetLogiranogModeratora() == null)
+            if (HttpContext.GetLogiranogNarucioca() == null 
+                && HttpContext.GetLogiranogVlasnika() == null 
+                && HttpContext.GetLogiranogModeratora() == null)
             {
                 return RedirectToAction("Index", "Login");
             }

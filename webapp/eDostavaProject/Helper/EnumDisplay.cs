@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.Helper
 {
+    // Extension klasa za Enum - Helper za prikazivanje enum atributa.
     public static class EnumExtensions
     {
-        /// <summary>
-        /// Extension metoda za prikazivanje enum "Display Name" atributa.
-        /// </summary>
-        /// <param name="enumType">EnumType</param>
-        /// <returns></returns>
         public static string GetDisplay(this Enum enumType) 
             => enumType
                 .GetType()

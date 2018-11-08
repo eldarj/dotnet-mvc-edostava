@@ -7,11 +7,11 @@ using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.AdminModul.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using eDostava.Web.Areas.AdminModul.Helper;
 
 namespace eDostava.Web.Areas.AdminModul.Controllers
 {
-    [Area("AdminModul")]
-    public class BlokController : Controller
+    public class BlokController : AdminController
     {
         private MojContext context;
         public BlokController(MojContext db)
@@ -21,10 +21,10 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
         public IActionResult Index()
         {
-            return View(GetAllBlokoviVM());
+            return View(PrepareAllBlokove());
         }
 
-        private BlokPrikazVM GetAllBlokoviVM()
+        private BlokPrikazVM PrepareAllBlokove()
         { 
             return new BlokPrikazVM
             {
@@ -41,6 +41,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
             };
         }
 
+        // gradid koristimo u slučaju dodavanja bloka za vec izabrani grad
         public IActionResult Dodaj(int? gradid)
         {
             return PartialView("Uredi", new BlokUrediVM
@@ -65,6 +66,12 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
         public IActionResult Snimi(BlokUrediVM Model)
         {
+            if (!ModelState.IsValid)
+            {
+                Model.Gradovi = SviGradovi();
+                return PartialView("Uredi", Model);
+            }
+
             Blok blok;
             if (Model.Id == 0)
             {
@@ -86,7 +93,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
                 return RedirectToAction("IndexPartial", "Grad", new { area = "AdminModul" });
             }
 
-            return PartialView("Index", GetAllBlokoviVM());
+            return PartialView("Index", PrepareAllBlokove());
         }
 
         public IActionResult Obrisi(int id)
@@ -96,7 +103,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
             context.Blokovi.Remove(x);
             context.SaveChanges();
 
-            return PartialView("Index", GetAllBlokoviVM());
+            return PartialView("Index", PrepareAllBlokove());
         }
 
         private List<SelectListItem> SviGradovi()

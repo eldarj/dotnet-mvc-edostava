@@ -8,11 +8,12 @@ using eDostava.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.AdminModul.ViewModels;
+using eDostava.Web.Areas.AdminModul.Filters;
+using eDostava.Web.Areas.AdminModul.Helper;
 
 namespace eDostava.Web.Controllers
 {
-    [Area("AdminModul")]
-    public class ModeratorController : Controller
+    public class ModeratorController : AdminController
     {
         private MojContext context;
         public ModeratorController(MojContext db)
@@ -20,7 +21,7 @@ namespace eDostava.Web.Controllers
             context = db;
         }
 
-        //[Route("dashboard/index")]
+        //[Route("dashboard")]
         public IActionResult Index(string layout)
         {
             ModeratorStatistikaVM Model= new ModeratorStatistikaVM

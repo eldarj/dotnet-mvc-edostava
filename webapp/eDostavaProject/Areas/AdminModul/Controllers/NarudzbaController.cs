@@ -9,11 +9,11 @@ using eDostava.Web.Areas.AdminModul.ViewModels;
 using eDostava.Web.Areas.AdminModul.ViewModels.Narudzba;
 using Microsoft.EntityFrameworkCore;
 using System.Dynamic;
+using eDostava.Web.Areas.AdminModul.Helper;
 
 namespace eDostava.Web.Areas.AdminModul.Controllers
 {
-    [Area("AdminModul")]
-    public class NarudzbaController : Controller
+    public class NarudzbaController : AdminController
     {
         private MojContext context;
         public NarudzbaController(MojContext db)
@@ -23,10 +23,10 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
 
         public IActionResult Index()
         {
-            return View(GetAllNarudzbe());
+            return View(PrepareAllNarudzbe());
         }
 
-        public NarudzbaPrikazVM GetAllNarudzbe()
+        public NarudzbaPrikazVM PrepareAllNarudzbe()
         {
             return new NarudzbaPrikazVM
             {
@@ -69,7 +69,7 @@ namespace eDostava.Web.Areas.AdminModul.Controllers
             context.Narudzbe.Remove(n);
             context.SaveChanges();
 
-            return PartialView("Index", GetAllNarudzbe());
+            return PartialView("Index", PrepareAllNarudzbe());
         }
     }
 }

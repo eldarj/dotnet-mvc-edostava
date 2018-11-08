@@ -90,7 +90,7 @@
                 msg += `<span> ${self.attr('data-alertify-btn-pre-text')} </span>`;
             }
             if (self.attr('data-alertify-btn-text')) {
-                msg += `<a class="btn btn-sm btn-danger center" href="#">${self.attr('data-alertify-btn-text')}</a>`;
+                msg += `<a class="btn btn-sm btn-danger center" href="${self.attr('data-alertify-goto-url')}">${self.attr('data-alertify-btn-text')}</a>`;
             }
             alertify.log(msg);
         }
@@ -202,7 +202,10 @@
                         if (form.attr('data-alertify-btn-text')) {
                             msg += `<a class="btn btn-sm btn-danger center" href="form.attr('data-alertify-goto-url')}">${form.attr('data-alertify-btn-text')}</a>`;
                         }
-                        alertify.log(msg);
+                        console.log($('.field-validation-error').length);
+                        if ($('.field-validation-error').length === 0) {
+                            alertify.log(msg);
+                        }
                     }
                 },
                 error: function (data) {

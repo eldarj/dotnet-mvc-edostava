@@ -37,9 +37,9 @@
                             <td>
                                 @foreach (Restoran y in x.Restorani)
                                 {
-                                    <a asp-action="Jelovnik" asp-controller="Restorani" asp-area="" asp-route-restoranid="@y.RestoranID" 
-                                       target="_blank" class="badge badge-danger">
-                                        <i class="fas fa-external-link-alt"></i> @y.Naziv
+                                    <a asp-action="Uredi" asp-controller="Restoran" asp-area="AdminModul" asp-route-id="@y.RestoranID" 
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="badge badge-danger">
+                                        @y.Naziv
                                     </a>
                                 }
                             </td>

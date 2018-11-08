@@ -61,7 +61,7 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
             if (n2 != null)
             {
                 HttpContext.SetLogiranogModeratora(n2);
-                HttpContext.Session.Set("trenutnoLogiran", "IB150281");
+                HttpContext.Session.Set("trenutnoLogiran", n2.Username);
             }
             if (n3 != null)
             {

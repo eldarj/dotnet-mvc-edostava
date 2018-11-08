@@ -1,4 +1,4 @@
-﻿
+
 html,body
 {
 margin-top:15px;
@@ -149,6 +149,11 @@ login-page {
             .container .info span .fa {
                 color: #EF3B3A;
             }
+div#loginPodaci {
+    position: absolute;
+    left: -250px;
+    top: -10px;
+}
 
 body {
     background: #76b852; /* fallback for old browsers */

@@ -20,8 +20,9 @@ namespace eDostava.Web.Controllers
             context = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool narudzbe)
         {
+            ViewBag.RenderNarudzbe = narudzbe;
             return View();
         }
 
@@ -34,11 +35,9 @@ namespace eDostava.Web.Controllers
                 Ime = n.Ime,
                 Prezime = n.Prezime,
                 Username = n.Username,
-                Password = n.Password,
                 Telefon = n.Telefon,
                 Email = n.Email,
                 BadgeId = n.BadgeID,
-                Badge = Badgevi(),
                 BlokId = n.BlokID,
                 Blok = Blokovi(),
             });
@@ -107,17 +106,9 @@ namespace eDostava.Web.Controllers
 
         private List<SelectListItem> Blokovi()
         {
-            var blokovi = new List<SelectListItem>();
-            blokovi.Add(new SelectListItem { Value = null, Text = "Izaberite blok" });
-            blokovi.AddRange(context.Blokovi.Select(x => new SelectListItem { Value = x.BlokID.ToString(), Text = x.Grad.Naziv + ", " + x.Naziv }));
-            return blokovi;
-        }
-        private List<SelectListItem> Badgevi()
-        {
-            var badgevi = new List<SelectListItem>();
-            badgevi.Add(new SelectListItem { Value = null, Text = "Izaberite badge" });
-            badgevi.AddRange(context.Badgevi.Select(x => new SelectListItem { Value = x.BadgeID.ToString(), Text = x.Naziv }));
-            return badgevi;
+            List<SelectListItem> Blokovi = new List<SelectListItem>();
+            Blokovi.AddRange(context.Blokovi.Select(x => new SelectListItem { Value = x.BlokID.ToString(), Text = x.Grad.Naziv + ", " + x.Naziv }));
+            return Blokovi;
         }
     }
 }

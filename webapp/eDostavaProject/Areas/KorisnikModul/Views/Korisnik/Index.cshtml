@@ -1,4 +1,7 @@
-﻿<h1>Moj profil</h1>
+﻿@{ 
+    bool RenderNarudzbe = ViewBag.RenderNarudzbe;
+}
+<h1>Moj profil</h1>
 <hr />
 <div class="korisnik-page-wrap">
     <div class="korisnik-left-wrap col-sm-3">
@@ -7,7 +10,8 @@
             <a asp-area="KorisnikModul" asp-action="Index" asp-controller="Narudzba" ajax-poziv="ajaxDa" ajax-rezultat="korisnik-right-wrap" class="btn btn-secondary">Moje Narudžbe</a>
         </div>
     </div>
-    <div id="korisnik-right-wrap" class="korisnik col-sm-9" ajax-onload="da" ajax-rezultat="korisnik-right-wrap" ajax-url="/KorisnikModul/Korisnik/Profil">
+    <div id="korisnik-right-wrap" class="korisnik col-sm-9" ajax-onload="da" ajax-rezultat="korisnik-right-wrap" 
+         ajax-url="/KorisnikModul/@(RenderNarudzbe ? "Narudzba/PosljednjaNarudzba" : "Korisnik/Profil")">
         ...
     </div>
 </div>

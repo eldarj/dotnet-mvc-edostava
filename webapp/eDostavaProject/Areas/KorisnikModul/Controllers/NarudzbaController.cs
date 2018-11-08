@@ -38,6 +38,15 @@ namespace eDostava.Web.Areas.KorisnikModul.Controllers
             });
         }
 
+        public IActionResult PosljednjaNarudzba()
+        {
+            Narudzba PosljednjaNarudzba = context.Narudzbe
+                .Where(x => x.NarucilacID == HttpContext.GetLogiranogNarucioca().KorisnikID)
+                .First();
+
+            return RedirectToAction("Detaljno", new { id = PosljednjaNarudzba.NarudzbaID });
+        }
+
         public IActionResult Detaljno(int id)
         {
             Narudzba n = context.Narudzbe

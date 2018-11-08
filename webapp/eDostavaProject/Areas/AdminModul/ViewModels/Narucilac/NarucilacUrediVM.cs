@@ -28,12 +28,8 @@ namespace eDostava.Web.Areas.AdminModul.ViewModels
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Obavezno polje!")]
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "Polje smije sadržati samo tekstualne karaktere, te biti dužine od 6 do 50 slova.")]
+        [EmailAddress(ErrorMessage = "Polje mora biti u formatu email adrese!")]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Obavezno polje!")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "Polje smije sadržati samo tekstualne karaktere, najmanje 3 i najviše 20 slova.")]
-        public string Password { get; set; }
 
         public int BlokID { get; set; }
 

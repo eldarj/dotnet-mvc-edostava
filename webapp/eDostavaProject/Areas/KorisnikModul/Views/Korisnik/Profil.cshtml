@@ -28,27 +28,29 @@
         <h3><span class="live-edit-section"><i class="fas fa-edit"></i></span> Osnovno</h3>
         <label asp-for="Ime">Ime</label>
         <input asp-for="Ime" class="form-control" placeholder="Ime" />
-        <span asp-validation-for="Ime"></span>
+        <span asp-validation-for="Ime" class="text-danger"></span><br />
         <label asp-for="Prezime">Prezime</label>
         <input asp-for="Prezime" class="form-control" placeholder="Prezime" />
-        <span asp-validation-for="Prezime"></span>
+        <span asp-validation-for="Prezime" class="text-danger"></span>
     </div>
     <hr />
     <div class="form-group">
         <h2><span class="live-edit-section"><i class="fas fa-edit"></i></span> Kontakt</h2>
         <label asp-for="Email">Email</label>
         <input asp-for="Email" class="form-control" placeholder="Email" />
-        <span asp-validation-for="Email"></span>
+        <span asp-validation-for="Email" class="text-danger"></span><br />
         <label asp-for="Telefon">Telefon</label>
         <input asp-for="Telefon" class="form-control" placeholder="Telefon" />
-        <span asp-validation-for="Telefon"></span>
+        <span asp-validation-for="Telefon" class="text-danger"></span>
     </div>
     <hr />
     <div class="form-group">
         <h2><span class="live-edit-section"><i class="fas fa-edit"></i></span> Lokacija</h2>
         <label asp-for="BlokId" class="nav-underline">Grad i blok</label>
-        <select asp-items="@Model.Blok" class="form-control" asp-for="BlokId"></select>
-        <span asp-validation-for="BlokId"></span>
+        <select asp-items="@Model.Blok" class="form-control" asp-for="BlokId">
+            <option disabled>Odaberite blok i grad</option>
+        </select>
+        <span asp-validation-for="BlokId" class="text-danger"></span>
     </div>
     <input type="submit" class="btn btn-main-color-1 btn-sm" value="Izmijeni" />
     <a asp-action="Profil" ajax-poziv="ajaxDa" ajax-rezultat="korisnik-right-wrap" class="cancel btn btn-sm btn-secondary">Odbaci</a>

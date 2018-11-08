@@ -1,0 +1,58 @@
+﻿@using eDostava.Data.Models
+@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model BlokPrikazVM
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h2>Blokovi</h2>
+            <hr />
+        </div>
+        <div class="card-text">
+            <table class="table bs-datatable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Naziv</th>
+                        <th>Grad</th>
+                        <th>Ukupno naručioca</th>
+                        <th>Naručioci</th>
+                        <th>Više</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.Blokovi)
+                    {
+                    <tr>
+                        <td>@x.Id</td>
+                        <td>@x.Naziv</td>
+                        <td>@x.Grad.PoštanskiBroj @x.Grad.Naziv</td>
+                        <td>@(x.BrojNarucioca > 0 ? x.BrojNarucioca.ToString() : "-")</td>
+                        <td>
+                            @foreach (Narucilac n in x.Narucioci)
+                            {
+                                <a asp-action="Uredi" asp-controller="Narucilac" asp-area="AdminModul"  asp-route-Id="@n.KorisnikID" 
+                                   ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="badge badge-danger">@n.Ime_prezime</a>
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Uredi" asp-controller="Blok" asp-area="AdminModul" asp-route-id="@x.Id"
+                                   ajax-poziv="da" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                <a asp-action="Obrisi" asp-controller="Blok" asp-area="AdminModul" asp-route-id="@x.Id"
+                                   ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-danger ajax-delete-row"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <br />
+            <a asp-action="Dodaj" asp-controller="Blok" asp-area="AdminModul" 
+               ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-sm btn-danger">Dodaj novi</a>
+            <br /><br />
+        </div>
+    </div>
+</div>

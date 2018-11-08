@@ -1,0 +1,75 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model RestoranPrikazVM
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h2>Restorani</h2>
+            <hr />
+        </div>
+        <div class="card-text">
+            <table class="table bs-datatable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Naziv</th>
+                        <th>Vlasnik</th>
+                        <th>Kontakt</th>
+                        <th class="text-center">Ukupno lajkova</th>
+                        <th>Više</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (RestoranPrikazVM.RestoranInfo x in Model.Restorani)
+                    {
+                        <tr>
+                            <td>@x.Id</td>
+                            <td class="width-200">
+                                <div class="flex-container">
+                                    @if (x.Slika != null)
+                                    {
+                                        <div class="div-image-holder image-holder-100  mt-1 mr-3" style="background-image: url('/@x.Slika')"></div>
+                                    }
+                                    <div class="flex-grow">
+                                        @x.Naziv<br />
+                                        <small>Opis: <i>@x.Opis</i></small><br />
+                                        <small>Slogan: <i>@(x.Slogan == null ? "-" : x.Slogan)</i></small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @x.Vlasnik.Ime_prezime <br />
+                                <i class="fas fa-envelope-square"></i> @x.Vlasnik.Email
+                            </td>
+                            <td class="nowrap">
+                                @if (x.WebUrl != null)
+                                {
+                                    <i class="fas fa-external-link-alt"></i> @x.WebUrl <br />
+                                }
+                                @if (x.BrojTelefona != null)
+                                {
+                                    <i class="fas fa-phone-square"></i> @x.BrojTelefona <br />
+                                }
+                                <i class="fas fa-map-marker-alt"></i> @x.Lokacija
+                            <td class="text-center">@x.BrojLajkova</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Uredi" asp-controller="Restoran" asp-area="AdminModul" asp-route-id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a asp-action="Obrisi" asp-controller="Restoran" asp-area="AdminModul" asp-route-id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-danger ajax-delete-row"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <br />
+            <a asp-action="Dodaj" asp-controller="Restoran" asp-area="AdminModul"
+               ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-sm btn-danger">Dodaj novi</a>
+            <br /><br />
+        </div>
+    </div>
+</div>

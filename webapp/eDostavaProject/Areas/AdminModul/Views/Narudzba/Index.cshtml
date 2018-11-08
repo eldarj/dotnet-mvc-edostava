@@ -1,0 +1,89 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels.Narudzba
+
+@model NarudzbaPrikazVM
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card text-white bg-warning o-hidden h-100">
+            <div class="card-body big-icon">
+                <div class="card-body-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h2 class="text-white text-center mb-0">
+                    @Model.Narudzbe.Where(n => n.DatumVrijeme.Month == DateTime.Now.Month).Count()
+                </h2>
+            </div>
+            <span class="card-footer text-white clearfix small z-1">
+                <span>Ukupno narudžbi za tekući, @DateTime.Now.Month. mjesec</span>
+            </span>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card text-white bg-danger o-hidden h-100">
+            <div class="card-body big-icon">
+                <div class="card-body-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h2 class="text-white text-center">
+                    @Model.Narudzbe.Where(n => n.DatumVrijeme.Month == DateTime.Now.AddMonths(-1).Month).Count()
+                </h2>
+            </div>
+            <span class="card-footer text-white clearfix small z-1">
+                <span>Ukupno narudžbi za prošli, @DateTime.Now.AddMonths(-1).Month. mjesec</span>
+            </span>
+        </div>
+    </div>
+</div>
+<br />
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h2>Narudžbe</h2>
+            <br />
+        </div>
+        <div class="card-text">
+            <table class="table bs-datatable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Sifra</th>
+                        <th>Narucilac</th>
+                        <th>Datum</th>
+                        <th>Ukupno stavki</th>
+                        <th>Ukupno (KM)</th>
+                        <th>Više</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.Narudzbe)
+                    {
+                        <tr>
+                            <td><small>@x.Id</small></td>
+                            <td class="nowrap"><small>@x.Sifra</small></td>
+                            <td><small>@x.NarucilacImePrezime</small></td>
+                            <td><small>@x.DatumVrijeme.ToString("dd.MM.yyyy H:mm")</small></td>
+                            <td><small>@x.UkupnoStavki</small></td>
+                            <td><small>@x.UkupnaCijena</small></td>
+                            <td class="nowrap">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Detaljno" asp-controller="Narucilac" asp-area="AdminModul" asp-route-id="@x.NarucilacId"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="addRow-Narucilac-@x.Id" class="btn btn-xs btn-success">
+                                        Prikaži podatke o naručiocu
+                                    </a>
+                                    <a asp-action="Detaljno" asp-controller="Narudzba" asp-area="AdminModul" asp-route-id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="addRow-Narudzba-@x.Id" class="btn btn-xs btn-primary">
+                                        Prikaži narudžbu detaljno
+                                    </a>
+                                </div>
+                                <a asp-action="Obrisi" asp-controller="Narudzba" asp-area="AdminModul" asp-route-id="@x.Id"
+                                   ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-danger ajax-delete-row"><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <br />
+        </div>
+    </div>
+</div>

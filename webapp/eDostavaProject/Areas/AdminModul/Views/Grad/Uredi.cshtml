@@ -1,0 +1,46 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model GradUrediVM
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            @if (Model.Naziv != null)
+            {
+                <h2>Grad <span class="badge badge-danger">@Model.Naziv</span></h2>
+            }
+            else
+            {
+                <h2>Novi grad</h2>
+            }
+        </div>
+        <div class="card-text">
+            <br />
+            <form asp-action="Snimi" asp-controller="Grad" asp-area="AdminModul"
+                  ajax-poziv="da" ajax-rezultat="modAjaxContainer"
+                  data-alertify data-alertify-btn-pre-text="Uspješno ste spremili podatke!">
+                <hr />
+                <div class="row">
+                    <div class="col-sm">
+                        <input asp-for="Id" type="hidden" />
+                        <div class="form-group">
+                            <label>Naziv:</label>
+                            <input type="text" asp-for="Naziv" class="form-control" />
+                            <span asp-validation-for="Naziv" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Postanski broj:</label>
+                            <input type="text" asp-for="PostanskiBroj" class="form-control" />
+                            <span asp-validation-for="PostanskiBroj" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <hr />
+                <input type="submit" value="Snimi" class="btn btn-sm btn-primary" />
+                <a asp-action="Index" asp-controller="Grad" asp-area="AdminModul" class="btn btn-sm btn-danger">Nazad</a>
+            </form>
+            <br /><br />
+        </div>
+    </div>
+</div>

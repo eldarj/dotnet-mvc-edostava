@@ -1,0 +1,31 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels.Narudzba
+
+@model NarudzbaDetaljnoVM
+<div class="full-width pt-1 pb-4 pl-4 pr-4">
+    <div class="card">
+        <small class="closeDivRow">Zatvori</small>
+        <div class="card-body flex-container p-0">
+            <div class="flex-grow flex-container p-3">
+                @foreach (var Stavka in Model.Stavke)
+                {
+                    <div class="p-1 border-bottom border-top m-1">
+                        <small class="bold">@Stavka.Hrana.Naziv</small> <small>(x @Stavka.Kolicina)</small><br />
+                        <small>Restoran: <i>@Stavka.Hrana.Jelovnik.Restoran.Naziv</i></small><br />
+                        <small>Jelovnik: <i>@Stavka.Hrana.Jelovnik.Opis</i></small>
+                    </div>
+                }
+            </div>
+            <div class="bg-light p-3">
+                <div><small class="bold">Ukupno restorana</small> <small class="badge badge-danger p-1">@Model.NarucenoIzRestorana.Count</small></div>
+                <div>
+                    <span>
+                        @foreach (string ImeRestorana in Model.NarucenoIzRestorana)
+                        {
+                            @ImeRestorana@( ImeRestorana != Model.NarucenoIzRestorana.Last() ? ", " : "" )
+                        }
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

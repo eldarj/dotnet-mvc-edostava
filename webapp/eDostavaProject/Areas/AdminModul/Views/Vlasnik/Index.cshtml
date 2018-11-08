@@ -1,0 +1,70 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels
+@using eDostava.Data.Models
+
+@model VlasnikPrikazVM
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h2>Vlasnici</h2>
+            <hr />
+        </div>
+        <div class="card-text">
+            <table class="table bs-datatable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Ime</th>
+                        <th>Prezime</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Datum kreiranja</th>
+                        <th>Restorani</th>
+                        <th>Ukupno restorana</th>
+                        <th>Više</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (VlasnikPrikazVM.VlasnikInfo x in Model.Vlasnici)
+                    {
+                        <tr>
+                            <td>@x.Id</td>
+                            <td>@x.Ime</td>
+                            <td>@x.Prezime</td>
+                            <td>@x.Email</td>
+                            <td>@x.Username</td>
+                            <td>@x.DatumKreiranja.ToString("dd.MM.yyyy H:mm")</td>
+                            <td>
+                                @foreach (Restoran y in x.Restorani)
+                                {
+                                    <a asp-action="Jelovnik" asp-controller="Restorani" asp-area="" asp-route-restoranid="@y.RestoranID" 
+                                       target="_blank" class="badge badge-danger">
+                                        <i class="fas fa-external-link-alt"></i> @y.Naziv
+                                    </a>
+                                }
+                            </td>
+                            <td>@x.UkupnoRestorana</td>
+                            <td class="nowrap">
+                                <a asp-action="Dodaj" asp-controller="Restoran" asp-area="AdminModul" asp-route-vlasnikid="@x.Id"
+                                   ajax-poziv="ajaxDa" ajax-rezultat="addRow-DodajRestoran-@x.Id" class="btn btn-xs btn-success">
+                                    Dodaj novi restoran
+                                </a>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Uredi" asp-controller="Vlasnik" asp-area="AdminModul" asp-route-Id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a asp-action="Obrisi" asp-controller="Vlasnik" asp-area="AdminModul" asp-route-Id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-danger ajax-delete-row"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <br />
+            <a asp-action="Dodaj" asp-controller="Vlasnik" asp-area="AdminModul"
+               ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-sm btn-danger">Dodaj novi</a>
+            <br /><br />
+        </div>
+    </div>
+</div>

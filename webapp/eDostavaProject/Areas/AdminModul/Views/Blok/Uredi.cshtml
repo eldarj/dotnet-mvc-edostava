@@ -1,0 +1,50 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model BlokUrediVM
+
+<div class="card">
+    <small class="closeDivRow @(Model.PredefinedGrad ? "" : "d-none")">Zatvori</small>
+    <div class="card-body">
+        <div class="card-title">
+            @if (Model.Naziv != null)
+            {
+                <h2>Blok <span class="badge badge-danger">@Model.Naziv</span></h2>
+            }
+            else
+            {
+                <h2>Novi blok</h2>
+            }
+            <br />
+        </div>
+        <div class="card-text">
+            <form asp-action="Snimi" asp-controller="Blok" asp-area="AdminModul"
+                  ajax-poziv="da" ajax-rezultat="modAjaxContainer"
+                  data-alertify data-alertify-btn-pre-text="Uspješno ste spremili podatke!">
+                <hr />
+                <div class="row">
+                    <div class="col-sm">
+                        <input asp-for="Id" type="hidden" />
+                        <input asp-for="PredefinedGrad" type="hidden" />
+                        <div class="form-group">
+                            <label>Naziv:</label>
+                            <input type="text" asp-for="Naziv" class="form-control" />
+                            <span asp-validation-for="Naziv" class="text-danger"></span>
+                        </div>
+                        <div class="form-group @(Model.PredefinedGrad ? "d-none" : "")">
+                            <label>Grad:</label>
+                            <select asp-for="GradID" asp-items="@Model.Gradovi" class="form-control">
+                                <option disabled>Odaberite grad</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <input type="submit" value="Snimi" class="btn btn-sm btn-primary" />
+                <a asp-action="Index" asp-controller="Blok" asp-area="AdminModul" class="btn btn-sm btn-danger @(Model.PredefinedGrad ? "d-none" : "")">Nazad</a>
+            </form>
+            <br />
+            <div id="modAjaxSubContainer">
+            </div>
+        </div>
+    </div>
+</div>

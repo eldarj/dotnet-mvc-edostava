@@ -1,0 +1,60 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model NarucilacPrikazVM
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h2>Naručioci</h2>
+            <hr />
+        </div>
+        <div class="card-text">
+            <table class="table bs-datatable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Ime i prezime</th>
+                        <th>Kontakt</th>
+                        <th>Username</th>
+                        <th>Datum kreiranja</th>
+                        <th>Grad</th>
+                        <th>Ukupno narudžbi</th>
+                        <th>Opcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (NarucilacPrikazVM.NaruciociInfo x in Model.Narucioci)
+                    {
+                        <tr>
+                            <td>@x.Id</td>
+                            <td>@x.Ime  @x.Prezime</td>
+                            <td class="text-nowrap">
+                                <i class="fas fa-phone-square"></i> @x.Telefon <br /> 
+                                <i class="fas fa-envelope-square"></i> @x.Email
+                            </td>
+                            <td>@x.Username</td>
+                            <td>@x.DatumKreiranja.ToString("dd.MM.yyyy H:mm")</td>
+                            <td class="text-nowrap">
+                                @x.BlokNaziv (@x.PostanskiBroj, @x.Grad.Naziv)
+                            </td>
+                            <td>@(x.UkupnoNarudzbi > 0 ? x.UkupnoNarudzbi.ToString() : "-")</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Uredi" asp-controller="Narucilac" asp-area="AdminModul" asp-route-id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a asp-action="Obrisi" asp-controller="Narucilac" asp-area="AdminModul" asp-route-id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-danger ajax-delete-row"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <br />
+            <a asp-action="Dodaj" asp-controller="Narucilac" asp-area="AdminModul"
+               ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-sm btn-danger">Dodaj novi</a>
+            <br /><br />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿<!-- Admin sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <div class="text-center mod-dashboard-badge">
+            <h6>eDostava!</h6>
+        </div>
+        <strong>BS</strong>
+    </div>
+    <ul class="list-unstyled components">
+        <li>
+            <a asp-action="Index" asp-controller="Moderator" asp-area="AdminModul">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a asp-action="Index" asp-controller="Restoran" asp-area="AdminModul">
+                <i class="fas fa-utensils"></i>
+                Restorani
+            </a>
+        </li>
+        <li>
+            <a asp-action="Index" asp-controller="Vlasnik" asp-area="AdminModul">
+                <i class="fas fa-user-tie"></i>
+                Vlasnici
+            </a>
+        </li>
+        <li>
+            <a href="#lokacijeDropdown" data-toggle="collapse" class="dropdown-toggle">
+                <i class="fas fa-thumbtack"></i>
+                Gradovi i blokovi
+            </a>
+            <ul class="collapse list-unstyled" id="lokacijeDropdown">
+                <li>
+                    <a asp-action="Index" asp-controller="Grad" asp-area="AdminModul">Gradovi</a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Blok" asp-area="AdminModul">Blokovi</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a asp-action="Index" asp-controller="Narucilac" asp-area="AdminModul">
+                <i class="fas fa-users"></i>
+                Narucioci
+            </a>
+        </li>
+        <li>
+            <a asp-action="Index" asp-controller="Narudzba" asp-area="AdminModul">
+                <i class="fas fa-receipt"></i>
+                Narudžbe
+            </a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            <a asp-controller="Home" asp-area="" class="btn btn-sm btn-light">> Frontend</a>
+        </li>
+    </ul>
+</nav>

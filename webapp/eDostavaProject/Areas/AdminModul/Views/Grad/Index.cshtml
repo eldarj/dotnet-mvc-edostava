@@ -1,0 +1,74 @@
+﻿@using eDostava.Data.Models
+@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model GradPrikazVM
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h2>Gradovi</h2>
+            <hr />
+        </div>
+        <div class="card-text">
+            <table class="table bs-datatable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Naziv</th>
+                        <th>Poštanski Broj</th>
+                        <th>Naručioci</th>
+                        <th>Blokovi</th>
+                        <th>Više</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (GradPrikazVM.GradInfo x in Model.Gradovi)
+                    {
+                        <tr>
+                            <td>@x.Id</td>
+                            <td>@x.Naziv</td>
+                            <td>@x.PostanskiBroj</td>
+                            <td class="max-width-200">
+                                <span>Ukupno <span class="badge badge-danger">@(x.UkupnoNarucioca > 0 ? x.UkupnoNarucioca.ToString() : "-")</span></span>
+                                <br />
+                                <small>
+                                    @foreach (Narucilac n in x.Narucioci)
+                                    {
+                                        @n.Ime @n.Prezime@( n != x.Narucioci.Last() ? ", " : "" )
+                                    }
+                                </small>
+                            </td>
+                            <td class="max-width-200">
+                                <span>Ukupno <span class="badge badge-danger">@(x.UkupnoBlokova > 0 ? x.UkupnoBlokova.ToString() : "-")</span></span>
+                                <br />
+                                <small>
+                                    @foreach (Blok b in x.Blokovi)
+                                    {
+                                        @b.Naziv@( b != x.Blokovi.Last() ? ", " : "" )
+                                    }
+                                </small>
+                            </td>
+                            <td>
+                                <a asp-action="Dodaj" asp-controller="Blok" asp-area="AdminModul" asp-route-gradid="@x.Id"
+                                   ajax-poziv="ajaxDa" ajax-rezultat="addRow-DodajBlok-@x.Id" class="btn btn-xs btn-success">
+                                    Dodaj novi blok
+                                </a>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Uredi" asp-controller="Grad" asp-area="AdminModul" asp-route-id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a asp-action="Obrisi" asp-controller="Grad" asp-area="AdminModul" asp-route-id="@x.Id"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-danger ajax-delete-row"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <br />
+            <a asp-action="Dodaj" asp-controller="Grad" asp-area="AdminModul"
+               ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-sm btn-danger">Dodaj novi</a>
+            <br /><br />
+        </div>
+    </div>
+</div>

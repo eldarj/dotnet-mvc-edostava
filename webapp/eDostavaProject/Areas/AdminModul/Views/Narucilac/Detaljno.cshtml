@@ -1,0 +1,29 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model NarucilacDetaljnoVM
+<div class="full-width pt-1 pb-4 pl-4 pr-4">
+    <div class="card">
+        <small class="closeDivRow">Zatvori</small>
+        <div class="card-body pt-1 pb-3 pl-3 pr-3">
+            <div class="border-bottom p-2">
+                <small>Naručio</small><br />
+                <strong>@Model.Ime @Model.Prezime</strong>
+            </div>
+            <div class="border-bottom flex-container flex p-2">
+                <div class="flex-container flex-direction-column">
+                    <span><i class="fas fa-user-circle"></i> @Model.Username</span>
+                    <span><i class="fas fa-envelope-square"></i> @Model.Email</span>
+                    <span><i class="fas fa-calendar-alt"></i> @Model.DatumKreiranja</span>
+                </div>
+                <div class="flex-container flex-direction-column">
+                    <span><i class="fas fa-phone-square"></i> @Model.Telefon</span>
+                    <span><i class="fas fa-map-marker-alt"></i> @Model.PostanskiBroj @Model.GradNaziv, @Model.BlokNaziv</span>
+                </div>
+            </div>
+            <div class="p-2">
+                <small>Napravio ukupno <span class="badge badge-danger">@Model.UkupnoNarudzbi</span> narudžbi.</small><br />
+                <small>Ukupno <span class="badge badge-danger">@Model.UkupnoPotroseno KM</span> potrošeno na narudžbe.</small>
+            </div>
+        </div>
+    </div>
+</div>

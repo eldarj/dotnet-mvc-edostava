@@ -1,0 +1,91 @@
+﻿@using eDostava.Data.Models
+@using eDostava.Web.ViewModels
+@using eDostava.Web.Areas.AdminModul.ViewModels;
+
+@model ModeratorStatistikaVM
+
+<div class="row">
+    <div class="col-xl-6 col-sm-6 mb-3">
+        <div class="card text-white bg-primary o-hidden h-100">
+            <div class="card-body big-icon">
+                <div class="card-body-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h2 class="text-white text-center">
+                    @Model.UkupnoRestorana
+                </h2>
+                <div class="text-center">Restorana!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1"
+               asp-controller="Restoran" asp-area="AdminModul">
+                <span class="float-left">Pregled restorana</span>
+                <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-6 col-sm-6 mb-3">
+        <div class="card text-white bg-warning o-hidden h-100">
+            <div class="card-body big-icon">
+                <div class="card-body-icon">
+                    <i class="fas fa-fw fa-list"></i>
+                </div>
+                <h2 class="text-white text-center">
+                    @Model.UkupnoVlasnika
+                </h2>
+                <div class="text-center">Vlasnika restorana!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" 
+               asp-controller="Vlasnik" asp-area="AdminModul">
+                <span class="float-left">Pregled vlasnika</span>
+                <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-6 col-sm-6 mb-3">
+        <div class="card text-white bg-success o-hidden h-100">
+            <div class="card-body big-icon">
+                <div class="card-body-icon">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                </div>
+                <h2 class="text-white text-center">
+                    @Model.UkupnoNarucioca
+                </h2>
+                <div class="text-center">Naručioca!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" 
+               asp-controller="Narucilac" asp-area="AdminModul">
+                <span class="float-left">Pregled naručioca</span>
+                <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-6 col-sm-6 mb-3">
+        <div class="card text-white bg-danger o-hidden h-100">
+            <div class="card-body big-icon">
+                <div class="card-body-icon">
+                    <i class="fas fa-fw fa-life-ring"></i>
+                </div>
+                <h2 class="text-white text-center">
+                    @Model.UkupnoNarudzbi
+                </h2>
+                <div class="text-center">Narudžbi!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1"
+               asp-controller="Narudzba" asp-area="AdminModul">
+                <span class="float-left">Pregled narudžbi</span>
+                <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+<hr />
+
+

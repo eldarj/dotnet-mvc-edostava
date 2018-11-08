@@ -1,0 +1,56 @@
+﻿@model eDostava.Web.ViewModels.ProfilLozinkaVM
+
+<h1>Promijeni lozinku</h1>
+<form asp-action="SnimiLozinku" asp-controller="Korisnik" asp-area="KorisnikModul" ajax-poziv="da" ajax-rezultat="korisnik-right-wrap"
+      data-alertify data-alertify-btn-pre-text="Uspješno ste promijenili vašu lozinku!"
+      check-for-errors-on-submit="yes" data-alertify-error="Molimo provjerite sva polja!"
+      method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="KorisnikID" class="form-control hidden" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Trenutna Lozinka</label>
+        <div class="input-group mb-2">
+            <input asp-for="Password" class="form-control" type="password" placeholder="Lozinka"
+                   ajax-url="/KorisnikModul/Korisnik/ProvjeriLozinku" ajax-onchange="da" ajax-add-value-param="da" />
+            <div class="input-group-append see-password-input"  data-target="Password">
+                <div class="input-group-text">
+                    <i class="fas fa-eye" data-icon-for="Password"></i>
+                </div>
+            </div>
+        </div>
+        <small id="PasswordHelp" class="text-danger invisible">
+            Lozinka nije tačna!
+        </small>  
+    </div>
+    <div class="form-group">
+        <label asp-for="NoviPassword">Nova Lozinka</label>
+        <div class="input-group mb-2">
+            <input asp-for="NoviPassword" class="form-control" type="password" placeholder="Lozinka" 
+                   data-check-is-same="NoviPasswordPonovo" data-check-erorr-id="NoviPasswordHelp"/>
+            <div class="input-group-append see-password-input" data-target="NoviPassword">
+                <div class="input-group-text">
+                    <i class="fas fa-eye" data-icon-for="NoviPassword"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="NoviPasswordPonovo">Ponovite novu lozinku</label>
+        <div class="input-group mb-2">
+            <input asp-for="NoviPasswordPonovo" class="form-control" type="password" placeholder="Lozinka"  
+                   data-check-is-same="NoviPassword" data-check-erorr-id="NoviPasswordHelp"/>
+            <div class="input-group-append see-password-input" data-target="NoviPasswordPonovo">
+                <div class="input-group-text">
+                    <i class="fas fa-eye" data-icon-for="NoviPasswordPonovo"></i>
+                </div>
+            </div>
+        </div>
+        <small id="NoviPasswordHelp" class="text-danger invisible">
+            Lozinke se ne podudaraju!
+        </small>  
+    </div>
+    <input type="submit" class="btn btn-main-color-1 btn-sm" value="Snimi" />
+    <a asp-action="Profil" ajax-poziv="ajaxDa" ajax-rezultat="korisnik-right-wrap" class="cancel btn btn-sm btn-secondary">Nazad</a>
+</form>
+<hr />

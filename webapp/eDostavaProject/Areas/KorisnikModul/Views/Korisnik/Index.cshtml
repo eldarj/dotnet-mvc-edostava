@@ -1,0 +1,13 @@
+﻿<h1>Moj profil</h1>
+<hr />
+<div class="korisnik-page-wrap">
+    <div class="korisnik-left-wrap col-sm-3">
+        <div class="btn-group-vertical">
+            <a asp-area="KorisnikModul" asp-action="Profil" asp-controller="Korisnik" ajax-poziv="ajaxDa" ajax-rezultat="korisnik-right-wrap" class="btn btn-secondary">Korisnički podaci</a>
+            <a asp-area="KorisnikModul" asp-action="Index" asp-controller="Narudzba" ajax-poziv="ajaxDa" ajax-rezultat="korisnik-right-wrap" class="btn btn-secondary">Moje Narudžbe</a>
+        </div>
+    </div>
+    <div id="korisnik-right-wrap" class="korisnik col-sm-9" ajax-onload="da" ajax-rezultat="korisnik-right-wrap" ajax-url="/KorisnikModul/Korisnik/Profil">
+        ...
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿@using eDostava.Web.Areas.KorisnikModul.ViewModels
+
+@model NarudzbaDetaljnoVM
+
+<h4>Narudžba</h4>
+<div class="row">
+    <div class="col-sm">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Hrana</th>
+                    <th>Količina</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Stavka in Model.Stavke)
+                {
+                    <tr>
+                        <td>
+                            <h5>@Stavka.Hrana.Naziv</h5>
+                            <small>Restoran: <i>@Stavka.Hrana.Jelovnik.Restoran.Naziv</i></small><br />
+                            <small>Jelovnik: <i>@Stavka.Hrana.Jelovnik.Opis</i></small>
+                        </td>
+                        <td class="text-right">x @Stavka.Kolicina</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br/>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <strong>Ukupno restorana <span class="badge badge-danger p-2">@Model.NarucenoIzRestorana.Count</span></strong>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (string ImeRestorana in Model.NarucenoIzRestorana)
+                {
+                    <tr>
+                        <td>@ImeRestorana</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm">
+        <p><strong>Detalji</strong></p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><strong>Šifra</strong></td>
+                    <td class="text-right"><small>@Model.Sifra</small></td>
+                </tr>
+                <tr>
+                    <td><strong>Datum</strong></td>
+                    <td class="text-right"><small>@Model.DatumVrijeme.ToString("dd.MM.yyyy H.mm")</small></td>
+                </tr>
+                <tr>
+                    <td><strong>Cijena</strong></td>
+                    <td class="text-right"><small>@Model.UkupnaCijena KM</small></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

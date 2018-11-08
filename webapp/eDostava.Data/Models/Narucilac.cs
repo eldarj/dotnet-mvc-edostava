@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 namespace eDostava.Data.Models
 {
-   public class Narucilac:Korisnik
+    public class Narucilac : Korisnik
     {
- 
+
 
         public string Ime { get; set; }
         public string Prezime { get; set; }
@@ -29,6 +29,8 @@ namespace eDostava.Data.Models
         {
             get { return Prezime + " " + Ime; }
         }
+
+        public virtual ICollection<Narudzba> Narudzbe {get; set;}
 
     }
 }

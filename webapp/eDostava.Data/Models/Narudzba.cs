@@ -27,9 +27,11 @@ namespace eDostava.Data.Models
         public Stanje Status { get; set; } = Stanje.Prazna;
         [ForeignKey("Narucilac")]
         public int NarucilacID { get; set; }
+        public Narucilac Narucilac { get; set; }
         [ForeignKey("Kupon")]
         public int? KuponID { get; set; }
         public Kupon Kupon { get; set; }
         public string GetKuponOpis => Kupon == null ? "~" : (Kupon.Opis ?? "~");
+        public virtual ICollection<StavkaNarudzbe> Stavke { get; set; }
     }
 }

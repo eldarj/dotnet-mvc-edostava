@@ -1,10 +1,14 @@
 ﻿function DodajAjaxEvente() {
+    var DEVELOPER_MODE = true;
+
     // Onload ajax
     $("[ajax-onload='da']").each(function (el) {
         $(this).attr("ajax-onload", "dodan");
 
         var urlZaPoziv = $(this).attr("ajax-url");
         var divZaRezultat = $(this).attr("ajax-rezultat");
+
+        console.log(urlZaPoziv);
 
         $.get(urlZaPoziv, function (data, status) {
             $("#" + divZaRezultat).html(data);
@@ -36,7 +40,7 @@
         let self = $(this);
         var urlZaPoziv = self.attr("ajax-url");
 
-        if (typeof self.attr("ajax-add-value-param") != 'undefined') {
+        if (typeof self.attr("ajax-add-value-param") !== 'undefined') {
             urlZaPoziv += "?" + self.attr("name") + "=" + self.val();
         }
 
@@ -58,11 +62,14 @@
     });
 
     $("a[ajax-poziv='ajaxDa']").off().click(function (event) {
-        $(this).attr("ajax-poziv", "dodan");
+        var self = $(this);
+        self.attr("ajax-poziv", "dodan");
         event.preventDefault();
         var urlZaPoziv1 = $(this).attr("ajax-url");
         var urlZaPoziv2 = $(this).attr("href");
         var divZaRezultat = $(this).attr("ajax-rezultat");
+
+        var executeAfter = 0;
 
         var urlZaPoziv;
 
@@ -88,16 +95,32 @@
             alertify.log(msg);
         }
 
-        $.ajax({
-            type: "GET",
-            url: urlZaPoziv,
-            async: true,
-            success: function (data) {
-                $("#" + divZaRezultat).html(data);
-            }
-        });
+        if (self.hasClass('ajax-delete-row')) {
+            self.closest('tr').css('background', 'yellow').fadeOut(1000);
+            executeAfter = 1100;
+        }
 
+        setTimeout(() => {
+            $.ajax({
+                type: "GET",
+                url: urlZaPoziv,
+                async: true,
+                success: function (data) {
 
+                    if (divZaRezultat.indexOf('addRow') !== -1) {
+                        self.closest('tr').css("background", "yellow");
+                        var colspan = self.closest('tr').children('td').length;
+                        if (!$("#" + divZaRezultat).length) {
+                            var newTr = $("<tr class='divRow'></tr>");
+                            var newTd = $("<td id='" + divZaRezultat + "' colspan='" + colspan + "'></td>");
+                            newTr.insertAfter(self.closest('tr')).append(newTd);
+                        }
+                    }
+
+                    $("#" + divZaRezultat).html(data);
+                }
+            });
+        }, executeAfter);
     });
 
     $("a[ajax-poziv='da']").click(function (event) {
@@ -125,6 +148,7 @@
 
         event.preventDefault();
 
+        // Provjeri custom js validaciju prije submita
         var valid = true;
         if (typeof checkErrors !== typeof undefined && checkErrors !== false) {
             form.find('input').each(function () {
@@ -158,7 +182,12 @@
             $.ajax({
                 type: "POST",
                 url: urlZaPoziv,
-                data: form.serialize(),
+                //data: form.serialize(),
+                data: new FormData(form.get(0)),
+                //
+                processData: false,
+                //
+                contentType: false,
                 success: function (data) {
                     $("#" + divZaRezultat).html(data);
                     // check for alertify message popups
@@ -175,17 +204,43 @@
                         }
                         alertify.log(msg);
                     }
+                },
+                error: function (data) {
+                    if (DEVELOPER_MODE) {
+                        console.log(data);
+                        console.log(data.status);
+                        console.log(data.statusCode);
+                        console.log(data.statusText);
+                        $("html").html(data.responseText)
+                            .prepend(`<a href='/AdminModul/Moderator'
+                                         style='background: red; padding: 10px; color: #fff; border-radius: 5px;
+                                                position: absolute; top: 10px; right: 5px; position: fixed;'>
+                                            Nazad na aplikaciju
+                                      </a>`);
+                    }
                 }
             });
         }
     });
 }
+
+// Ponovo parsiraj npr. forme za validaciju
+function ApplyUnobtrusiveValidation()
+{
+    let form = $(this);
+    form.each(function () {
+        $.data(form[0], 'validator', false);
+    });
+    $.validator.unobtrusive.parse("form");
+}
+
+// Izvršava nakon što glavni html dokument bude generisan
 $(document).ready(function () {
-    // izvršava nakon što glavni html dokument bude generisan
     DodajAjaxEvente();
 });
 
+// Izvršava nakon bilo kojeg ajax poziva
 $(document).ajaxComplete(function () {
-    // izvršava nakon bilo kojeg ajax poziva
     DodajAjaxEvente();
+    ApplyUnobtrusiveValidation();
 });

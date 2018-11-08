@@ -22,6 +22,11 @@ body {
     z-index: 5;
     top: 0;
 }
+.navbar.bg-light {
+    padding-bottom: 10px;
+    background: #fff !important;
+    box-shadow: 0 5px 5.5px 1px rgba(0, 0, 0, .05);
+}
 .main-header-container {
     width: 100%;
     background-image: url(../images/wallpapers/main_background.jpg);
@@ -154,6 +159,11 @@ body {
 .live-edit div:not(.edit) select {
     border-color: transparent;
     pointer-events: none;
+    font-weight:;
+}
+.live-edit label {
+    font-size: 12px;
+    font-weight: 600;
 }
 .live-edit:not(.edit) input[type=submit],
 .live-edit:not(.edit) a.cancel {
@@ -217,7 +227,7 @@ footer {
     }
 
 .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
 }
 
 /* Input fields - password toggle visibility btns */

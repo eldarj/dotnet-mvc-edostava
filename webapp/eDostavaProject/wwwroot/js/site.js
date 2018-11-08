@@ -1,6 +1,12 @@
 ﻿// Write your JavaScript code.
 $(document).ready(function () {
+
+
     $(function () {
+        window.FontAwesomeConfig = {
+            searchPseudoElements: true
+        }
+
         // Live form edits (npr profil)
         $("#korisnik-right-wrap").on('click', '.live-edit-section', function () {
             $(this).closest(".form-group").toggleClass('edit');

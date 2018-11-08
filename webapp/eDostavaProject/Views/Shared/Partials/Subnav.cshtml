@@ -1,13 +1,20 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using RS1_Ispit_2017.Helper
+@using eDostava.Data.Models
 @{
     string trenutnoLogiran = Context.Session.GetString("trenutnoLogiran");
+    Moderator moderator = Context.Session.Get<Moderator>("logiraniModerator");
 }
 <div class="container">
     <div class="nav-scroller bg-white d-flex">
         <nav class="nav nav-underline ml-auto">
             <a class="nav-link text-dark">Dobrodošli <span class="text-warning">@trenutnoLogiran</span>!</a>
-            <a class="nav-link" asp-action="Index" asp-controller="Korisnik"><i class="fas fa-user-circle"></i> Profil</a>
-            <a class="nav-link" asp-action="Odjava" asp-controller="Login"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            @if (moderator != null)
+            {
+                <a class="nav-link" asp-action="Index" asp-controller="Moderator" asp-area="AdminModul"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            }
+            <a class="nav-link" asp-action="Index" asp-controller="Korisnik" asp-area="KorisnikModul"><i class="fas fa-user-circle"></i> Profil</a>
+            <a class="nav-link" asp-action="Odjava" asp-controller="Login" asp-area=""><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
     </div>
 </div>

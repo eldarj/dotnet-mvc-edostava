@@ -1,4 +1,10 @@
 ﻿@model eDostava.Web.ViewModels.HranaIndexVM
+@using KorpaSessionExtensions
+
+@{
+    bool? _jeNarucilac = Context.Session.JeNarucilac();
+}
+
 <br />
 <div id="jelovnikAjax@(Model.DivID)">
     <table class="table table-hover" style="font-size:120%">
@@ -24,7 +30,10 @@
                         <a asp-action="UrediProizvod" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.DivID)" asp-route-divid="@Model.DivID" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-info">Uredi</a>
                         <a asp-action="ObrisiProizvod" ajax-poziv="da" ajax-rezultat="jelovnikAjax@(Model.DivID)" asp-route-proizvodid="@x.HranaID" asp-route-jelovnikid="@Model.jelovnikID" class="btn btn-warning">Ukloni</a>
                     }
-                    <a asp-action="Dodaj" asp-controller="Korpa" asp-route-id="@x.HranaID" ajax-poziv="ajaxDa" ajax-rezultat="korpa" class="btn btn-info">Dodaj u Korpu</a>
+                    @if (_jeNarucilac == true)
+                    {
+                        <a asp-action="Dodaj" asp-controller="Korpa" asp-route-id="@x.HranaID" ajax-poziv="ajaxDa" ajax-rezultat="korpa" class="btn btn-info">Dodaj u Korpu</a>
+                    }
                 </td>
             </tr>
         }

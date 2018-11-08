@@ -17,13 +17,13 @@
     </div>
     <div class="col-sm text-center">
         <p>Moj profil</p>
-        <a asp-controller="Korisnik" class="btn btn-lg btn-main-color-1">Profil</a>
+        <a asp-controller="Korisnik" asp-area="KorisnikModul" class="btn btn-lg btn-main-color-1">Profil</a>
     </div>
     @if (moderator != null)
     {
         <div class="col-sm text-center">
             <p>Administracijski dashboard</p>
-            <a asp-controller="Moderator" class="btn btn-lg btn-main-color-1">Administracija</a>
+            <a asp-area="AdminModul" asp-controller="Moderator" class="btn btn-lg btn-main-color-1">Administracija</a>
         </div>
     }
 </div>

@@ -17,7 +17,7 @@ namespace eDostava.Web.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            KorpaPrikazVM Model = new KorpaPrikazVM()
+            return View(new KorpaPrikazVM()
             {
                 Stavke = HttpContext.GetStavke()
                     .Select(x => new KorpaPrikazVM.KorpaStavkeInfo()
@@ -33,9 +33,7 @@ namespace eDostava.Web.ViewComponents
                     })
                     .ToList(),
                 Narudzba = HttpContext.GetNarudzba()
-            };
-
-            return View(Model);
+            });
         }
     }
 }

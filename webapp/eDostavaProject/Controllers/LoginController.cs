@@ -38,7 +38,7 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
             return View(model);
         }
 
-        public IActionResult Prijava(string username, string password)
+        public IActionResult Prijava(string username, string password, bool cookielogin)
         {
             HttpContext.Session.Clear();
 
@@ -54,18 +54,18 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
 
             if (n1 != null)
             {
-                HttpContext.SetLogiranogVlasnika(n1);
+                HttpContext.SetLogiranogVlasnika(n1, cookielogin);
                 HttpContext.Session.Set("trenutnoLogiran", n1.Ime_prezime);
             }
 
             if (n2 != null)
             {
-                HttpContext.SetLogiranogModeratora(n2);
+                HttpContext.SetLogiranogModeratora(n2, cookielogin);
                 HttpContext.Session.Set("trenutnoLogiran", n2.Username);
             }
             if (n3 != null)
             {
-                HttpContext.SetLogiranogNarucioca(n3);
+                HttpContext.SetLogiranogNarucioca(n3, cookielogin);
                 HttpContext.Session.Set("trenutnoLogiran", n3.Ime_prezime);
                 HttpContext.Session.SetBoolean("jeNarucilac", true);
             }
@@ -79,6 +79,9 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
         public IActionResult Odjava()
         {
             HttpContext.Session.Clear();
+            HttpContext.Response.Cookies.Delete("logiraniVlasnik");
+            HttpContext.Response.Cookies.Delete("logiraniModerator");
+            HttpContext.Response.Cookies.Delete("logiraniNarucilac");
             return RedirectToAction("Index");
         }
 

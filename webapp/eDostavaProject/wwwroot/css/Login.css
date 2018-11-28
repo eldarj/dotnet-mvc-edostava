@@ -44,7 +44,7 @@ login-page {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-    .form input {
+    .form input:not([type=checkbox]) {
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         outline: 0;
         background: #f2f2f2;
@@ -55,7 +55,20 @@ login-page {
         box-sizing: border-box;
         font-size: 14px;
     }
-
+    
+    .form input[type=checkbox] {
+        position: relative;
+        top: 2px;
+    }
+    .form label {  
+        width: 100%;
+        display: block;
+        margin-bottom: 15px;
+    }
+    .form label span {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 14px;
+    }
     .form select {
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         outline: 0;

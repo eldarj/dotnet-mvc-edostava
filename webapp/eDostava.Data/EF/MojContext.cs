@@ -54,5 +54,6 @@ namespace eDostava.Data
         public DbSet<Zalba> Zalbe { get; set; }
         public DbSet<TipKuhinje> TipoviKuhinje { get; set; }
         public DbSet<Badge> Badgevi { get; set; }
+        public DbSet<AuthToken> AuthTokeni { get; set; }
     }
 }

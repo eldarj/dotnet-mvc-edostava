@@ -1,0 +1,48 @@
+﻿@using eDostava.Web.Areas.AdminModul.ViewModels
+
+@model SessionPrikazVM
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h2>Sesije</h2>
+            <hr />
+        </div>
+        <div class="card-text">
+            <table class="table bs-datatable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Token</th>
+                        <th>IP</th>
+                        <th>Datum logiranja</th>
+                        <th>Više</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SessionPrikazVM.Session x in Model.Sessions)
+                    {
+                        <tr>
+                            <td class="nowrap">
+                                @if (Model.TrenutniToken == x.Token)
+                                {
+                                    <b>(trenutna sesija)</b><br />
+                                }
+                                @x.Token
+                            </td>
+                            <td class="nowrap">@x.Ip</td>
+                            <td class="nowrap">@x.LoginTime.ToString("dd.MM.yyyy H:mm")</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Obrisi" asp-controller="Session" asp-area="AdminModul" asp-route-token="@x.Token"
+                                       ajax-poziv="ajaxDa" ajax-rezultat="modAjaxContainer" class="btn btn-xs btn-danger ajax-delete-row"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <br />
+        </div>
+    </div>
+</div>

@@ -12,9 +12,10 @@ using System;
 namespace eDostava.Data.Migrations
 {
     [DbContext(typeof(MojContext))]
-    partial class MojContextModelSnapshot : ModelSnapshot
+    [Migration("20181128224235_UpdateAuthTokens")]
+    partial class UpdateAuthTokens
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +28,6 @@ namespace eDostava.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DatumGenerisanja");
-
-                    b.Property<string>("Ip");
 
                     b.Property<int?>("ModeratorId");
 

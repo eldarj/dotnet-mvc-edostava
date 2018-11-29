@@ -12,9 +12,10 @@ using System;
 namespace eDostava.Data.Migrations
 {
     [DbContext(typeof(MojContext))]
-    partial class MojContextModelSnapshot : ModelSnapshot
+    [Migration("20181128223359_AuthTokens")]
+    partial class AuthTokens
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,15 +29,13 @@ namespace eDostava.Data.Migrations
 
                     b.Property<DateTime>("DatumGenerisanja");
 
-                    b.Property<string>("Ip");
+                    b.Property<int>("ModeratorId");
 
-                    b.Property<int?>("ModeratorId");
-
-                    b.Property<int?>("NarucilacId");
+                    b.Property<int>("NarucilacId");
 
                     b.Property<string>("Value");
 
-                    b.Property<int?>("VlasnikId");
+                    b.Property<int>("VlasnikId");
 
                     b.HasKey("Id");
 
@@ -404,15 +403,18 @@ namespace eDostava.Data.Migrations
                 {
                     b.HasOne("eDostava.Data.Models.Moderator", "Moderator")
                         .WithMany()
-                        .HasForeignKey("ModeratorId");
+                        .HasForeignKey("ModeratorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("eDostava.Data.Models.Narucilac", "Narucilac")
                         .WithMany()
-                        .HasForeignKey("NarucilacId");
+                        .HasForeignKey("NarucilacId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("eDostava.Data.Models.Vlasnik", "Vlasnik")
                         .WithMany()
-                        .HasForeignKey("VlasnikId");
+                        .HasForeignKey("VlasnikId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("eDostava.Data.Models.Blok", b =>

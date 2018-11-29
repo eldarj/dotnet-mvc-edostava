@@ -1,5 +1,6 @@
 ﻿using eDostava.Data.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace RS1_Ispit_2017.Helper
         private const string logiraniVlasnik = "logiraniVlasnik";
         private const string logiraniModerator = "logiraniModerator";
         private const string logiraniNarucilac = "logiraniNarucilac";
-
+        public const string tokenCookieName = "EDOSTAVA_TKN";
 
         public static void SetBoolean(this ISession session, string key, bool value)
         {
@@ -38,30 +39,48 @@ namespace RS1_Ispit_2017.Helper
         {
            
             context.Session.Set(logiraniVlasnik,korisnik);
-            if (cookielogin)
-                context.Response.SetCookieJson(logiraniVlasnik, korisnik);
-            else
-                context.Response.SetCookieJson(logiraniVlasnik, null);
-        }
 
-        public static void SetLogiranogModeratora(this HttpContext context, MojContext db, Moderator korisnik, bool cookielogin = false)
-        {
-
-            context.Session.Set(logiraniModerator, korisnik);
             if (cookielogin)
             {
+                MojContext db = context.RequestServices.GetService<MojContext>();
+
                 string token = Guid.NewGuid().ToString();
                 db.AuthTokeni.Add(new AuthToken
                 {
                     Value = token,
-                    KorisnikId = korisnik.KorisnikID,
+                    VlasnikId = korisnik.KorisnikID,
                     DatumGenerisanja = DateTime.Now
                 });
-                context.Response.SetCookieJson(logiraniModerator, token);
+                db.SaveChanges();
+                context.Response.SetCookieToken(tokenCookieName, token);
             }
             else
             {
-                context.Response.SetCookieJson(logiraniModerator, null);
+                context.Response.SetCookieToken(tokenCookieName, null);
+            }
+        }
+
+        public static void SetLogiranogModeratora(this HttpContext context, Moderator korisnik, bool cookielogin = false)
+        {
+            context.Session.Set(logiraniModerator, korisnik);
+
+            if (cookielogin)
+            {
+                MojContext db = context.RequestServices.GetService<MojContext>();
+
+                string token = Guid.NewGuid().ToString();
+                db.AuthTokeni.Add(new AuthToken
+                {
+                    Value = token,
+                    ModeratorId = korisnik.KorisnikID,
+                    DatumGenerisanja = DateTime.Now
+                });
+                db.SaveChanges();
+                context.Response.SetCookieToken(tokenCookieName, token);
+            }
+            else
+            {
+                context.Response.SetCookieToken(tokenCookieName, null);
             }
         }
 
@@ -69,10 +88,25 @@ namespace RS1_Ispit_2017.Helper
         {
 
             context.Session.Set(logiraniNarucilac, korisnik);
+            
             if (cookielogin)
-                context.Response.SetCookieJson(logiraniNarucilac, korisnik);
+            {
+                MojContext db = context.RequestServices.GetService<MojContext>();
+
+                string token = Guid.NewGuid().ToString();
+                db.AuthTokeni.Add(new AuthToken
+                {
+                    Value = token,
+                    NarucilacId = korisnik.KorisnikID,
+                    DatumGenerisanja = DateTime.Now
+                });
+                db.SaveChanges();
+                context.Response.SetCookieToken(tokenCookieName, token);
+            }
             else
-                context.Response.SetCookieJson(logiraniNarucilac, null);
+            {
+                context.Response.SetCookieToken(tokenCookieName, null);
+            }
         }
 
         public static Vlasnik GetLogiranogVlasnika(this HttpContext context)
@@ -80,28 +114,50 @@ namespace RS1_Ispit_2017.Helper
             Vlasnik x = context.Session.Get<Vlasnik>(logiraniVlasnik);
             if (x == null)
             {
-                x = context.Request.GetCookiesJson<Vlasnik>(logiraniVlasnik);
-                context.Session.Set(logiraniVlasnik, x);
-            }
-            return x;
-        }
-
-        public static Moderator GetLogiranogModeratora(this HttpContext context, MojContext db)
-        {
-            Moderator x = context.Session.Get<Moderator>(logiraniModerator);
-            if (x == null)
-            {
-                string token = context.Request.GetCookiesJson<string>(logiraniModerator);
+                string token = context.Request.GetCookiesToken(tokenCookieName);
                 if (token == null)
                 {
                     return null;
                 }
 
-                AuthToken authToken = db.AuthTokeni.SingleOrDefault(k => k.Value == token);
+                MojContext db = context.RequestServices.GetService<MojContext>();
 
-                if (authToken != null)
+                Vlasnik vlasnik = db.AuthTokeni
+                    .Where(k => k.Value == token)
+                    .Select(k => k.Vlasnik)
+                    .SingleOrDefault();
+
+                if (vlasnik != null)
                 {
-                    context.Session.Set(logiraniModerator, db.Moderatori.SingleOrDefault(k => k.KorisnikID == authToken.KorisnikId));
+                    context.Session.Set(tokenCookieName, vlasnik);
+                    return vlasnik;
+                }
+            }
+            return x;
+        }
+
+        public static Moderator GetLogiranogModeratora(this HttpContext context)
+        {
+            Moderator x = context.Session.Get<Moderator>(logiraniModerator);
+            if (x == null)
+            {
+                string token = context.Request.GetCookiesToken(tokenCookieName);
+                if (token == null)
+                {
+                    return null;
+                }
+
+                MojContext db = context.RequestServices.GetService<MojContext>();
+
+                Moderator moderator = db.AuthTokeni
+                    .Where(k => k.Value == token)
+                    .Select(k => k.Moderator)
+                    .SingleOrDefault();
+
+                if (moderator != null)
+                {
+                    context.Session.Set(tokenCookieName, moderator);
+                    return moderator;
                 }
             }
             return x;
@@ -112,10 +168,47 @@ namespace RS1_Ispit_2017.Helper
             Narucilac x = context.Session.Get<Narucilac>(logiraniNarucilac);
             if (x == null)
             {
-                x = context.Request.GetCookiesJson<Narucilac>(logiraniNarucilac);
-                context.Session.Set(logiraniNarucilac, x);
+                string token = context.Request.GetCookiesToken(tokenCookieName);
+                if (token == null)
+                {
+                    return null;
+                }
+
+                MojContext db = context.RequestServices.GetService<MojContext>();
+
+                Narucilac narucilac = db.AuthTokeni
+                    .Where(k => k.Value == token)
+                    .Select(k => k.Narucilac)
+                    .SingleOrDefault();
+
+                if (narucilac != null)
+                {
+                    context.Session.Set(tokenCookieName, narucilac);
+                    return narucilac;
+                }
             }
             return x;
+        }
+
+        public static string GetCurrentToken(this HttpContext context)
+        {
+            return context.Request.GetCookiesToken(tokenCookieName);
+        }
+
+        public static void RemoveCurrentSession(this HttpContext context)
+        {
+            string token = context.Request.GetCookiesToken(tokenCookieName);
+
+            MojContext db = context.RequestServices.GetService<MojContext>();
+            AuthToken dbToken = db.AuthTokeni.SingleOrDefault(t => t.Value == token);
+            if (dbToken != null)
+            {
+                db.AuthTokeni.Remove(dbToken);
+                db.SaveChanges();
+            }
+
+            context.Response.Cookies.Delete(tokenCookieName);
+            context.Session.Clear();
         }
     }
 }

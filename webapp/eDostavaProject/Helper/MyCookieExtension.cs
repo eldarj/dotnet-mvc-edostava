@@ -38,6 +38,31 @@ namespace eDostava.Web.Helper
             response.Cookies.Append(key, strValue, option);
         }
 
+        public static string GetCookiesToken(this HttpRequest request, string key)
+        {
+            return request.Cookies[key];
+        }
+
+        public static void SetCookieToken(this HttpResponse response, string key, string token, int? expireTime = null)
+        {
+            if (token == null)
+            {
+                response.Cookies.Delete(key);
+                return;
+            }
+
+            CookieOptions option = new CookieOptions();
+            if (expireTime.HasValue)
+            {
+                option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
+            } else
+            {
+                option.Expires = DateTime.Now.AddDays(7);
+            }
+            response.Cookies.Delete(key);
+            response.Cookies.Append(key, token, option);
+        }
+
         public static void RemoveCookie(this HttpResponse response, string key)
         {
             response.Cookies.Delete(key);

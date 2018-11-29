@@ -78,10 +78,7 @@ namespace RS1_Ispit_2017_06_21_v1.Controllers
 
         public IActionResult Odjava()
         {
-            HttpContext.Session.Clear();
-            HttpContext.Response.Cookies.Delete("logiraniVlasnik");
-            HttpContext.Response.Cookies.Delete("logiraniModerator");
-            HttpContext.Response.Cookies.Delete("logiraniNarucilac");
+            Autentifikacija.RemoveCurrentSession(HttpContext);
             return RedirectToAction("Index");
         }
 

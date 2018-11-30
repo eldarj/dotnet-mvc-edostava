@@ -15,7 +15,7 @@ namespace eDostava.Data.Models
         [ForeignKey("Blok")]
         public int BlokID { get; set; }
 
-        public Blok Blok { get; set; }
+        public virtual Blok Blok { get; set; }
         [ForeignKey("Badge")]
         public int BadgeID { get; set; }
         public Badge Badge { get; set; }
@@ -29,6 +29,10 @@ namespace eDostava.Data.Models
         {
             get { return Prezime + " " + Ime; }
         }
+
+        public string ImageUrl { get; set; }
+
+        public string Adresa { get; set; }
 
         public virtual ICollection<Narudzba> Narudzbe {get; set;}
 

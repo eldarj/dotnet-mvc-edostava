@@ -16,7 +16,7 @@ namespace eDostava.Data.Models
 
         [ForeignKey("Hrana")]
         public int HranaID { get; set; }
-        public Hrana Hrana { get; set; }
+        public virtual Hrana Hrana { get; set; }
         public int Kolicina { get; set; }
 
         public double CalcCijena => Hrana.Cijena * Kolicina;

@@ -14,6 +14,6 @@ namespace eDostava.Data.Models
         [ForeignKey("Grad")]
         public int GradID { get; set; }
 
-        public Grad Grad { get; set; }
+        public virtual Grad Grad { get; set; }
     }
 }

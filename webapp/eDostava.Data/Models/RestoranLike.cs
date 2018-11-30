@@ -18,7 +18,9 @@ namespace eDostava.Data.Models
         public int RestoranID { get; set; }
         
         public Restoran Restoran { get; set; }
-        DateTime Datum { get; set; }
+        public DateTime Datum { get; set; } = DateTime.Now;
+
+        public string Recenzija { get; set; } = "-";
 
 
     }

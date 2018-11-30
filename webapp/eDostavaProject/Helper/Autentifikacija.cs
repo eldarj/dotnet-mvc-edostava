@@ -88,7 +88,7 @@ namespace RS1_Ispit_2017.Helper
         {
 
             context.Session.Set(logiraniNarucilac, korisnik);
-            
+
             if (cookielogin)
             {
                 MojContext db = context.RequestServices.GetService<MojContext>();
@@ -122,15 +122,16 @@ namespace RS1_Ispit_2017.Helper
 
                 MojContext db = context.RequestServices.GetService<MojContext>();
 
-                Vlasnik vlasnik = db.AuthTokeni
+                Vlasnik korisnik = db.AuthTokeni
                     .Where(k => k.Value == token)
                     .Select(k => k.Vlasnik)
                     .SingleOrDefault();
 
-                if (vlasnik != null)
+                if (korisnik != null)
                 {
-                    context.Session.Set(tokenCookieName, vlasnik);
-                    return vlasnik;
+                    context.Session.Set(logiraniVlasnik, korisnik);
+                    context.Session.Set("trenutnoLogiran", korisnik.Ime_prezime);
+                    return korisnik;
                 }
             }
             return x;
@@ -149,15 +150,16 @@ namespace RS1_Ispit_2017.Helper
 
                 MojContext db = context.RequestServices.GetService<MojContext>();
 
-                Moderator moderator = db.AuthTokeni
+                Moderator korisnik = db.AuthTokeni
                     .Where(k => k.Value == token)
                     .Select(k => k.Moderator)
                     .SingleOrDefault();
 
-                if (moderator != null)
+                if (korisnik != null)
                 {
-                    context.Session.Set(tokenCookieName, moderator);
-                    return moderator;
+                    context.Session.Set(logiraniModerator, korisnik);
+                    context.Session.Set("trenutnoLogiran", korisnik.Username);
+                    return korisnik;
                 }
             }
             return x;
@@ -176,15 +178,17 @@ namespace RS1_Ispit_2017.Helper
 
                 MojContext db = context.RequestServices.GetService<MojContext>();
 
-                Narucilac narucilac = db.AuthTokeni
+                Narucilac korisnik = db.AuthTokeni
                     .Where(k => k.Value == token)
                     .Select(k => k.Narucilac)
                     .SingleOrDefault();
 
-                if (narucilac != null)
+                if (korisnik != null)
                 {
-                    context.Session.Set(tokenCookieName, narucilac);
-                    return narucilac;
+                    context.Session.Set(logiraniNarucilac, korisnik);
+                    context.Session.Set("trenutnoLogiran", korisnik.Ime_prezime);
+                    context.Session.SetBoolean("jeNarucilac", true);
+                    return korisnik;
                 }
             }
             return x;

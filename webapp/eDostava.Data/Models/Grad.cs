@@ -13,5 +13,7 @@ namespace eDostava.Data.Models
         public string Naziv { get; set; }
 
         public int PoštanskiBroj { get; set; }
+
+        public string Drzava { get; set; }
     }
 }

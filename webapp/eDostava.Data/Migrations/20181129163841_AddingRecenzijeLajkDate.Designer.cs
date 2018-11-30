@@ -12,9 +12,10 @@ using System;
 namespace eDostava.Data.Migrations
 {
     [DbContext(typeof(MojContext))]
-    partial class MojContextModelSnapshot : ModelSnapshot
+    [Migration("20181129163841_AddingRecenzijeLajkDate")]
+    partial class AddingRecenzijeLajkDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,8 +84,6 @@ namespace eDostava.Data.Migrations
                 {
                     b.Property<int>("GradID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Drzava");
 
                     b.Property<string>("Naziv");
 
@@ -197,8 +196,6 @@ namespace eDostava.Data.Migrations
                     b.Property<int>("KorisnikID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Adresa");
-
                     b.Property<int>("BadgeID");
 
                     b.Property<int>("BlokID");
@@ -206,8 +203,6 @@ namespace eDostava.Data.Migrations
                     b.Property<DateTime>("DatumKreiranja");
 
                     b.Property<string>("Email");
-
-                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Ime");
 

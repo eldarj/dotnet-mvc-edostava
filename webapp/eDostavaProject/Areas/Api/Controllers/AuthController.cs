@@ -50,7 +50,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     ZadnjiLogin = DateTime.Now,
                     Token ="",
                     Adresa = s.Adresa,
-                    ImageUrl = s.ImageUrl != null ? s.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    ImageUrl = s.ImageUrl != null && s.ImageUrl.Length > 0 ? s.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
                 })
                 .FirstOrDefaultAsync();
 
@@ -84,7 +84,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Prezime = Model.Prezime,
                     Password = Model.Password,
                     Username = Model.Username,
-                    ImageUrl = Model.ImageUrl != null ? Model.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
                     Adresa = Model.Adresa,
                     BadgeID = 1,
                     DatumKreiranja = DateTime.Now,
@@ -106,7 +106,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     ZadnjiLogin = DateTime.Now,
                     Token = "",
                     Adresa = newUser.Adresa,
-                    ImageUrl = newUser.ImageUrl != null ? newUser.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    ImageUrl = newUser.ImageUrl,
                     NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == newUser.KorisnikID).Count()
                 };
 
@@ -151,7 +151,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     ZadnjiLogin = DateTime.Now,
                     Token = "",
                     Adresa = user.Adresa,
-                    ImageUrl = user.ImageUrl != null && user.ImageUrl.Length > 0 ? user.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    ImageUrl = user.ImageUrl,
                     NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == user.KorisnikID).Count()
                 };
 
@@ -161,16 +161,17 @@ namespace eDostava.Web.Areas.Api.Controllers
             return BadRequest("Update failed, morate proslijediti validan postojeći PK-ID i korisnički račun!");
         }
 
-        // DELETE: api/Auth/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNarucilac([FromRoute] int id)
+        // DELETE: api/Auth/Delete
+        [HttpPost]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete([FromBody] AuthRegisterPost Model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var narucilac = await _context.Narucioci.SingleOrDefaultAsync(m => m.KorisnikID == id);
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(m => m.KorisnikID == Model.Id);
             if (narucilac == null)
             {
                 return NotFound();
@@ -179,7 +180,7 @@ namespace eDostava.Web.Areas.Api.Controllers
             _context.Narucioci.Remove(narucilac);
             await _context.SaveChangesAsync();
 
-            return Ok(narucilac);
+            return NoContent();
         }
 
         private bool NarucilacExists(int id)

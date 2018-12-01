@@ -16,6 +16,8 @@ namespace eDostava.Web.Areas.Api.Controllers
     [Route("api/Auth")]
     public class AuthController : Controller
     {
+        private readonly string IMAGE_DIR = "uploads/images/korisnik";
+        private readonly string DEFAULT_IMAGE = "default_identicon.png";
         private readonly MojContext _context;
 
         public AuthController(MojContext context)
@@ -33,6 +35,8 @@ namespace eDostava.Web.Areas.Api.Controllers
             }
 
             AuthUserVM model = await _context.Narucioci
+                .Include(n => n.Blok)
+                .ThenInclude(n => n.Grad)
                 .Where(n => n.Username == postAccount.Username && n.Password == postAccount.Password)
                 .Select(s => new AuthUserVM
                 {
@@ -41,9 +45,11 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Prezime = s.Prezime,
                     Username = s.Username,
                     Blok = s.Blok,
+                    DatumKreiranja = s.DatumKreiranja,
+                    ZadnjiLogin = DateTime.Now,
                     Token ="",
                     Adresa = s.Adresa,
-                    ImageUrl = s.ImageUrl
+                    ImageUrl = s.ImageUrl != null ? s.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
                 })
                 .FirstOrDefaultAsync();
 
@@ -61,27 +67,95 @@ namespace eDostava.Web.Areas.Api.Controllers
 
         // POST: api/Auth/Register
         [HttpPost]
-        [Route("api/Auth/Register")]
+        [Route("Register")]
         public async Task<IActionResult> Register([FromBody] AuthRegisterPost Model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            Narucilac newUser = new Narucilac
+
+            if (Model.Id == 0)
             {
-                Ime = Model.Ime,
-                Prezime = Model.Prezime,
-                Username = Model.Username,
-                BadgeID = 1,
-                DatumKreiranja = DateTime.Now,
-                BlokID = Model.BlokID
-            };
+                Narucilac newUser = new Narucilac
+                {
+                    Ime = Model.Ime,
+                    Prezime = Model.Prezime,
+                    Password = Model.Password,
+                    Username = Model.Username,
+                    ImageUrl = Model.ImageUrl != null ? Model.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    Adresa = Model.Adresa,
+                    BadgeID = 1,
+                    DatumKreiranja = DateTime.Now,
+                    Blok = _context.Blokovi.Include(b => b.Grad).DefaultIfEmpty(_context.Blokovi.First()).First(b => b.BlokID == Model.BlokID)
+                };
+                
+                await _context.Narucioci.AddAsync(newUser);
+                await _context.SaveChangesAsync();
 
-            _context.Narucioci.Add(newUser);
-            await _context.SaveChangesAsync();
+                AuthUserVM authUserVM = new AuthUserVM
+                {
+                    Id = newUser.KorisnikID,
+                    Ime = newUser.Ime,
+                    Prezime = newUser.Prezime,
+                    Username = newUser.Username,
+                    Blok = newUser.Blok,
+                    DatumKreiranja = newUser.DatumKreiranja,
+                    ZadnjiLogin = DateTime.Now,
+                    Token = "",
+                    Adresa = newUser.Adresa,
+                    ImageUrl = newUser.ImageUrl != null ? newUser.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == newUser.KorisnikID).Count()
+                };
 
-            return CreatedAtAction("GetNarucilac", new { id = newUser.KorisnikID }, newUser);
+                return CreatedAtAction("Register", new { id = authUserVM.Id }, authUserVM);
+            }
+
+            return BadRequest("Register failed, check what (existing) data are you passing. Did you mean to call the Update action?");
+        }
+
+        // POST: api/Auth/Update
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] AuthRegisterPost Model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (Model.Id != 0)
+            {
+                Narucilac user = await _context.Narucioci.FindAsync(Model.Id);
+                user.Ime = Model.Ime ?? user.Ime;
+                user.Prezime = Model.Prezime ?? user.Prezime;
+                user.Password = Model.Password ?? user.Password;
+                user.Username = Model.Username ?? user.Username;
+                user.ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE;
+                user.Adresa = Model.Adresa ?? user.Adresa;
+                user.Blok = _context.Blokovi.Include(b => b.Grad).DefaultIfEmpty(_context.Blokovi.First()).First(b => b.BlokID == Model.BlokID);
+
+                await _context.SaveChangesAsync();
+
+                AuthUserVM authUserVM = new AuthUserVM
+                {
+                    Id = user.KorisnikID,
+                    Ime = user.Ime,
+                    Prezime = user.Prezime,
+                    Username = user.Username,
+                    Blok = user.Blok,
+                    DatumKreiranja = user.DatumKreiranja,
+                    ZadnjiLogin = DateTime.Now,
+                    Token = "",
+                    Adresa = user.Adresa,
+                    ImageUrl = user.ImageUrl != null && user.ImageUrl.Length > 0 ? user.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == user.KorisnikID).Count()
+                };
+
+                return CreatedAtAction("Update", new { id = authUserVM.Id }, authUserVM);
+            }
+
+            return BadRequest("Update failed, morate proslijediti validan postojeći PK-ID i korisnički račun!");
         }
 
         // DELETE: api/Auth/5

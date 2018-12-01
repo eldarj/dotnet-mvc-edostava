@@ -9,6 +9,8 @@ using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.Api.Models;
 using System.Net;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
@@ -19,10 +21,12 @@ namespace eDostava.Web.Areas.Api.Controllers
         private readonly string IMAGE_DIR = "uploads/images/korisnik";
         private readonly string DEFAULT_IMAGE = "default_identicon.png";
         private readonly MojContext _context;
+        private readonly IHostingEnvironment _appEnvironment;
 
-        public AuthController(MojContext context)
+        public AuthController(MojContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _appEnvironment = hostingEnvironment;
         }
 
         // POST: api/Auth
@@ -181,6 +185,43 @@ namespace eDostava.Web.Areas.Api.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // UPLOAD PROFILE IMAGE: api/Auth/User/Image
+        [HttpPost]
+        [Route("User/Image")]
+        public async Task<IActionResult> UploadImage([FromBody] UserImagePost Model)
+        {
+            if (Model.EncodedImageBase64 == null || !(Model.EncodedImageBase64.Length > 0))
+            {
+                return BadRequest("Nedostaje slika.");
+            }
+
+            Narucilac user = await _context.Narucioci.FindAsync(Model.UserId);
+
+            if (user != null)
+            {
+                try
+                {
+                    string Filename = Model.FileName + "_" + Model.UserId + "_" + Guid.NewGuid().ToString().Substring(0, 4) + ".jpeg";
+                    string Uploads = Path.Combine(_appEnvironment.WebRootPath, IMAGE_DIR);
+                    string FilePath = Path.Combine(Uploads, Filename); // Pripremi path i ime slike
+
+                    byte[] imageBytes = Convert.FromBase64String(Model.EncodedImageBase64);
+                    System.IO.File.WriteAllBytes(FilePath, imageBytes);
+
+                    user.ImageUrl = IMAGE_DIR + "/" + Filename;
+                    await _context.SaveChangesAsync();
+
+                    return Ok(user.ImageUrl);
+                }
+                catch ( Exception e )
+                {
+                    // handle ili samo pust da akcija vrati bad request?
+                }
+            }
+
+            return BadRequest("Dogodila se greska pri konverziji base64 u sliku.");
         }
 
         private bool NarucilacExists(int id)

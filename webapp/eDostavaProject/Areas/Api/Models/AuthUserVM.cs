@@ -1,4 +1,5 @@
 ﻿using eDostava.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,10 @@ namespace eDostava.Web.Areas.Api.Models
         public string ImageUrl { get; set; }
         public string Telefon { get; set; }
         public string Email { get; set; }
+        public DateTime DatumKreiranja { get; set; }
         public string Token { get; set; }
         public Blok Blok { get; set; }
+        public int NarudzbeCount { get; set; }
+        public DateTime ZadnjiLogin { get; internal set; }
     }
 }

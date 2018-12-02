@@ -10,10 +10,12 @@ namespace eDostava.Data.Models
     {
         [Display(Name = "Narudžba nije validna!")]
         NijeValidna,
-        [Display(Name = "Narudžba isporučena! Ispraznili smo vašu korpu ukoliko želite poručiti još nešto.")]
+        [Display(Name = "Isporučena")]
         Isporucena,
-        [Display(Name = "Dodane stavke:")]
-        Aktivna,
+        [Display(Name = "Prihvaćena")]
+        Prihvacena,
+        [Display(Name = "Na čekanju")]
+        NaCekanju,
         [Display(Name = "Korpa je prazna. Pregledajte restorane i jelovnike, izaberite i dodajte u korpu nešto fino!")]
         Prazna
     }

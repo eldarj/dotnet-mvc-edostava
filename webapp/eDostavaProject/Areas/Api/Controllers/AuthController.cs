@@ -27,7 +27,7 @@ namespace eDostava.Web.Areas.Api.Controllers
 
         // POST: api/Auth
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] UserLoginRequest postAccount)
+        public async Task<IActionResult> Login([FromBody] AuthLoginVM postAccount)
         {
             if (!ModelState.IsValid)
             {

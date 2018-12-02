@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.Areas.Api.Models
 {
-    public class UserImagePost
+    public class UserImageRequest
     {
         public string EncodedImageBase64 { get; set; }
         public string FileName { get; set; }

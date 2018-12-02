@@ -12,21 +12,21 @@ using eDostava.Web.Areas.Api.Models;
 namespace eDostava.Web.Areas.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Locations")]
-    public class LocationsController : Controller
+    [Route("api/Lokacije")]
+    public class LokacijeController : Controller
     {
         private readonly MojContext _context;
 
-        public LocationsController(MojContext context)
+        public LokacijeController(MojContext context)
         {
             _context = context;
         }
 
-        // GET: api/Locations
+        // GET: api/Lokacije
         [HttpGet]
-        public ActionResult GetLocations()
+        public ActionResult GetBlokovi()
         {
-            BlokApiModel model = new BlokApiModel
+            BlokListResponse model = new BlokListResponse
             {
                 Blokovi = _context.Blokovi.Include(b => b.Grad).ToList()
             };
@@ -34,9 +34,9 @@ namespace eDostava.Web.Areas.Api.Controllers
             return Ok(model);
         }
 
-        // GET: api/Locations/5
+        // GET: api/Lokacije/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBlok([FromRoute] int id)
+        public async Task<IActionResult> GetSingleBlok([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {

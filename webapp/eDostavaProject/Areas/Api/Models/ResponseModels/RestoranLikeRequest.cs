@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.Areas.Api.Models
 {
-    public class AuthLoginPost
+    public class RestoranLikeRequest
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public UserLoginRequest credentials { get; set; }
+        public string Recenzija { get; set; }
     }
 }

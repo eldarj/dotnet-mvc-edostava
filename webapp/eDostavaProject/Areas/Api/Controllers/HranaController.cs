@@ -22,28 +22,34 @@ namespace eDostava.Web.Areas.Api.Controllers
             _context = context;
         }
 
-        // GET: api/Hrana
+        // GET: api/Restorani/{id}/Hrana
         [HttpGet]
-        public IEnumerable<HranaApiModel.HranaInfo> GetProizvodi()
+        public ActionResult GetProizvodi([FromRoute] int id)
         {
-            int restoranResourceId = Int32.Parse(RouteData.Values["id"].ToString());
-            HranaApiModel model = new HranaApiModel
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            int restoranId = Int32.Parse(RouteData.Values["id"].ToString());
+            HranaListResponse model = new HranaListResponse
             {
                 Hrana = _context.Proizvodi
                 .Include(p => p.Jelovnik)
-                .Where(p => p.Jelovnik.RestoranID == restoranResourceId)
-                .Select(h => new HranaApiModel.HranaInfo
+                .Where(p => p.Jelovnik.RestoranID == restoranId)
+                .Select(h => new HranaListResponse.HranaInfo
                 {
                     Id = h.HranaID,
                     Naziv = h.Naziv,
                     Opis = h.Opis,
-                    Slika = HttpContext.Request.Host.Value + "/" + h.Slika,
+                    ImageUrl = h.Slika,
                     Cijena = h.Cijena,
-                    Tip = h.TipKuhinje
+                    TipKuhinje = h.TipKuhinje
                 })
                 .ToList()
             };
-            return model.Hrana;
+
+            return Ok(model);
         }
     }
 }

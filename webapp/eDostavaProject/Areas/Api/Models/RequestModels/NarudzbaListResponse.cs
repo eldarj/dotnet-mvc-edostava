@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static eDostava.Web.Areas.Api.Models.HranaApiModel;
-using static eDostava.Web.Areas.Api.Models.RestoranApiModel;
+using static eDostava.Web.Areas.Api.Models.HranaListResponse;
+using static eDostava.Web.Areas.Api.Models.RestoranListResponse;
 
 namespace eDostava.Web.Areas.Api.Models
 {
-    public class NarudzbaApiModel
+    public class NarudzbaListResponse
     {
         public class NarudzbaHranaStavka
         {

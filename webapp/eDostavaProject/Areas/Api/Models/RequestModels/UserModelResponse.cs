@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.Areas.Api.Models
 {
-    public class AuthUserVM
+    public class UserModelResponse
     {
         public int Id { get; set; }
         public string Username { get; set; }

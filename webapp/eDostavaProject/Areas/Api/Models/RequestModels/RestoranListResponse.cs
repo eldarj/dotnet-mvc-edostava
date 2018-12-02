@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.Areas.Api.Models
 {
-    public class RestoranApiModel
+    public class RestoranListResponse
     {
         public class RestoranLike
         {

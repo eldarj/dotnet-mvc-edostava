@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.Api.Models;
-using System.Net;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using eDostava.Web.Areas.Api.Helper;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
@@ -18,8 +16,6 @@ namespace eDostava.Web.Areas.Api.Controllers
     [Route("api/Auth")]
     public class AuthController : Controller
     {
-        private readonly string IMAGE_DIR = "uploads/images/korisnik";
-        private readonly string DEFAULT_IMAGE = "default_identicon.png";
         private readonly MojContext _context;
         private readonly IHostingEnvironment _appEnvironment;
 
@@ -31,18 +27,18 @@ namespace eDostava.Web.Areas.Api.Controllers
 
         // POST: api/Auth
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] AuthLoginPost postAccount)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest postAccount)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            AuthUserVM model = await _context.Narucioci
+            UserModelResponse model = await _context.Narucioci
                 .Include(n => n.Blok)
                 .ThenInclude(n => n.Grad)
                 .Where(n => n.Username == postAccount.Username && n.Password == postAccount.Password)
-                .Select(s => new AuthUserVM
+                .Select(s => new UserModelResponse
                 {
                     Id = s.KorisnikID,
                     Ime = s.Ime,
@@ -54,7 +50,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     ZadnjiLogin = DateTime.Now,
                     Token ="",
                     Adresa = s.Adresa,
-                    ImageUrl = s.ImageUrl != null && s.ImageUrl.Length > 0 ? s.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    ImageUrl = s.ImageUrl != null && s.ImageUrl.Length > 0 ? s.ImageUrl : ApiConfig.IMAGE_DIR + "/" + ApiConfig.DEFAULT_IMAGE,
                 })
                 .FirstOrDefaultAsync();
 
@@ -73,7 +69,7 @@ namespace eDostava.Web.Areas.Api.Controllers
         // POST: api/Auth/Register
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] AuthRegisterPost Model)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest Model)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +84,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Prezime = Model.Prezime,
                     Password = Model.Password,
                     Username = Model.Username,
-                    ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE,
+                    ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : ApiConfig.IMAGE_DIR + "/" + ApiConfig.DEFAULT_IMAGE,
                     Adresa = Model.Adresa,
                     BadgeID = 1,
                     DatumKreiranja = DateTime.Now,
@@ -98,7 +94,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 await _context.Narucioci.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
-                AuthUserVM authUserVM = new AuthUserVM
+                UserModelResponse authUserVM = new UserModelResponse
                 {
                     Id = newUser.KorisnikID,
                     Ime = newUser.Ime,
@@ -120,10 +116,10 @@ namespace eDostava.Web.Areas.Api.Controllers
             return BadRequest("Register failed, check what (existing) data are you passing. Did you mean to call the Update action?");
         }
 
-        // POST: api/Auth/Update
+        // PUT: api/Auth/Update
         [HttpPost]
         [Route("Update")]
-        public async Task<IActionResult> Update([FromBody] AuthRegisterPost Model)
+        public async Task<IActionResult> Update([FromBody] UserRegisterRequest Model)
         {
             if (!ModelState.IsValid)
             {
@@ -137,13 +133,13 @@ namespace eDostava.Web.Areas.Api.Controllers
                 user.Prezime = Model.Prezime ?? user.Prezime;
                 user.Password = Model.Password ?? user.Password;
                 user.Username = Model.Username ?? user.Username;
-                user.ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : IMAGE_DIR + "/" + DEFAULT_IMAGE;
+                user.ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : ApiConfig.IMAGE_DIR + "/" + ApiConfig.DEFAULT_IMAGE;
                 user.Adresa = Model.Adresa ?? user.Adresa;
                 user.Blok = _context.Blokovi.Include(b => b.Grad).DefaultIfEmpty(_context.Blokovi.First()).First(b => b.BlokID == Model.BlokID);
 
                 await _context.SaveChangesAsync();
 
-                AuthUserVM authUserVM = new AuthUserVM
+                UserModelResponse authUserVM = new UserModelResponse
                 {
                     Id = user.KorisnikID,
                     Ime = user.Ime,
@@ -168,7 +164,7 @@ namespace eDostava.Web.Areas.Api.Controllers
         // DELETE: api/Auth/Delete
         [HttpPost]
         [Route("Delete")]
-        public async Task<IActionResult> Delete([FromBody] AuthRegisterPost Model)
+        public async Task<IActionResult> Delete([FromBody] UserRegisterRequest Model)
         {
             if (!ModelState.IsValid)
             {
@@ -190,7 +186,7 @@ namespace eDostava.Web.Areas.Api.Controllers
         // UPLOAD PROFILE IMAGE: api/Auth/User/Image
         [HttpPost]
         [Route("User/Image")]
-        public async Task<IActionResult> UploadImage([FromBody] UserImagePost Model)
+        public async Task<IActionResult> UploadImage([FromBody] UserImageRequest Model)
         {
             if (Model.EncodedImageBase64 == null || !(Model.EncodedImageBase64.Length > 0))
             {
@@ -204,13 +200,13 @@ namespace eDostava.Web.Areas.Api.Controllers
                 try
                 {
                     string Filename = Model.FileName + "_" + Model.UserId + "_" + Guid.NewGuid().ToString().Substring(0, 4) + ".jpeg";
-                    string Uploads = Path.Combine(_appEnvironment.WebRootPath, IMAGE_DIR);
+                    string Uploads = Path.Combine(_appEnvironment.WebRootPath, ApiConfig.IMAGE_DIR);
                     string FilePath = Path.Combine(Uploads, Filename); // Pripremi path i ime slike
 
                     byte[] imageBytes = Convert.FromBase64String(Model.EncodedImageBase64);
                     System.IO.File.WriteAllBytes(FilePath, imageBytes);
 
-                    user.ImageUrl = IMAGE_DIR + "/" + Filename;
+                    user.ImageUrl = ApiConfig.IMAGE_DIR + "/" + Filename;
                     await _context.SaveChangesAsync();
 
                     return Ok(user.ImageUrl);
@@ -222,11 +218,6 @@ namespace eDostava.Web.Areas.Api.Controllers
             }
 
             return BadRequest("Dogodila se greska pri konverziji base64 u sliku.");
-        }
-
-        private bool NarucilacExists(int id)
-        {
-            return _context.Narucioci.Any(e => e.KorisnikID == id);
         }
     }
 }

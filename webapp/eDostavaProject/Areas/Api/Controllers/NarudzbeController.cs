@@ -23,20 +23,35 @@ namespace eDostava.Web.Areas.Api.Controllers
             _context = context;
         }
 
-        // GET: api/Narudzbe
-        [HttpGet]
-        public IEnumerable<NarudzbaApiModel.NarudzbaInfo> GetNarudzbe()
+        // POST: api/Narudzbe
+        [HttpPost]
+        public async Task<IActionResult> GetNarudzbe([FromBody] UserLoginRequest user)
         {
-            NarudzbaApiModel model = new NarudzbaApiModel
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Narucilac narucilac = await _context.Narucioci
+                .Where(n => n.Username == user.Username && n.Password == user.Password)
+                .FirstOrDefaultAsync();
+
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            NarudzbaListResponse model = new NarudzbaListResponse
             {
                 Narudzbe = _context.Narudzbe
-                    .Select(n => new NarudzbaApiModel.NarudzbaInfo
+                    .Where(n => n.NarucilacID == narucilac.KorisnikID)
+                    .Select(n => new NarudzbaListResponse.NarudzbaInfo
                     {
                         DatumKreiranja = n.DatumVrijeme,
                         GuidSifra = n.Sifra,
                         Status = n.Status.GetDisplay(),
                         UkupnaCijena = n.UkupnaCijena,
-                        HranaStavke = n.Stavke.Select(s => new NarudzbaApiModel.NarudzbaHranaStavka
+                        HranaStavke = n.Stavke.Select(s => new NarudzbaListResponse.NarudzbaHranaStavka
                         {
                             Cijena = s.Hrana.Cijena,
                             Naziv = s.Hrana.Naziv,
@@ -48,55 +63,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     .ToList()
             };
 
-            return model.Narudzbe;
-        }
-
-        // GET: api/Narudzbe/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetNarudzba([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var narudzba = await _context.Narudzbe.SingleOrDefaultAsync(m => m.NarudzbaID == id);
-
-            if (narudzba == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(new NarudzbaApiModel.NarudzbaInfo
-            {
-                DatumKreiranja = narudzba.DatumVrijeme,
-                GuidSifra = narudzba.Sifra,
-                Status = narudzba.Status.GetDisplay(),
-                UkupnaCijena = narudzba.UkupnaCijena,
-                HranaStavke = narudzba.Stavke.Select(s => new NarudzbaApiModel.NarudzbaHranaStavka
-                {
-                    Cijena = s.CalcCijena,
-                    Naziv = s.Hrana.Naziv,
-                    Kolicina = s.Kolicina
-                })
-                            .ToList(),
-                NarucenoIzRestorana = narudzba.Stavke.Select(s => s.Hrana.Jelovnik.Restoran.Naziv).ToList()
-            });
-        }
-
-        // POST: api/Narudzbe
-        [HttpPost]
-        public async Task<IActionResult> PostNarudzba([FromBody] Narudzba narudzba)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Narudzbe.Add(narudzba);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNarudzba", new { id = narudzba.NarudzbaID }, narudzba);
+            return Ok(model);
         }
     }
 }

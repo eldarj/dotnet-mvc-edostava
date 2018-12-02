@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eDostava.Web.Areas.Api.Models
 {
-    public class BlokApiModel
+    public class BlokListResponse
     {
         public List<Blok> Blokovi { get; set; }
     }

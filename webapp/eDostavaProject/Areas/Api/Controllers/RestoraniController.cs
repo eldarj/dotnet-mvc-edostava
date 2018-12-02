@@ -27,10 +27,10 @@ namespace eDostava.Web.Areas.Api.Controllers
         [HttpGet]
         public ActionResult GetRestorani()
         {
-            RestoranApiModel model = new RestoranApiModel
+            RestoranListResponse model = new RestoranListResponse
             {
                 Restorani = _context.Restorani
-                .Select(x => new RestoranApiModel.RestoranInfo
+                .Select(x => new RestoranListResponse.RestoranInfo
                 {
                     Id = x.RestoranID,
                     Naziv = x.Naziv,
@@ -38,7 +38,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Vlasnik = x.Vlasnik,
                     Telefon = x.Telefon,
                     Lokacija = x.Blok.Grad.Naziv + ", " + x.Blok.Naziv,
-                    Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == x.RestoranID).Select( l => new RestoranApiModel.RestoranLike
+                    Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == x.RestoranID).Select( l => new RestoranListResponse.RestoranLike
                         {
                             Datum = l.Datum,
                             ImePrezime = l.Narucilac.Ime_prezime,
@@ -58,7 +58,7 @@ namespace eDostava.Web.Areas.Api.Controllers
 
         // GET: api/Restorani/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRestoran([FromRoute] int id)
+        public async Task<IActionResult> GetSingleRestoran([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(new RestoranApiModel.RestoranInfo
+            return Ok(new RestoranListResponse.RestoranInfo
             {
                 Id = restoran.RestoranID,
                 Naziv = restoran.Naziv,
@@ -84,7 +84,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 Vlasnik = restoran.Vlasnik,
                 Telefon = restoran.Telefon,
                 Lokacija = restoran.Blok.Grad.Naziv + ", " + restoran.Blok.Naziv,
-                Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == restoran.RestoranID).Select(l => new RestoranApiModel.RestoranLike
+                Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == restoran.RestoranID).Select(l => new RestoranListResponse.RestoranLike
                 {
                     Datum = l.Datum,
                     ImePrezime = l.Narucilac.Ime_prezime,
@@ -96,6 +96,81 @@ namespace eDostava.Web.Areas.Api.Controllers
                 TipoviKuhinje = _context.Proizvodi
                                         .Where(p => p.Jelovnik.RestoranID == restoran.RestoranID).Select(p => p.TipKuhinje).Distinct().ToList()
             });
+        }
+
+
+
+        // POST: api/Restorani/5/Like
+        [HttpPost("id")]
+        public async Task<IActionResult> LikeRestoran([FromRoute] int id, [FromBody] RestoranLikeRequest restoranLike)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Narucilac narucilac = await _context.Narucioci
+                .Where(n => n.Username == restoranLike.credentials.Username && n.Password == restoranLike.credentials.Password)
+                .FirstOrDefaultAsync();
+
+
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            Restoran restoran = await _context.Restorani.FindAsync(id);
+
+            if (restoran != null && _context.Lajkovi.FirstAsync(l => l.NarucilacID == narucilac.KorisnikID && l.RestoranID == restoran.RestoranID) == null)
+            {
+                RestoranLike like = new RestoranLike
+                {
+                    RestoranID = restoran.RestoranID,
+                    NarucilacID = narucilac.KorisnikID,
+                    Recenzija = restoranLike.Recenzija,
+                    Datum = DateTime.Now
+                };
+
+                _context.Lajkovi.Add(like);
+                await _context.SaveChangesAsync();
+
+                return Ok("Uspješan like restorana.");
+            }
+
+            return BadRequest("Nismo pronašli restoran, ili je već isit user lajkao restoran.");
+        }
+
+        // POST: api/Restorani/5/Unline
+        [HttpPost("id")]
+        public async Task<IActionResult> UnlikeRestoran([FromRoute] int id, [FromBody] UserLoginRequest user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Narucilac narucilac = await _context.Narucioci
+                .Where(n => n.Username == user.Username && n.Password == user.Password)
+                .FirstOrDefaultAsync();
+
+
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            Restoran restoran = await _context.Restorani.FindAsync(id);
+            RestoranLike like = await _context.Lajkovi.FirstAsync(l => l.NarucilacID == narucilac.KorisnikID && l.RestoranID == restoran.RestoranID);
+
+            if (restoran != null && like != null)
+            {
+                _context.Lajkovi.Remove(like);
+                await _context.SaveChangesAsync();
+
+                return Ok("Uspješan unlike restorana.");
+            }
+
+            return BadRequest("Nismo pronašli restoran, ili restoran nije ni bio lajkan.");
         }
     }
 }

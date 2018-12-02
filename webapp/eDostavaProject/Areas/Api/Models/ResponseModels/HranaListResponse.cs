@@ -16,7 +16,7 @@ namespace eDostava.Web.Areas.Api.Models
             public string Naziv { get; set; }
             public string Opis { get; set; }
             public double Cijena { get; set; }
-            public string RestoranNazv { get; set; }
+            public string RestoranNaziv { get; set; }
             public int RestoranId { get; set; }
             public TipKuhinje TipKuhinje { get; set; }
         }

@@ -46,7 +46,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     ImageUrl = HttpContext.Request.Host.Value + "/" +  h.Slika,
                     Cijena = h.Cijena,
                     TipKuhinje = h.TipKuhinje,
-                    RestoranNazv = h.Jelovnik.Restoran.Naziv,
+                    RestoranNaziv = h.Jelovnik.Restoran.Naziv,
                     RestoranId = h.Jelovnik.RestoranID
                 })
                 .ToList()

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.Api.Models;
+using static eDostava.Web.Areas.AdminModul.ViewModels.RestoranPrikazVM;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
@@ -44,7 +45,9 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Opis = h.Opis,
                     ImageUrl = HttpContext.Request.Host.Value + "/" +  h.Slika,
                     Cijena = h.Cijena,
-                    TipKuhinje = h.TipKuhinje
+                    TipKuhinje = h.TipKuhinje,
+                    RestoranNazv = h.Jelovnik.Restoran.Naziv,
+                    RestoranId = h.Jelovnik.RestoranID
                 })
                 .ToList()
             };

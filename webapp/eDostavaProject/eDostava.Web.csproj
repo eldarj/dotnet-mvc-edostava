@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Api\Helper\" />
     <Folder Include="wwwroot\uploads\images\korisnik\" />
     <Folder Include="wwwroot\uploads\images\restoran\" />
   </ItemGroup>

@@ -42,7 +42,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Id = h.HranaID,
                     Naziv = h.Naziv,
                     Opis = h.Opis,
-                    ImageUrl = h.Slika,
+                    ImageUrl = HttpContext.Request.Host.Value + "/" +  h.Slika,
                     Cijena = h.Cijena,
                     TipKuhinje = h.TipKuhinje
                 })

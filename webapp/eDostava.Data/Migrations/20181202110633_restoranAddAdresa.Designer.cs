@@ -12,9 +12,10 @@ using System;
 namespace eDostava.Data.Migrations
 {
     [DbContext(typeof(MojContext))]
-    partial class MojContextModelSnapshot : ModelSnapshot
+    [Migration("20181202110633_restoranAddAdresa")]
+    partial class restoranAddAdresa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,8 +295,6 @@ namespace eDostava.Data.Migrations
                     b.Property<string>("Adresa");
 
                     b.Property<int>("BlokID");
-
-                    b.Property<string>("Email");
 
                     b.Property<int>("MinimalnaCijenaNarudžbe");
 

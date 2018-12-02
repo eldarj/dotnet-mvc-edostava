@@ -25,6 +25,10 @@ namespace eDostava.Data.Models
         /* Vlasnik restorana */
         public Vlasnik Vlasnik { get; set; }
 
+        public string Email { get; set; }
+
+        public string Adresa { get; set; }
+
         [ForeignKey("Blok")]
         public int BlokID { get; set; }
 

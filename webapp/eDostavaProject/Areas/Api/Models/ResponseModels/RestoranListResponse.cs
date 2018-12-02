@@ -21,10 +21,12 @@ namespace eDostava.Web.Areas.Api.Models
             public string Opis { get; set; }
             public Vlasnik Vlasnik { get; set; }
             public string Telefon { get; set; }
+            public string Adresa { get; set; }
             public string Lokacija { get; set; }
             public List<RestoranLike> Lajkovi { get; set; }
             public string Slika { get; set; }
             public string Slogan { get; set; }
+            public string Email { get; set; }
             public string WebUrl { get; set; }
             public List<TipKuhinje> TipoviKuhinje { get; set; }
         }

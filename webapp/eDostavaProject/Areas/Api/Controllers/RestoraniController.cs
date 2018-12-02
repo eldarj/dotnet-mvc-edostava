@@ -37,6 +37,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Opis = x.Opis,
                     Vlasnik = x.Vlasnik,
                     Telefon = x.Telefon,
+                    Adresa = x.Adresa,
                     Lokacija = x.Blok.Grad.Naziv + ", " + x.Blok.Naziv,
                     Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == x.RestoranID).Select( l => new RestoranListResponse.RestoranLike
                         {
@@ -47,6 +48,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Slika = HttpContext.Request.Host.Value + "/" + x.Slika,
                     Slogan = x.Slogan,
                     WebUrl = x.WebUrl,
+                    Email = x.Email,
                     TipoviKuhinje = _context.Proizvodi
                                         .Where(p => p.Jelovnik.RestoranID == x.RestoranID).Select(p => p.TipKuhinje).Distinct().ToList()
             })
@@ -83,6 +85,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 Opis = restoran.Opis,
                 Vlasnik = restoran.Vlasnik,
                 Telefon = restoran.Telefon,
+                Adresa = restoran.Adresa,
                 Lokacija = restoran.Blok.Grad.Naziv + ", " + restoran.Blok.Naziv,
                 Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == restoran.RestoranID).Select(l => new RestoranListResponse.RestoranLike
                 {
@@ -92,6 +95,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 }).ToList(),
                 Slika = HttpContext.Request.Host.Value + "/" + restoran.Slika,
                 Slogan = restoran.Slogan,
+                Email = restoran.Email,
                 WebUrl = restoran.WebUrl,
                 TipoviKuhinje = _context.Proizvodi
                                         .Where(p => p.Jelovnik.RestoranID == restoran.RestoranID).Select(p => p.TipKuhinje).Distinct().ToList()

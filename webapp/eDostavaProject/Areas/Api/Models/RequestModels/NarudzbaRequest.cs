@@ -8,14 +8,6 @@ namespace eDostava.Web.Areas.Api.Models.RequestModels
     public class NarudzbaRequest
     {
         public UserLoginRequest credentials { get; set; }
-
-        public class StavkaRequest
-        {
-            public int HranaID { get; set; }
-            public int Kolicina { get; set; }
-        }
-        public double UkupnaCijena { get; set; }
-        public List<StavkaRequest> stavke { get; set; }
-
+        public int Id{ get; set; }
     }
 }

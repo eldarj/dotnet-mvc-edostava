@@ -17,6 +17,7 @@ namespace eDostava.Web.Areas.Api.Models
         }
         public class NarudzbaInfo
         {
+            public int Id { get; set; }
             public Guid GuidSifra { get; set; }
             public DateTime DatumKreiranja { get; set; }
             public double UkupnaCijena { get; set; }

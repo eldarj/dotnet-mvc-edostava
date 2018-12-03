@@ -10,6 +10,7 @@ using eDostava.Data.Models;
 using eDostava.Web.Areas.Api.Models;
 using eDostava.Web.Helper;
 using eDostava.Web.Areas.Api.Models.RequestModels;
+using static eDostava.Web.Areas.Api.Models.NarudzbaListResponse;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
@@ -48,8 +49,9 @@ namespace eDostava.Web.Areas.Api.Controllers
                     .Where(n => n.NarucilacID == narucilac.KorisnikID)
                     .Select(n => new NarudzbaListResponse.NarudzbaInfo
                     {
-                        DatumKreiranja = n.DatumVrijeme,
+                        Id = n.NarudzbaID,
                         GuidSifra = n.Sifra,
+                        DatumKreiranja = n.DatumVrijeme,
                         Status = n.Status.GetDisplay(),
                         UkupnaCijena = n.UkupnaCijena,
                         HranaStavke = n.Stavke.Select(s => new NarudzbaListResponse.NarudzbaHranaStavka
@@ -70,7 +72,7 @@ namespace eDostava.Web.Areas.Api.Controllers
         // POST: api/Narudzbe/Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> NewNarudzba([FromBody] NarudzbaRequest Model)
+        public async Task<IActionResult> NewNarudzba([FromBody] CreateNarudzbaRequest Model)
         {
             if (!ModelState.IsValid)
             {
@@ -110,9 +112,54 @@ namespace eDostava.Web.Areas.Api.Controllers
                 }
             }
 
-
             return BadRequest("Pogrešan username ili password.");
+        }
 
+        // DELETE: api/Narudzbe/5/Delete
+        [HttpPost("{id}")]
+        [Route("{id}/Delete")]
+        public async Task<IActionResult> Delete([FromRoute] int Id, [FromBody] UserLoginRequest User)
+        {
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == User.Username && n.Password == User.Password);
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            Narudzba narudzba = await _context.Narudzbe.FindAsync(Id);
+            if (narudzba == null)
+            {
+                return NotFound();
+            }
+
+            if (narudzba.Status == Stanje.NaCekanju)
+            {
+                _context.Narudzbe.Remove(narudzba);
+                await _context.SaveChangesAsync();
+
+                return Ok("Narudžba uspješno uklonjena.");
+            }
+            return BadRequest("Dogodila se greška, ili je narudžba već prihvaćena!");
+        }
+
+        // POST: api/Narudzbe/5/Status
+        [HttpPost("{id}")]
+        [Route("{id}/Status")]
+        public async Task<IActionResult> Status([FromRoute] int Id, [FromBody] UserLoginRequest User)
+        {
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == User.Username && n.Password == User.Password);
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            Narudzba narudzba = await _context.Narudzbe.FindAsync(Id);
+            if (narudzba != null)
+            {
+                return Ok(narudzba.Status.GetDisplay());
+            }
+
+            return BadRequest("Dogodila se greška, ili navedena narudžba ne postoji.");
         }
     }
 }

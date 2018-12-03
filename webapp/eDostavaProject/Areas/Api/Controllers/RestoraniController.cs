@@ -105,19 +105,11 @@ namespace eDostava.Web.Areas.Api.Controllers
 
 
         // POST: api/Restorani/5/Like
-        [HttpPost("id")]
-        public async Task<IActionResult> LikeRestoran([FromRoute] int id, [FromBody] RestoranLikeRequest restoranLike)
+        [HttpPost("{id}")]
+        [Route("{id}/Like")]
+        public async Task<IActionResult> LikeRestoran([FromRoute] int id, [FromBody] UserLoginRequest User)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            Narucilac narucilac = await _context.Narucioci
-                .Where(n => n.Username == restoranLike.credentials.Username && n.Password == restoranLike.credentials.Password)
-                .FirstOrDefaultAsync();
-
-
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == User.Username && n.Password == User.Password);
             if (narucilac == null)
             {
                 return BadRequest("Pogrešan username ili password.");
@@ -131,7 +123,6 @@ namespace eDostava.Web.Areas.Api.Controllers
                 {
                     RestoranID = restoran.RestoranID,
                     NarucilacID = narucilac.KorisnikID,
-                    Recenzija = restoranLike.Recenzija,
                     Datum = DateTime.Now
                 };
 
@@ -141,23 +132,15 @@ namespace eDostava.Web.Areas.Api.Controllers
                 return Ok("Uspješan like restorana.");
             }
 
-            return BadRequest("Nismo pronašli restoran, ili je već isit user lajkao restoran.");
+            return BadRequest("Nismo pronašli restoran, ili je user već lajkao isti restoran.");
         }
 
-        // POST: api/Restorani/5/Unline
-        [HttpPost("id")]
-        public async Task<IActionResult> UnlikeRestoran([FromRoute] int id, [FromBody] UserLoginRequest user)
+        // POST: api/Restorani/5/Unlike
+        [HttpPost("{id}")]
+        [Route("{id}/Unlike")]
+        public async Task<IActionResult> UnlikeRestoran([FromRoute] int id, [FromBody] UserLoginRequest User)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            Narucilac narucilac = await _context.Narucioci
-                .Where(n => n.Username == user.Username && n.Password == user.Password)
-                .FirstOrDefaultAsync();
-
-
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == User.Username && n.Password == User.Password);
             if (narucilac == null)
             {
                 return BadRequest("Pogrešan username ili password.");

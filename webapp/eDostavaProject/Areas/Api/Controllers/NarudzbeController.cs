@@ -9,6 +9,7 @@ using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.Api.Models;
 using eDostava.Web.Helper;
+using eDostava.Web.Areas.Api.Models.RequestModels;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
@@ -64,6 +65,54 @@ namespace eDostava.Web.Areas.Api.Controllers
             };
 
             return Ok(model);
+        }
+
+        // POST: api/Narudzbe/Create
+        [HttpPost]
+        [Route("Create")]
+        public async Task<IActionResult> NewNarudzba([FromBody] NarudzbaRequest Model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Provjerite narudžbu.");
+            }
+
+            Narucilac user = await _context.Narucioci.FirstAsync(u => u.Username == Model.credentials.Username && u.Password == Model.credentials.Password);
+
+            if (user != null)
+            {
+                try
+                {
+                    Narudzba narudzba = new Narudzba
+                    {
+                        UkupnaCijena = Model.UkupnaCijena,
+                        Status = Stanje.NaCekanju,
+                        NarucilacID = user.KorisnikID
+                    };
+                    _context.Narudzbe.Add(narudzba);
+                    await _context.SaveChangesAsync();
+
+                    foreach (var s in Model.stavke)
+                    {
+                        _context.StavkeNarudzbe.Add(new StavkaNarudzbe
+                        {
+                            NarudzbaID = narudzba.NarudzbaID,
+                            HranaID = s.HranaID,
+                            Kolicina = s.Kolicina
+                        });
+                    }
+
+                    await _context.SaveChangesAsync();
+                    return Ok("Nova narudžba kreirana.");
+                } catch (Exception e)
+                {
+                    return BadRequest("Couldn't create a new resource, please try again.");
+                }
+            }
+
+
+            return BadRequest("Pogrešan username ili password.");
+
         }
     }
 }

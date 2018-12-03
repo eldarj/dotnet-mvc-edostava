@@ -39,12 +39,17 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Telefon = x.Telefon,
                     Adresa = x.Adresa,
                     Lokacija = x.Blok.Grad.Naziv + ", " + x.Blok.Naziv,
-                    Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == x.RestoranID).Select( l => new RestoranListResponse.RestoranLike
+                    Recenzije = _context.Recenzije.Where(r => r.RestoranID == x.RestoranID)
+                        .Include(r => r.Narucilac)
+                        .Select(r => new RestoranListResponse.RestoranRecenzija
                         {
-                            Datum = l.Datum,
-                            ImePrezime = l.Narucilac.Ime_prezime,
-                            Recenzija = l.Recenzija
+                            Datum = r.Datum,
+                            ImePrezime = r.Narucilac.Ime_prezime,
+                            Liked = _context.Lajkovi.First(l => l.NarucilacID == r.NarucilacID && l.RestoranID == r.RestoranID) == null ? false : true,
+                            Recenzija = r.Recenzija,
+                            ImageUrl = r.Narucilac.ImageUrl
                         }).ToList(),
+                    LikeCount = _context.Lajkovi.Where(l => l.RestoranID == x.RestoranID).Count(),
                     Slika = HttpContext.Request.Host.Value + "/" + x.Slika,
                     Slogan = x.Slogan,
                     WebUrl = x.WebUrl,
@@ -87,12 +92,17 @@ namespace eDostava.Web.Areas.Api.Controllers
                 Telefon = restoran.Telefon,
                 Adresa = restoran.Adresa,
                 Lokacija = restoran.Blok.Grad.Naziv + ", " + restoran.Blok.Naziv,
-                Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == restoran.RestoranID).Select(l => new RestoranListResponse.RestoranLike
-                {
-                    Datum = l.Datum,
-                    ImePrezime = l.Narucilac.Ime_prezime,
-                    Recenzija = l.Recenzija
-                }).ToList(),
+                Recenzije = _context.Recenzije.Where(r => r.RestoranID == restoran.RestoranID)
+                    .Include(r => r.Narucilac)
+                    .Select(r => new RestoranListResponse.RestoranRecenzija
+                    {
+                        Datum = r.Datum,
+                        ImePrezime = r.Narucilac.Ime_prezime,
+                        Liked = _context.Lajkovi.First(l => l.NarucilacID == r.NarucilacID && l.RestoranID == r.RestoranID) == null ? false : true,
+                        Recenzija = r.Recenzija,
+                        ImageUrl = r.Narucilac.ImageUrl
+                    }).ToList(),
+                LikeCount = _context.Lajkovi.Where(l => l.RestoranID == restoran.RestoranID).Count(),
                 Slika = HttpContext.Request.Host.Value + "/" + restoran.Slika,
                 Slogan = restoran.Slogan,
                 Email = restoran.Email,

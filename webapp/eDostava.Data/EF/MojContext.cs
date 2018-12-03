@@ -21,6 +21,12 @@ namespace eDostava.Data
                 .HasForeignKey(pt => pt.RestoranID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<RestoranRecenzija>()
+                .HasOne(rr => rr.Restoran)
+                .WithMany()
+                .HasForeignKey(rr => rr.RestoranID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<HranaPrilog>()
                 .HasKey(a => new { a.HranaID, a.PrilogID });
 
@@ -49,6 +55,7 @@ namespace eDostava.Data
         public DbSet<RadnoVrijeme> VrijemeRada { get; set; }
         public DbSet<Restoran> Restorani { get; set; }
         public DbSet<RestoranLike> Lajkovi { get; set; }
+        public DbSet<RestoranRecenzija> Recenzije { get; set; }
         public DbSet<StavkaNarudzbe> StavkeNarudzbe { get; set; }
         public DbSet<Vlasnik> Vlasnici { get; set; }
         public DbSet<Zalba> Zalbe { get; set; }

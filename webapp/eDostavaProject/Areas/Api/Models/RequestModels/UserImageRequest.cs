@@ -9,6 +9,6 @@ namespace eDostava.Web.Areas.Api.Models
     {
         public string EncodedImageBase64 { get; set; }
         public string FileName { get; set; }
-        public int UserId { get; set; }
+        public UserLoginRequest credentials { get; set; }
     }
 }

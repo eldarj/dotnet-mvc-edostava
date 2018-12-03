@@ -47,6 +47,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Password = s.Password,
                     Blok = s.Blok,
                     DatumKreiranja = s.DatumKreiranja,
+                    NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == s.KorisnikID).Count(),
                     ZadnjiLogin = DateTime.Now,
                     Token ="",
                     Adresa = s.Adresa,
@@ -193,13 +194,13 @@ namespace eDostava.Web.Areas.Api.Controllers
                 return BadRequest("Nedostaje slika.");
             }
 
-            Narucilac user = await _context.Narucioci.FindAsync(Model.UserId);
+            Narucilac user = await _context.Narucioci.FirstAsync(u => u.Username == Model.credentials.Username && u.Password == Model.credentials.Password);
 
             if (user != null)
             {
                 try
                 {
-                    string Filename = Model.FileName + "_" + Model.UserId + "_" + Guid.NewGuid().ToString().Substring(0, 4) + ".jpeg";
+                    string Filename = Model.FileName + "_" + Model.credentials.Username + "_" + Guid.NewGuid().ToString().Substring(0, 4) + ".jpeg";
                     string Uploads = Path.Combine(_appEnvironment.WebRootPath, ApiConfig.IMAGE_DIR);
                     string FilePath = Path.Combine(Uploads, Filename); // Pripremi path i ime slike
 
@@ -214,10 +215,11 @@ namespace eDostava.Web.Areas.Api.Controllers
                 catch ( Exception e )
                 {
                     // handle ili samo pust da akcija vrati bad request?
+                    return BadRequest("Dogodila se greska pri konverziji base64 u sliku.");
                 }
             }
 
-            return BadRequest("Dogodila se greska pri konverziji base64 u sliku.");
+            return BadRequest("Pogrešan username ili password.");
         }
     }
 }

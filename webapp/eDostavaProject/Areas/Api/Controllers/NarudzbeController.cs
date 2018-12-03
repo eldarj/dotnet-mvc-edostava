@@ -74,7 +74,7 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("Create")]
         public async Task<IActionResult> NewNarudzba([FromBody] CreateNarudzbaRequest Model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Model.stavke.Count == 0)
             {
                 return BadRequest("Provjerite narudžbu.");
             }

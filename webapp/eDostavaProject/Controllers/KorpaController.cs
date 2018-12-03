@@ -41,7 +41,7 @@ namespace eDostava.Web.Controllers
 
             if (stavke.AddUnique(_stavka))
             {
-                narudzba.Status = Stanje.Aktivna;
+                narudzba.Status = Stanje.NaCekanju;
                 narudzba.UkupnaCijena += _stavka.CalcCijena;
                 HttpContext.SetNarudzba(narudzba);
                 HttpContext.SetStavke(stavke);

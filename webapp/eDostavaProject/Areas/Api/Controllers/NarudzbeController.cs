@@ -47,6 +47,7 @@ namespace eDostava.Web.Areas.Api.Controllers
             {
                 Narudzbe = _context.Narudzbe
                     .Where(n => n.NarucilacID == narucilac.KorisnikID)
+                    .OrderByDescending(n => n.DatumVrijeme)
                     .Select(n => new NarudzbaListResponse.NarudzbaInfo
                     {
                         Id = n.NarudzbaID,

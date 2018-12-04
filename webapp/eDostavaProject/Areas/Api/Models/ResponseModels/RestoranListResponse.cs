@@ -19,6 +19,7 @@ namespace eDostava.Web.Areas.Api.Models
         public class RestoranRecenzija
         {
             public string ImePrezime { get; set; }
+            public string Username { get; set; }
             public string ImageUrl { get; set; }
             public string Recenzija { get; set; }
             public bool Liked { get; set; }

@@ -45,10 +45,18 @@ namespace eDostava.Web.Areas.Api.Controllers
                         {
                             Datum = r.Datum,
                             ImePrezime = r.Narucilac.Ime_prezime,
-                            Liked = _context.Lajkovi.First(l => l.NarucilacID == r.NarucilacID && l.RestoranID == r.RestoranID) == null ? false : true,
+                            Liked = _context.Lajkovi.Where(l => l.NarucilacID == r.NarucilacID && l.RestoranID == r.RestoranID).SingleOrDefault() == null ? false : true,
                             Recenzija = r.Recenzija,
                             ImageUrl = r.Narucilac.ImageUrl
                         }).ToList(),
+		            Lajkovi = _context.Lajkovi.Where(l => l.RestoranID == x.RestoranID)
+			        .Include(l => l.Narucilac)
+			        .Select(l => new RestoranListResponse.RestoranLike
+			        {
+			           Username = l.Narucilac.Username,
+			           ImePrezime = l.Narucilac.Ime_prezime,
+			           ImageUrl = l.Narucilac.ImageUrl,
+			        }).ToList(),
                     LikeCount = _context.Lajkovi.Where(l => l.RestoranID == x.RestoranID).Count(),
                     Slika = HttpContext.Request.Host.Value + "/" + x.Slika,
                     Slogan = x.Slogan,
@@ -127,7 +135,7 @@ namespace eDostava.Web.Areas.Api.Controllers
 
             Restoran restoran = await _context.Restorani.FindAsync(id);
 
-            if (restoran != null && _context.Lajkovi.FirstAsync(l => l.NarucilacID == narucilac.KorisnikID && l.RestoranID == restoran.RestoranID) == null)
+            if (restoran != null && _context.Lajkovi.SingleOrDefault(l => l.NarucilacID == narucilac.KorisnikID && l.RestoranID == restoran.RestoranID) == null)
             {
                 RestoranLike like = new RestoranLike
                 {
@@ -139,7 +147,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 _context.Lajkovi.Add(like);
                 await _context.SaveChangesAsync();
 
-                return Ok("Uspješan like restorana.");
+                return Ok("Dodali ste restoran \"" + restoran.Naziv + " \" u omiljene!.");
             }
 
             return BadRequest("Nismo pronašli restoran, ili je user već lajkao isti restoran.");
@@ -164,7 +172,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 _context.Lajkovi.Remove(like);
                 await _context.SaveChangesAsync();
 
-                return Ok("Uspješan unlike restorana.");
+                return Ok("Uklonili ste restoran \"" + restoran.Naziv + "\" iz omiljenih.");
             }
 
             return BadRequest("Nismo pronašli restoran, ili restoran nije ni bio lajkan.");

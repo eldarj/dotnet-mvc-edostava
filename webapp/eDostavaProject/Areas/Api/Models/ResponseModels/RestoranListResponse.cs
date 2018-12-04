@@ -8,6 +8,13 @@ namespace eDostava.Web.Areas.Api.Models
 {
     public class RestoranListResponse
     {
+	
+	public class RestoranLike
+	{
+	    public string Username { get; set; }
+	    public string ImePrezime { get; set; }
+	    public string ImageUrl { get; set; }
+	}
 
         public class RestoranRecenzija
         {
@@ -29,6 +36,7 @@ namespace eDostava.Web.Areas.Api.Models
             public string Lokacija { get; set; }
             public int LikeCount { get; set; }
             public List<RestoranRecenzija> Recenzije { get; set; }
+	        public List<RestoranLike> Lajkovi { get; set; }
             public string Slika { get; set; }
             public string Slogan { get; set; }
             public string Email { get; set; }

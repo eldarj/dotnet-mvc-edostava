@@ -20,6 +20,7 @@ namespace eDostavaProject
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://192.168.1.3:51627")
                 .Build();
     }
 }

@@ -107,6 +107,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     {
                         Datum = r.Datum,
                         ImePrezime = r.Narucilac.Ime_prezime,
+                        Username = r.Narucilac.Username,
                         Liked = _context.Lajkovi.First(l => l.NarucilacID == r.NarucilacID && l.RestoranID == r.RestoranID) == null ? false : true,
                         Recenzija = r.Recenzija,
                         ImageUrl = r.Narucilac.ImageUrl

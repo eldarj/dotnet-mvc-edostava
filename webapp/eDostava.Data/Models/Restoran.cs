@@ -34,5 +34,7 @@ namespace eDostava.Data.Models
 
         public Blok Blok { get; set; }
 
+        public virtual ICollection<RestoranLike> Lajkovi { get; set; }
+
     }
 }

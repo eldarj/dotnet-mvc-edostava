@@ -14,7 +14,6 @@ using eDostava.Web.Areas.Api.Helper;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
-    [Produces("application/json")]
     [Route("api/Restorani")]
     public class RestoraniController : MyBaseApiController
     {

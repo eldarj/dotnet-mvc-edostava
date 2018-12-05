@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace eDostava.Web.Areas.Api.Helper
 {
     [MyApiAuthAttribute]
+    [Produces("application/json")]
     public class MyBaseApiController : Controller
     {
         protected readonly MojContext _context;

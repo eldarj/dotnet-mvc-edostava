@@ -9,6 +9,7 @@ using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.AdminModul.ViewModels;
 using eDostava.Web.Areas.Api.Models;
+using eDostava.Web.Areas.Api.Models.RequestModels;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
@@ -40,6 +41,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Adresa = x.Adresa,
                     Lokacija = x.Blok.Grad.Naziv + ", " + x.Blok.Naziv,
                     Recenzije = _context.Recenzije.Where(r => r.RestoranID == x.RestoranID)
+                        .OrderByDescending(r => r.Datum)
                         .Include(r => r.Narucilac)
                         .Select(r => new RestoranListResponse.RestoranRecenzija
                         {
@@ -107,7 +109,6 @@ namespace eDostava.Web.Areas.Api.Controllers
                         Datum = r.Datum,
                         ImePrezime = r.Narucilac.Ime_prezime,
                         Username = r.Narucilac.Username,
-                        Liked = _context.Lajkovi.First(l => l.NarucilacID == r.NarucilacID && l.RestoranID == r.RestoranID) == null ? false : true,
                         Recenzija = r.Recenzija,
                         ImageUrl = r.Narucilac.ImageUrl
                     }).ToList(),
@@ -120,8 +121,155 @@ namespace eDostava.Web.Areas.Api.Controllers
                                         .Where(p => p.Jelovnik.RestoranID == restoran.RestoranID).Select(p => p.TipKuhinje).Distinct().ToList()
             });
         }
+        
+
+        private List<RestoranListResponse.RestoranRecenzija> getRecenzije(Restoran restoran)
+        {
+            return _context.Recenzije.Where(r => r.RestoranID == restoran.RestoranID)
+                    .Include(r => r.Narucilac)
+                    .OrderByDescending(r => r.Datum)
+                    .Select(r => new RestoranListResponse.RestoranRecenzija
+                    {
+                        Datum = r.Datum,
+                        ImePrezime = r.Narucilac.Ime_prezime,
+                        Username = r.Narucilac.Username,
+                        Recenzija = r.Recenzija,
+                        ImageUrl = r.Narucilac.ImageUrl
+                    }).ToList();
+        }
+
+        [HttpPost("{id}")]
+        [Route("{id}/Komentari")]
+        public async Task<IActionResult> GetKomentare([FromRoute] int id, [FromBody] RestoranKomentariRequest Model)
+        {
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == Model.credentials.Username && n.Password == Model.credentials.Password);
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            Restoran restoran = await _context.Restorani.FindAsync(id);
+            if (restoran == null)
+            {
+                return BadRequest("Restoran ne postoji.");
+            }
+
+            return Ok(new RestoranKomentariRequest.RestoranKomentariResponse
+            {
+                Recenzije = await _context.Recenzije.Where(r => r.RestoranID == restoran.RestoranID)
+                    .Include(r => r.Narucilac)
+                    .OrderByDescending(r => r.Datum)
+                    .Select(r => new RestoranListResponse.RestoranRecenzija
+                    {
+                        Datum = r.Datum,
+                        ImePrezime = r.Narucilac.Ime_prezime,
+                        Username = r.Narucilac.Username,
+                        Recenzija = r.Recenzija,
+                        ImageUrl = r.Narucilac.ImageUrl
+                    }).ToListAsync()
+            });
+        }
+
+        [HttpPost("{id}")]
+        [Route("{id}/Komentari/Novi")]
+        public async Task<IActionResult> NoviKomentar([FromRoute] int id, [FromBody] RestoranNoviKomentarRequest Model)
+        {
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == Model.credentials.Username && n.Password == Model.credentials.Password);
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            Restoran restoran = await _context.Restorani.FindAsync(id);
+            if (restoran == null)
+            {
+                return BadRequest("Restoran ne postoji.");
+            }
+
+            _context.Recenzije.Add(new RestoranRecenzija
+            {
+                Datum = DateTime.Now,
+                NarucilacID = narucilac.KorisnikID,
+                RestoranID = restoran.RestoranID,
+                Recenzija = Model.komentar
+            });
+            await _context.SaveChangesAsync();
 
 
+            return Ok(new RestoranKomentariRequest.RestoranKomentariResponse
+            {
+                Recenzije = await _context.Recenzije.Where(r => r.RestoranID == restoran.RestoranID)
+                    .Include(r => r.Narucilac)
+                    .OrderByDescending(r => r.Datum)
+                    .Select(r => new RestoranListResponse.RestoranRecenzija
+                    {
+                        Datum = r.Datum,
+                        ImePrezime = r.Narucilac.Ime_prezime,
+                        Username = r.Narucilac.Username,
+                        Recenzija = r.Recenzija,
+                        ImageUrl = r.Narucilac.ImageUrl
+                    }).ToListAsync()
+            });
+        }
+
+        [HttpPost("{id}")]
+        [Route("{id}/Komentari/Subscribe")]
+        public async Task<IActionResult> SubscribeKomentari([FromRoute] int id, [FromBody] RestoranKomentariRequest subRequest)
+        {
+            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == subRequest.credentials.Username && n.Password == subRequest.credentials.Password);
+            if (narucilac == null)
+            {
+                return BadRequest("Pogrešan username ili password.");
+            }
+
+            Restoran restoran = await _context.Restorani.FindAsync(id);
+            if (restoran == null)
+            {
+                return BadRequest("Restoran ne postoji.");
+            }
+
+            var recenzijeList = getRecenzije(restoran);
+            if (subRequest.KomentariHashCode == null || subRequest.KomentariHashCode.Length == 0)
+            {
+                return Ok(new RestoranKomentariRequest.RestoranKomentariResponse
+                {
+                    KomentariHashCode = generateUniqueHash(recenzijeList)
+                });
+            } else
+            {
+                try
+                {
+                    // keep the connection alive and keep checking data source hash vs client's data hash
+                    do
+                    {
+                        //
+                    }
+                    while (subRequest.KomentariHashCode == generateUniqueHash(getRecenzije(restoran)));
+
+                    // data source changed if hash changed
+                    return Ok(new RestoranKomentariRequest.RestoranKomentariResponse
+                    {
+                        KomentariHashCode = generateUniqueHash(getRecenzije(restoran)),
+                        Recenzije = getRecenzije(restoran)
+                    });
+                } catch (Exception e)
+                {
+                    return BadRequest("Connection closed - " + e.Message);
+                }
+            }
+
+            return BadRequest("Connection closed.");
+        }
+
+        private string generateUniqueHash(List<RestoranListResponse.RestoranRecenzija> recenzije)
+        {
+            string hash = "";
+            foreach (RestoranListResponse.RestoranRecenzija r in recenzije)
+            {
+                hash += r.Recenzija.Replace(" ", "") + r.Username;
+            }
+            return hash;
+        }
 
         // POST: api/Restorani/5/Like
         [HttpPost("{id}")]

@@ -17,9 +17,8 @@ namespace eDostava.Data
 
             modelBuilder.Entity<RestoranLike>()
                 .HasOne(pt => pt.Restoran)
-                .WithMany()
-                .HasForeignKey(pt => pt.RestoranID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(pt => pt.Lajkovi)
+                .HasForeignKey(pt => pt.RestoranID);
 
             modelBuilder.Entity<RestoranRecenzija>()
                 .HasOne(rr => rr.Restoran)

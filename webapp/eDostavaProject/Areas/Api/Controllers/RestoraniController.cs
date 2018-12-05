@@ -10,19 +10,15 @@ using eDostava.Data.Models;
 using eDostava.Web.Areas.AdminModul.ViewModels;
 using eDostava.Web.Areas.Api.Models;
 using eDostava.Web.Areas.Api.Models.RequestModels;
+using eDostava.Web.Areas.Api.Helper;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Restorani")]
-    public class RestoraniController : Controller
+    public class RestoraniController : MyBaseApiController
     {
-        private readonly MojContext _context;
-
-        public RestoraniController(MojContext context)
-        {
-            _context = context;
-        }
+        public RestoraniController(MojContext context) : base(context) { }
 
         // GET: api/Restorani
         [HttpGet]

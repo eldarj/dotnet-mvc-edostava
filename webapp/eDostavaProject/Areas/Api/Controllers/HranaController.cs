@@ -9,19 +9,15 @@ using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.Api.Models;
 using static eDostava.Web.Areas.AdminModul.ViewModels.RestoranPrikazVM;
+using eDostava.Web.Areas.Api.Helper;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Restorani/{id}/Hrana")]
-    public class HranaController : Controller
-    {
-        private readonly MojContext _context;
-
-        public HranaController(MojContext context)
-        {
-            _context = context;
-        }
+    public class HranaController : MyBaseApiController
+    { 
+        public HranaController(MojContext context) : base(context) { }
 
         // GET: api/Restorani/{id}/Hrana
         [HttpGet]

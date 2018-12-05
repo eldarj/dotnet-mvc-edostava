@@ -8,19 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using eDostava.Data;
 using eDostava.Data.Models;
 using eDostava.Web.Areas.Api.Models;
+using eDostava.Web.Areas.Api.Helper;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Lokacije")]
-    public class LokacijeController : Controller
+    public class LokacijeController : MyBaseApiController
     {
-        private readonly MojContext _context;
-
-        public LokacijeController(MojContext context)
-        {
-            _context = context;
-        }
+        public LokacijeController(MojContext context) : base(context) { }
 
         // GET: api/Lokacije
         [HttpGet]

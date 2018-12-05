@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using eDostava.Data;
 using eDostava.Data.Models;
@@ -9,6 +10,9 @@ using eDostava.Web.Areas.Api.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using eDostava.Web.Areas.Api.Helper;
+using Microsoft.AspNetCore.Http;
+using eDostava.Web.Helper;
+using RS1_Ispit_2017.Helper;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
@@ -34,6 +38,8 @@ namespace eDostava.Web.Areas.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            string token = Guid.NewGuid().ToString();
+
             UserModelResponse model = await _context.Narucioci
                 .Include(n => n.Blok)
                 .ThenInclude(n => n.Grad)
@@ -49,9 +55,9 @@ namespace eDostava.Web.Areas.Api.Controllers
                     DatumKreiranja = s.DatumKreiranja,
                     NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == s.KorisnikID).Count(),
                     ZadnjiLogin = DateTime.Now,
-                    Token ="",
+                    Token = token,
                     Adresa = s.Adresa,
-                    ImageUrl = s.ImageUrl != null && s.ImageUrl.Length > 0 ? s.ImageUrl : ApiConfig.IMAGE_DIR + "/" + ApiConfig.DEFAULT_IMAGE,
+                    ImageUrl = s.ImageUrl != null && s.ImageUrl.Length > 0 ? s.ImageUrl : MyApiConfig.IMAGE_DIR + "/" + MyApiConfig.DEFAULT_IMAGE,
                 })
                 .FirstOrDefaultAsync();
 
@@ -66,6 +72,20 @@ namespace eDostava.Web.Areas.Api.Controllers
             return BadRequest("Pogrešan username ili password.");
         }
 
+        [HttpPost]
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            string token = HttpContext.GetMyAuthToken();
+            AuthToken tokenDb = _context.AuthTokeni.Find(token);
+            if (tokenDb != null)
+            {
+                _context.Remove(tokenDb);
+                _context.SaveChanges();
+            }
+
+            return Ok();
+        }
 
         // POST: api/Auth/Register
         [HttpPost]
@@ -79,13 +99,14 @@ namespace eDostava.Web.Areas.Api.Controllers
 
             if (Model.Id == 0)
             {
+                string token = Guid.NewGuid().ToString();
                 Narucilac newUser = new Narucilac
                 {
                     Ime = Model.Ime,
                     Prezime = Model.Prezime,
                     Password = Model.Password,
                     Username = Model.Username,
-                    ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : ApiConfig.IMAGE_DIR + "/" + ApiConfig.DEFAULT_IMAGE,
+                    ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : MyApiConfig.IMAGE_DIR + "/" + MyApiConfig.DEFAULT_IMAGE,
                     Adresa = Model.Adresa,
                     BadgeID = 1,
                     DatumKreiranja = DateTime.Now,
@@ -93,6 +114,17 @@ namespace eDostava.Web.Areas.Api.Controllers
                 };
                 
                 await _context.Narucioci.AddAsync(newUser);
+
+                AuthToken tokenRecord = new AuthToken
+                {
+                    Value = token,
+                    NarucilacId = newUser.KorisnikID,
+                    DatumGenerisanja = DateTime.Now,
+                    Ip = HttpContext.Connection.RemoteIpAddress + ":" + HttpContext.Connection.RemotePort
+                };
+
+                await _context.AuthTokeni.AddAsync(tokenRecord);
+
                 await _context.SaveChangesAsync();
 
                 UserModelResponse authUserVM = new UserModelResponse
@@ -105,7 +137,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Blok = newUser.Blok,
                     DatumKreiranja = newUser.DatumKreiranja,
                     ZadnjiLogin = DateTime.Now,
-                    Token = "",
+                    Token = token,
                     Adresa = newUser.Adresa,
                     ImageUrl = newUser.ImageUrl,
                     NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == newUser.KorisnikID).Count()
@@ -134,7 +166,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 user.Prezime = Model.Prezime ?? user.Prezime;
                 user.Password = Model.Password ?? user.Password;
                 user.Username = Model.Username ?? user.Username;
-                user.ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : ApiConfig.IMAGE_DIR + "/" + ApiConfig.DEFAULT_IMAGE;
+                user.ImageUrl = Model.ImageUrl != null && Model.ImageUrl.Length > 0 ? Model.ImageUrl : MyApiConfig.IMAGE_DIR + "/" + MyApiConfig.DEFAULT_IMAGE;
                 user.Adresa = Model.Adresa ?? user.Adresa;
                 user.Blok = _context.Blokovi.Include(b => b.Grad).DefaultIfEmpty(_context.Blokovi.First()).First(b => b.BlokID == Model.BlokID);
 
@@ -201,13 +233,13 @@ namespace eDostava.Web.Areas.Api.Controllers
                 try
                 {
                     string Filename = Model.FileName + "_" + Model.credentials.Username + "_" + Guid.NewGuid().ToString().Substring(0, 4) + ".jpeg";
-                    string Uploads = Path.Combine(_appEnvironment.WebRootPath, ApiConfig.IMAGE_DIR);
+                    string Uploads = Path.Combine(_appEnvironment.WebRootPath, MyApiConfig.IMAGE_DIR);
                     string FilePath = Path.Combine(Uploads, Filename); // Pripremi path i ime slike
 
                     byte[] imageBytes = Convert.FromBase64String(Model.EncodedImageBase64);
                     System.IO.File.WriteAllBytes(FilePath, imageBytes);
 
-                    user.ImageUrl = ApiConfig.IMAGE_DIR + "/" + Filename;
+                    user.ImageUrl = MyApiConfig.IMAGE_DIR + "/" + Filename;
                     await _context.SaveChangesAsync();
 
                     return Ok(user.ImageUrl);
@@ -221,5 +253,33 @@ namespace eDostava.Web.Areas.Api.Controllers
 
             return BadRequest("Pogrešan username ili password.");
         }
+
+
+        //public static string GetTrenutniToken(this HttpContext context)
+        //{
+        //    string token = context.Session.Get<string>(ApiConfig.AUTH_USER);
+        //    if (token == null)
+        //    {
+        //        token = context.Request.GetCookiesToken(ApiConfig.TOKEN_COOKIE_NAME);
+        //    }
+        //    return token;
+        //}
+
+        //public static Narucilac GetLogiraniKorisnik(this HttpContext context)
+        //{
+        //    string token = GetTrenutniToken(context);
+        //    if (token == null)
+        //    {
+        //        return null;
+        //    }
+
+        //    MojContext db = context.RequestServices.GetService<MojContext>();
+
+        //    return db.AuthTokeni
+        //        .Where(x => x.Value == token)
+        //        .Select(x => x.Narucilac)
+        //        .SingleOrDefault();
+        //}
+
     }
 }

@@ -11,19 +11,15 @@ using eDostava.Web.Areas.Api.Models;
 using eDostava.Web.Helper;
 using eDostava.Web.Areas.Api.Models.RequestModels;
 using static eDostava.Web.Areas.Api.Models.NarudzbaListResponse;
+using eDostava.Web.Areas.Api.Helper;
 
 namespace eDostava.Web.Areas.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Narudzbe")]
-    public class NarudzbeController : Controller
+    public class NarudzbeController : MyBaseApiController
     {
-        private readonly MojContext _context;
-
-        public NarudzbeController(MojContext context)
-        {
-            _context = context;
-        }
+        public NarudzbeController(MojContext context) : base(context) { }
 
         // POST: api/Narudzbe
         [HttpPost]
@@ -80,37 +76,32 @@ namespace eDostava.Web.Areas.Api.Controllers
                 return BadRequest("Provjerite narudžbu.");
             }
 
-            Narucilac user = await _context.Narucioci.FirstAsync(u => u.Username == Model.credentials.Username && u.Password == Model.credentials.Password);
-
-            if (user != null)
+            try
             {
-                try
+                Narudzba narudzba = new Narudzba
                 {
-                    Narudzba narudzba = new Narudzba
-                    {
-                        UkupnaCijena = Model.UkupnaCijena,
-                        Status = Stanje.NaCekanju,
-                        NarucilacID = user.KorisnikID
-                    };
-                    _context.Narudzbe.Add(narudzba);
-                    await _context.SaveChangesAsync();
+                    UkupnaCijena = Model.UkupnaCijena,
+                    Status = Stanje.NaCekanju,
+                    NarucilacID = MyAuthUser.KorisnikID
+                };
+                _context.Narudzbe.Add(narudzba);
+                await _context.SaveChangesAsync();
 
-                    foreach (var s in Model.stavke)
-                    {
-                        _context.StavkeNarudzbe.Add(new StavkaNarudzbe
-                        {
-                            NarudzbaID = narudzba.NarudzbaID,
-                            HranaID = s.HranaID,
-                            Kolicina = s.Kolicina
-                        });
-                    }
-
-                    await _context.SaveChangesAsync();
-                    return Ok("Nova narudžba kreirana.");
-                } catch (Exception e)
+                foreach (var s in Model.stavke)
                 {
-                    return BadRequest("Couldn't create a new resource, please try again.");
+                    _context.StavkeNarudzbe.Add(new StavkaNarudzbe
+                    {
+                        NarudzbaID = narudzba.NarudzbaID,
+                        HranaID = s.HranaID,
+                        Kolicina = s.Kolicina
+                    });
                 }
+
+                await _context.SaveChangesAsync();
+                return Ok("Nova narudžba kreirana.");
+            } catch (Exception e)
+            {
+                return BadRequest("Couldn't create a new resource, please try again.");
             }
 
             return BadRequest("Pogrešan username ili password.");

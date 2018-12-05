@@ -7,7 +7,6 @@ namespace eDostava.Web.Areas.Api.Models.RequestModels
 {
     public class NarudzbaRequest
     {
-        public UserLoginRequest credentials { get; set; }
         public int Id{ get; set; }
     }
 }

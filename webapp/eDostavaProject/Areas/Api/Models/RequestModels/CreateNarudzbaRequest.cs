@@ -7,8 +7,6 @@ namespace eDostava.Web.Areas.Api.Models.RequestModels
 {
     public class CreateNarudzbaRequest
     {
-        public UserLoginRequest credentials { get; set; }
-
         public class StavkaRequest
         {
             public int HranaID { get; set; }

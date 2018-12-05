@@ -7,7 +7,6 @@ namespace eDostava.Web.Areas.Api.Models
 {
     public class RestoranLikeRequest
     {
-        public UserLoginRequest credentials { get; set; }
         public string Recenzija { get; set; }
     }
 }

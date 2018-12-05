@@ -8,7 +8,6 @@ namespace eDostava.Web.Areas.Api.Models.RequestModels
 {
     public class RestoranKomentariRequest
     {
-        public UserLoginRequest credentials { get; set; }
         public string ClientID { get; set; }
         public string ClientIP { get; set; }
         public string KomentariHashCode { get; set; }

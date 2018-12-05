@@ -138,12 +138,6 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("{id}/Komentari")]
         public async Task<IActionResult> GetKomentare([FromRoute] int id, [FromBody] RestoranKomentariRequest Model)
         {
-            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == Model.credentials.Username && n.Password == Model.credentials.Password);
-            if (narucilac == null)
-            {
-                return BadRequest("Pogrešan username ili password.");
-            }
-
             Restoran restoran = await _context.Restorani.FindAsync(id);
             if (restoran == null)
             {
@@ -170,12 +164,6 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("{id}/Komentari/Novi")]
         public async Task<IActionResult> NoviKomentar([FromRoute] int id, [FromBody] RestoranNoviKomentarRequest Model)
         {
-            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == Model.credentials.Username && n.Password == Model.credentials.Password);
-            if (narucilac == null)
-            {
-                return BadRequest("Pogrešan username ili password.");
-            }
-
             Restoran restoran = await _context.Restorani.FindAsync(id);
             if (restoran == null)
             {
@@ -185,7 +173,7 @@ namespace eDostava.Web.Areas.Api.Controllers
             _context.Recenzije.Add(new RestoranRecenzija
             {
                 Datum = DateTime.Now,
-                NarucilacID = narucilac.KorisnikID,
+                NarucilacID = MyAuthUser.KorisnikID,
                 RestoranID = restoran.RestoranID,
                 Recenzija = Model.komentar
             });
@@ -212,12 +200,6 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("{id}/Komentari/Subscribe")]
         public async Task<IActionResult> SubscribeKomentari([FromRoute] int id, [FromBody] RestoranKomentariRequest subRequest)
         {
-            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == subRequest.credentials.Username && n.Password == subRequest.credentials.Password);
-            if (narucilac == null)
-            {
-                return BadRequest("Pogrešan username ili password.");
-            }
-
             Restoran restoran = await _context.Restorani.FindAsync(id);
             if (restoran == null)
             {
@@ -272,20 +254,14 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("{id}/Like")]
         public async Task<IActionResult> LikeRestoran([FromRoute] int id, [FromBody] UserLoginRequest User)
         {
-            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == User.Username && n.Password == User.Password);
-            if (narucilac == null)
-            {
-                return BadRequest("Pogrešan username ili password.");
-            }
-
             Restoran restoran = await _context.Restorani.FindAsync(id);
 
-            if (restoran != null && _context.Lajkovi.SingleOrDefault(l => l.NarucilacID == narucilac.KorisnikID && l.RestoranID == restoran.RestoranID) == null)
+            if (restoran != null && _context.Lajkovi.SingleOrDefault(l => l.NarucilacID == MyAuthUser.KorisnikID && l.RestoranID == restoran.RestoranID) == null)
             {
                 RestoranLike like = new RestoranLike
                 {
                     RestoranID = restoran.RestoranID,
-                    NarucilacID = narucilac.KorisnikID,
+                    NarucilacID = MyAuthUser.KorisnikID,
                     Datum = DateTime.Now
                 };
 
@@ -303,14 +279,8 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("{id}/Unlike")]
         public async Task<IActionResult> UnlikeRestoran([FromRoute] int id, [FromBody] UserLoginRequest User)
         {
-            Narucilac narucilac = await _context.Narucioci.SingleOrDefaultAsync(n => n.Username == User.Username && n.Password == User.Password);
-            if (narucilac == null)
-            {
-                return BadRequest("Pogrešan username ili password.");
-            }
-
             Restoran restoran = await _context.Restorani.FindAsync(id);
-            RestoranLike like = await _context.Lajkovi.FirstAsync(l => l.NarucilacID == narucilac.KorisnikID && l.RestoranID == restoran.RestoranID);
+            RestoranLike like = await _context.Lajkovi.FirstAsync(l => l.NarucilacID == MyAuthUser.KorisnikID && l.RestoranID == restoran.RestoranID);
 
             if (restoran != null && like != null)
             {

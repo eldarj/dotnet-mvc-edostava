@@ -13,9 +13,14 @@ using eDostava.Web.Areas.Api.Helper;
 namespace eDostava.Web.Areas.Api.Controllers
 {
     [Route("api/Lokacije")]
-    public class LokacijeController : MyBaseApiController
+    public class LokacijeController : Controller
     {
-        public LokacijeController(MojContext context) : base(context) { }
+        private readonly MojContext _context;
+
+        public LokacijeController(MojContext context)
+        {
+            _context = context;
+        }
 
         // GET: api/Lokacije
         [HttpGet]

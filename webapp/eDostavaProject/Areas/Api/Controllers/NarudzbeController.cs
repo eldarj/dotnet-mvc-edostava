@@ -97,7 +97,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                return Ok("Nova narudžba kreirana.");
+                return Ok(narudzba.Sifra.ToString());
             } catch (Exception e)
             {
                 return BadRequest("Couldn't create a new resource, please try again.");

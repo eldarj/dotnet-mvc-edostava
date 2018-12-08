@@ -117,22 +117,6 @@ namespace eDostava.Web.Areas.Api.Controllers
             });
         }
         
-
-        private List<RestoranListResponse.RestoranRecenzija> getRecenzije(Restoran restoran)
-        {
-            return _context.Recenzije.Where(r => r.RestoranID == restoran.RestoranID)
-                    .Include(r => r.Narucilac)
-                    .OrderByDescending(r => r.Datum)
-                    .Select(r => new RestoranListResponse.RestoranRecenzija
-                    {
-                        Datum = r.Datum,
-                        ImePrezime = r.Narucilac.Ime_prezime,
-                        Username = r.Narucilac.Username,
-                        Recenzija = r.Recenzija,
-                        ImageUrl = r.Narucilac.ImageUrl
-                    }).ToList();
-        }
-
         [HttpPost("{id}")]
         [Route("{id}/Komentari")]
         public async Task<IActionResult> GetKomentare([FromRoute] int id, [FromBody] RestoranKomentariRequest Model)
@@ -236,6 +220,21 @@ namespace eDostava.Web.Areas.Api.Controllers
             }
 
             return BadRequest("Connection closed.");
+        }
+
+        private List<RestoranListResponse.RestoranRecenzija> getRecenzije(Restoran restoran)
+        {
+            return _context.Recenzije.Where(r => r.RestoranID == restoran.RestoranID)
+                    .Include(r => r.Narucilac)
+                    .OrderByDescending(r => r.Datum)
+                    .Select(r => new RestoranListResponse.RestoranRecenzija
+                    {
+                        Datum = r.Datum,
+                        ImePrezime = r.Narucilac.Ime_prezime,
+                        Username = r.Narucilac.Username,
+                        Recenzija = r.Recenzija,
+                        ImageUrl = r.Narucilac.ImageUrl
+                    }).ToList();
         }
 
         private string generateUniqueHash(List<RestoranListResponse.RestoranRecenzija> recenzije)

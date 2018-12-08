@@ -33,51 +33,53 @@ namespace eDostava.Web.Areas.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] AuthLoginVM postAccount)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            string token = Guid.NewGuid().ToString();
-
-            UserModelResponse model = await _context.Narucioci
+            Narucilac user = await _context.Narucioci
                 .Include(n => n.Blok)
                 .ThenInclude(n => n.Grad)
                 .Where(n => n.Username == postAccount.Username && n.Password == postAccount.Password)
-                .Select(s => new UserModelResponse
-                {
-                    Id = s.KorisnikID,
-                    Ime = s.Ime,
-                    Prezime = s.Prezime,
-                    Username = s.Username,
-                    Password = s.Password,
-                    Blok = s.Blok,
-                    DatumKreiranja = s.DatumKreiranja,
-                    NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == s.KorisnikID).Count(),
-                    ZadnjiLogin = DateTime.Now,
-                    Token = token,
-                    Adresa = s.Adresa,
-                    ImageUrl = s.ImageUrl != null && s.ImageUrl.Length > 0 ? s.ImageUrl : MyApiConfig.IMAGE_DIR + "/" + MyApiConfig.DEFAULT_IMAGE,
-                })
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
 
-
-            if (model != null)
+            if (user == null)
             {
-                // due to lazyloading - fix this later
-                model.Blok.Grad = _context.Gradovi.Where(g => g.GradID == model.Blok.GradID).FirstOrDefault();
-                return Ok(model);
+                return BadRequest("Pogrešan username ili password");
             }
 
-            return BadRequest("Pogrešan username ili password.");
+            string token = Guid.NewGuid().ToString();
+            UserModelResponse model = new UserModelResponse
+            {
+                Id = user.KorisnikID,
+                Ime = user.Ime,
+                Prezime = user.Prezime,
+                Username = user.Username,
+                Password = user.Password,
+                Blok = user.Blok,
+                DatumKreiranja = user.DatumKreiranja,
+                NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == user.KorisnikID).Count(),
+                ZadnjiLogin = DateTime.Now,
+                Token = token,
+                Adresa = user.Adresa,
+                ImageUrl = user.ImageUrl != null && user.ImageUrl.Length > 0 ? user.ImageUrl : MyApiConfig.IMAGE_DIR + "/" + MyApiConfig.DEFAULT_IMAGE,
+            };
+
+            await _context.AuthTokeni.AddAsync(new AuthToken
+            {
+                Value = token,
+                NarucilacId = user.KorisnikID,
+                DatumGenerisanja = DateTime.Now,
+                Ip = HttpContext.Connection.RemoteIpAddress + ":" + HttpContext.Connection.RemotePort
+            });
+
+            await _context.SaveChangesAsync();
+
+            return Ok(model);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Logout")]
         public IActionResult Logout()
         {
             string token = HttpContext.GetMyAuthToken();
-            AuthToken tokenDb = _context.AuthTokeni.Find(token);
+            AuthToken tokenDb = _context.AuthTokeni.Where(t => t.Value == token).Single();
             if (tokenDb != null)
             {
                 _context.Remove(tokenDb);
@@ -92,9 +94,10 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterRequest Model)
         {
-            if (!ModelState.IsValid)
+            Narucilac existing = await _context.Narucioci.FindAsync(Model.Id);
+            if (existing != null)
             {
-                return BadRequest(ModelState);
+                return BadRequest("Username " + Model.Username + " je već zauzet");
             }
 
             if (Model.Id == 0)
@@ -115,7 +118,7 @@ namespace eDostava.Web.Areas.Api.Controllers
                 
                 await _context.Narucioci.AddAsync(newUser);
 
-                AuthToken tokenRecord = new AuthToken
+                AuthToken tokenDb = new AuthToken
                 {
                     Value = token,
                     NarucilacId = newUser.KorisnikID,
@@ -123,11 +126,11 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Ip = HttpContext.Connection.RemoteIpAddress + ":" + HttpContext.Connection.RemotePort
                 };
 
-                await _context.AuthTokeni.AddAsync(tokenRecord);
+                await _context.AuthTokeni.AddAsync(tokenDb);
 
                 await _context.SaveChangesAsync();
 
-                UserModelResponse authUserVM = new UserModelResponse
+                return Ok(new UserModelResponse
                 {
                     Id = newUser.KorisnikID,
                     Ime = newUser.Ime,
@@ -141,12 +144,10 @@ namespace eDostava.Web.Areas.Api.Controllers
                     Adresa = newUser.Adresa,
                     ImageUrl = newUser.ImageUrl,
                     NarudzbeCount = _context.Narudzbe.Where(n => n.NarucilacID == newUser.KorisnikID).Count()
-                };
-
-                return CreatedAtAction("Register", new { id = authUserVM.Id }, authUserVM);
+                });
             }
 
-            return BadRequest("Register failed, check what (existing) data are you passing. Did you mean to call the Update action?");
+            return BadRequest("Provjerite podatke");
         }
 
         // PUT: api/Auth/Update
@@ -253,33 +254,5 @@ namespace eDostava.Web.Areas.Api.Controllers
 
             return BadRequest("Pogrešan username ili password.");
         }
-
-
-        //public static string GetTrenutniToken(this HttpContext context)
-        //{
-        //    string token = context.Session.Get<string>(ApiConfig.AUTH_USER);
-        //    if (token == null)
-        //    {
-        //        token = context.Request.GetCookiesToken(ApiConfig.TOKEN_COOKIE_NAME);
-        //    }
-        //    return token;
-        //}
-
-        //public static Narucilac GetLogiraniKorisnik(this HttpContext context)
-        //{
-        //    string token = GetTrenutniToken(context);
-        //    if (token == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    MojContext db = context.RequestServices.GetService<MojContext>();
-
-        //    return db.AuthTokeni
-        //        .Where(x => x.Value == token)
-        //        .Select(x => x.Narucilac)
-        //        .SingleOrDefault();
-        //}
-
     }
 }

@@ -21,7 +21,7 @@ namespace eDostava.Web.Areas.Api.Filters
 
     public class ApiAuthImpl : IAsyncActionFilter
     {
-        public ApiAuthImpl(){ }
+        public ApiAuthImpl() { }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {

@@ -265,4 +265,4 @@ __pycache__/
 **/[Dd]ebug/
 **/.vs/
 webapp/.vs/
-images/
+#images/

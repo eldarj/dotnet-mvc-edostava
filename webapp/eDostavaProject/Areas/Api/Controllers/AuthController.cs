@@ -94,7 +94,7 @@ namespace eDostava.Web.Areas.Api.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterRequest Model)
         {
-            Narucilac existing = await _context.Narucioci.FindAsync(Model.Id);
+            Narucilac existing = await _context.Narucioci.FindAsync(Model.Id); // provjeri je li postoji user
             if (existing != null)
             {
                 return BadRequest("Username " + Model.Username + " je već zauzet");

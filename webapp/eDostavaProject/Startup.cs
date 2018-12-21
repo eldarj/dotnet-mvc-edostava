@@ -24,7 +24,7 @@ namespace eDostavaProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MojContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("lokalni2")));
+                options.UseSqlServer(Configuration.GetConnectionString("azure-db")));
 
             services.AddMvc();
             services.AddMemoryCache();

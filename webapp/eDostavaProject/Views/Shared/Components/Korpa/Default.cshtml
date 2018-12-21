@@ -40,7 +40,7 @@
         <div class="korpa-sum">
             <p><span>Ukupno: </span>@Model.Narudzba.UkupnaCijena KM</p>
             <a class="btn btn-sm btn-main-color-1 full-width
-                @if (Model.Narudzba.Status != eDostava.Data.Models.Stanje.Aktivna)
+                @if (Model.Narudzba.Status != eDostava.Data.Models.Stanje.Prihvacena)
                 {
                     @:disabled
                 } "
